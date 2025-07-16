@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectukusay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables para colores */
+        :root {
+            --primary-color: #00376e;
+            --secondary-color: #129cec;
+            --accent-color: #f32f19;
+            --success-color: #fca503;
+            --bg-color: #f7f8fa;
+            --text-color: #070707;
+            --card-bg: #ffffff;
+            --border-color: #03376b;
+            /* Modo Oscuro */
+            --background-dark: #2c3e50; /* Azul oscuro */
+            --text-dark: #ecf0f1; /* Gris claro */
+            --card-background-dark: #34495e; /* Azul oscuro más claro */
+
+            /* Niveles de puntaje actualizados */
+            --level-c-color: #e74c3c; /* Rojo para Inicio */
+            --level-b-color: #f39c12; /* Amarillo para Proceso */
+            --level-a-color: #ff8c00; /* Anaranjado para Logrado */
+            --level-ad-color: #27ae60; /* Verde para Logro Destacado */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20;
+            padding: 20;
+            background: var(--background-light); /* Aplicar el degradado al fondo */
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Modo oscuro */
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode header {
+            background-color: var(--card-background-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .sidebar {
+            background-color: var(--card-background-dark);
+            color: var(--text-dark);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .student-form input,
+        body.dark-mode .controls select {
+            background-color: var(--card-background-dark);
+            color: var(--text-dark);
+            border: 1px solid white;
+        }
+
+        /* Botones en modo oscuro también amarillos */
+        body.dark-mode .student-form button,
+        body.dark-mode .btn-primary,
+        body.dark-mode .btn-secondary,
+        body.dark-mode .controls button,
+        body.dark-mode .visual-options button {
+            background-color: var(--secondary-color);
+            color: white; /* Asegurar texto blanco en botones amarillos */
+            border: 1px solid var(--secondary-color); /* Borde amarillo en modo oscuro */
+        }
+        body.dark-mode .student-form button:hover,
+        body.dark-mode .btn-primary:hover,
+        body.dark-mode .btn-secondary:hover,
+        body.dark-mode .controls button:hover,
+        body.dark-mode .visual-options button:hover {
+            background-color: #e0a027; /* Amarillo más oscuro al pasar el ratón en modo oscuro */
+        }
+
+
+        body.dark-mode .text-display,
+        body.dark-mode .quiz-section,
+        body.dark-mode .comment-section {
+            background-color: var(--card-background-dark);
+            color: var(--text-dark);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: rgb(253, 253, 253);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.966);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            display: inline-block; /* Permitir que h1 se siente al lado de la imagen */
+            vertical-align: middle; /* Alinear con la imagen */
+            margin-right: 15px; /* Espacio entre el título y el slogan */
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #logo {
+            vertical-align: middle;
+            margin-right: 75px;
+            border-radius: 10%;
+            max-width: 150px; /* Tamaño máximo del logo */
+            height: auto;
+        }
+
+        #logo1 {
+            vertical-align: middle;
+            margin-right: 05px;
+            border-radius: 10%;
+            max-width: 400px; /* Tamaño máximo del logo */
+            height: auto;
+        }
+        .slogan-container {
+            margin-top: 0.1rem; /* Espacio entre el título y el slogan */
+            width: 100%; /* Ocupar todo el ancho para el marquee */
+        }
+
+        .slogan-container p {
+            margin: 0; /* Eliminar márgenes predeterminados del párrafo dentro del marquee */
+            font-size: 2.2rem;
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+            padding: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .sidebar {
+            flex: 0 0 280px; /* Ancho fijo para la barra lateral */
+            background-color: #b8d4f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(5, 1, 250, 0.979);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Títulos en el sidebar y secciones de contenido */
+        .sidebar h2, .sidebar h3,
+        .text-display h2,
+        .quiz-section h2, .comment-section h2,
+        .visual-options h3 {
+            color: #2b85df;; /* Color negro para los títulos */
+            margin-top: 0;
+            border-bottom: 2px solid var(--primary-color); /* Borde con color primario */
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilo para los contenedores de input con botón de voz */
+        .input-with-speech {
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Pequeño espacio entre input y botón */
+            margin-bottom: 0.8rem; /* Mantener margen original para el grupo */
+        }
+
+        .input-with-speech input {
+            flex-grow: 1; /* Permitir que el input ocupe el espacio disponible */
+            margin-bottom: 0; /* Eliminar margen individual ya que está en el div padre */
+            width: auto; /* Ancho automático para que flex-grow funcione */
+            padding: 0.8rem;
+            border-radius: 8px; /* Bordes más redondeados */
+            border: 2px solid var(--primary-color); /* Borde más visible */
+            font-size: 1rem;
+            box-sizing: border-box; /* Incluir padding y border en el ancho/alto */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+        }
+
+        .input-with-speech input:focus {
+            border-color: var(--secondary-color); /* Borde amarillo al enfocar */
+            box-shadow: 0 0 8px rgba(247, 179, 43, 0.7); /* Sombra más pronunciada al enfocar */
+            outline: none; /* Eliminar el contorno por defecto */
+        }
+
+        /* Estilo para todos los botones */
+        .student-form button, .btn-primary, .btn-secondary, .text-actions button, .visual-options button {
+            background-color: var(--primary-color); /* Botones en azul */
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 0.8rem 1.2rem; /* Padding consistente */
+            border-radius: 10px; /* Bordes más redondeados */
+            font-size: 1rem;
+        }
+
+        .student-form button:hover, .btn-primary:hover, .btn-secondary:hover, .text-actions button:hover, .visual-options button:hover {
+            background-color: #3a6a9a; /* Azul más oscuro al pasar el ratón */
+        }
+
+        /* Estilo específico para los botones de dictado de voz */
+        .speech-input-btn {
+            background-color: var(--primary-color); /* Usar color primario (azul acero) para botones de micrófono */
+            color: white;
+            border: none;
+            border-radius: 10px; /* Bordes más redondeados */
+            padding: 0.5rem 0.7rem; /* Padding más pequeño */
+            cursor: pointer;
+            font-size: 1.2rem; /* Hacer el icono del micrófono un poco más grande */
+            transition: background-color 0.3s ease;
+            flex-shrink: 0; /* Evitar que el botón se encoja */
+        }
+
+        .speech-input-btn:hover {
+            background-color: #3a6a9a; /* Azul acero más oscuro al pasar el ratón */
+        }
+
+        /* Modo oscuro para los botones de dictado de voz */
+        body.dark-mode .speech-input-btn {
+            background-color: var(--primary-color); /* Azul en modo oscuro */
+            color: var(--text-dark); /* Texto oscuro para contraste */
+        }
+        body.dark-mode .speech-input-btn:hover {
+            background-color: #3a6a9a; /* Azul más oscuro al pasar el ratón */
+        }
+
+        .student-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        #levelAchieved {
+            font-weight: bold;
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .level-c { background-color: var(--level-c-color); color: white; }
+        .level-b { background-color: var(--level-b-color); color: white; }
+        .level-a { background-color: var(--level-a-color); color: white; }
+        .level-ad { background-color: var(--level-ad-color); color: white; }
+
+        .reading-record ul, .ranking ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        .reading-record li, .ranking li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #eee;
+            display: flex; /* Para alinear el texto y el botón de borrar */
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ranking li .delete-student-btn {
+            background: none;
+            border: none;
+            color: #e74c3c; /* Rojo para el icono de borrar */
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.2s ease;
+            padding: 0.2rem;
+        }
+
+        .ranking li .delete-student-btn:hover {
+            color: #c0392b; /* Rojo más oscuro al pasar el ratón */
+        }
+
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-background-light);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgb(18, 1, 243);
+            flex-wrap: wrap;
+            gap: 1rem;
+            background-color: #b1c8df;
+        }
+
+        .controls select {
+            padding: 0.8rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .text-actions button {
+            margin-left: 0.5rem; /* Mantener margen entre botones de acción de texto */
+        }
+
+        .text-display, .quiz-section, .comment-section {
+            background-color: var(--card-background-light);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgb(55, 0, 252);
+            min-height: 300px; /* Para asegurar un tamaño mínimo */
+        }
+
+        .text-display .author {
+            color: #111010;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        #textContent { /* Aplicar el tamaño de fuente directamente aquí */
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.1rem; /* Tamaño de texto inicial */
+        }
+
+        #textContent p { /* Eliminar font-size de aquí para que el del padre funcione */
+            margin-bottom: 1rem;
+        }
+
+        .placeholder-text {
+            text-align: center;
+            color: #888;
+            padding: 50px;
+            font-style: italic;
+        }
+
+        .reading-message {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 1rem;
+        }
+
+        .question p {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        /* Estilo para inputs de respuesta corta y labels de radio */
+        .question .short-answer-input {
+            width: 100%; /* Ocupar todo el ancho disponible */
+            padding: 0.8rem;
+            border: 1px solid var(--primary-color); /* Borde con color primario */
+            border-radius: 8px; /* Bordes más redondeados */
+            font-size: 1rem;
+            box-sizing: border-box; /* Incluir padding y border en el ancho/alto */
+            margin-top: 0.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .question .short-answer-input:focus {
+            border-color: var(--secondary-color); /* Borde amarillo al enfocar */
+            box-shadow: 0 0 5px rgba(247, 179, 43, 0.5); /* Sombra amarilla al enfocar */
+            outline: none; /* Eliminar el contorno por defecto */
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.6rem; /* Añadir padding para mejor área de clic */
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .question label:hover {
+            background-color: #f0f0f0; /* Fondo sutil al pasar el ratón */
+        }
+        body.dark-mode .question label:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        /* Comment Section */
+        .comment-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-input-area textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0; /* Eliminar margen individual */
+            box-sizing: border-box; /* Incluir padding y border en el ancho/alto */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        body.dark-mode .comment-input-area textarea {
+            background-color: var(--card-background-dark);
+            color: var(--text-dark);
+            border: 1px solid var(--accent-color);
+        }
+        .comment-input-area textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(247, 179, 43, 0.5);
+            outline: none;
+        }
+
+        /* New Visual Options Section */
+        .visual-options {
+            margin-bottom: 1.5rem; /* Espacio debajo de esta sección */
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #dddbe4; /* Separador */
+        }
+
+        footer {
+             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 0px;
+            border-radius: 7px;
+            margin: 0px;
+        }
+
+        /* Media Queries para Responsividad */
+        @media (max-width: 1024px) {
+            main {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                flex: none;
+                width: 100%;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .text-actions {
+                margin-top: 1rem;
+            }
+
+            .text-actions button {
+                margin-left: 0;
+                margin-right: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .sidebar, .text-display, .quiz-section, .comment-section, .controls {
+                padding: 1rem;
+            }
+
+            .text-display h2 {
+                font-size: 1.8rem;
+            }
+
+            #textContent {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .student-form input, .student-form button,
+            .controls select, .text-actions button {
+                font-size: 0.9rem;
+                padding: 0.6rem;
+            }
+
+            .text-display h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="C:\Users\USUARIO\Downloads\Gemini_Generated_Image_nxu4snxu4snxu4sns.png">
+        <img id="logo1" src="C:\Users\USUARIO\Downloads\Sin título-1.png">
+        <b><h1></h1></b>
+        <div class="slogan-container">
+            <!-- Nota: La etiqueta <marquee> está obsoleta y puede no ser compatible en futuros navegadores. -->
+            <b><marquee behavior="scroll" direction="left" scrollamount="5"><p>¡La alegría de leer comienza aquí!</p></marquee></b>
+        </div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <div class="visual-options"> <!-- Nueva sección para opciones visuales, ahora al inicio del sidebar -->
+                <h3>Opciones de Visualización</h3>
+                <button id="toggleThemeBtn">🌙 Modo Oscuro / ☀️ Modo Claro</button>
+            </div>
+            <h2>Panel de Estudiante</h2>
+            <div class="student-form">
+                <h3>Ingresa tus datos:</h3>
+                <div class="input-with-speech">
+                    <input type="text" id="studentName" placeholder="Nombre(s) y Apellido(s)">
+                    <button class="speech-input-btn" data-target="studentName" title="Dictar nombre">🎤</button>
+                </div>
+                <div class="input-with-speech">
+                    <input type="text" id="studentGrade" placeholder="Grado">
+                    <button class="speech-input-btn" data-target="studentGrade" title="Dictar grado">🎤</button>
+                </div>
+                <button id="activateStudent">Activar</button>
+            </div>
+            <div class="student-info"> <!-- Removed style="display:none;" -->
+                <p>¡Bienvenido(a), <span id="currentStudentName"></span>!</p>
+                <p>Grado: <span id="currentStudentGrade"></span></p>
+                <p>Puntaje Total: <span id="totalScore">0</span></p>
+                <p>Nivel Alcanzado: <span id="levelAchieved" class="level-c">Inicio (C)</span></p>
+                <button id="registerNewStudentBtn" class="btn-secondary" style="margin-top: 1rem;">Registrar Nuevo Estudiante</button>
+            </div>
+            <div class="reading-record">
+                <h3>Record de Lectura:</h3>
+                <ul id="readTextsList">
+                    <!-- Textos leídos se añadirán aquí -->
+                </ul>
+            </div>
+            <div class="ranking">
+                <h3>Ranking:</h3>
+                <ol id="studentRanking">
+                    <!-- El ranking de estudiantes se cargará aquí -->
+                </ol>
+            </div>
+        </aside>
+
+        <section class="content-area">
+            <nav class="controls">
+                <div class="text-selector">
+                    <label for="textCategory">Elige tu aventura:</label>
+                    <select id="textCategory">
+                        <option value="cuentos">Cuentos</option>
+                        <option value="novelas">Novelas</option>
+                        <option value="fabulas">Fábulas</option>
+                        <option value="articulos">Artículos Informativos</option>
+                    </select>
+                </div>
+                <div class="text-actions">
+                    <!-- Un solo botón para Leer/Pausar/Reanudar -->
+                    <button id="readAloudBtn">🗣️ Leer en Voz Alta</button>
+                    <button id="increaseFontSizeBtn">A+</button>
+                    <button id="decreaseFontSizeBtn">A-</button>
+                </div>
+            </nav>
+
+            <article class="text-display">
+                <h2 id="textTitle"></h2>
+                <div id="textAuthor" class="author"></div>
+                <div id="textContent">
+                    <p class="placeholder-text">Selecciona una categoría de texto y luego un texto para empezar a leer. ¡La aventura te espera!</p>
+                </div>
+                <button id="startQuizBtn" class="btn-primary" style="display:none;">Terminé de leer, ¡a la comprensión!</button>
+            </article>
+
+            <section id="readingMessage" class="reading-message" style="display:none;">
+                <p>¡Bien hecho! Has terminado esta lectura. 🎉</p>
+            </section>
+
+            <section id="quizSection" class="quiz-section" style="display:none;">
+                <h2>Preguntas de Comprensión</h2>
+                <div id="quizQuestions">
+                    <!-- Preguntas del quiz se cargarán aquí -->
+                </div>
+                <button id="submitQuizBtn" class="btn-primary">Enviar Respuestas</button>
+                <button id="retryQuizBtn" class="btn-secondary" style="display:none;">Intentar de Nuevo</button>
+                <p id="quizFeedback"></p>
+            </section>
+
+            <section id="commentSection" class="comment-section" style="display:none;">
+                <h2>Tu Reflexión sobre el Texto</h2>
+                <p>¿Qué te pareció la lectura? ¿Qué ideas o sentimientos te generó? ¡Comparte tus pensamientos!</p>
+                <div class="comment-input-area">
+                    <textarea id="textComment" placeholder="Escribe aquí tu comentario..."></textarea>
+                    <button class="speech-input-btn" data-target="textComment" title="Dictar comentario">🎤</button>
+                </div>
+                <button id="submitCommentBtn" class="btn-primary">Enviar Comentario</button>
+                <p id="commentFeedback" style="margin-top: 1rem; font-weight: bold;"></p>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+            <p>© 2025 LectuMundo - Plataforma Educativa Interactiva</p>
+            <p>© 2025 José Lenis Cayao Bustamante</p>
+            <p>Desarrollado para fomentar la lectura y comprensión en estudiantes de secundaria</p>
+    </footer>
+
+    <script>
+        // --- Data de Textos (JSON embebido) ---
+        const cuentosData = [
+            {
+                "title": "El Principito",
+                "author": "Antoine de Saint-Exupéry",
+                "content": [
+                    "Cuando yo tenía seis años vi una vez un cuadro magnífico en un libro sobre el Bosque Virgen que se llamaba “Historias vividas”. Representaba una serpiente boa que se tragaba una fiera. He aquí la copia del dibujo.",
+                    "En el libro se afirmaba: “Las serpientes boa se tragan su presa entera, sin masticarla. Luego no pueden moverse y duermen durante los seis meses de su digestión.”",
+                    "Reflexioné mucho en aquel momento sobre las aventuras de la jungla y, a mi vez, logré hacer con un lápiz de color mi primer dibujo. Mi dibujo número 1. Era así:",
+                    "Les enseñé mi obra maestra a las personas mayores y les pregunté si mi dibujo les daba miedo. Me respondieron: “¿Por qué un sombrero iba a dar miedo?”",
+                    "Mi dibujo no representaba un sombrero. Representaba una serpiente boa que digería un elefante. Dibujé entonces el interior de la serpiente boa para que las personas mayores pudieran comprender. Siempre tienen necesidad de explicaciones."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Qué animal representaba el primer dibujo del narrador?",
+                        "type": "multiple-choice",
+                        "options": ["Un elefante", "Un sombrero", "Una serpiente boa digiriendo un elefante", "Una fiera"],
+                        "answer": "Una serpiente boa digiriendo un elefante"
+                    },
+                    {
+                        "question": "¿Cuánto tiempo duermen las serpientes boa después de tragar su presa?",
+                        "type": "multiple-choice",
+                        "options": ["Un mes", "Tres meses", "Seis meses", "Un año"],
+                        "answer": "Seis meses"
+                    },
+                    {
+                        "question": "¿Por qué el narrador dibujó el interior de la serpiente boa?",
+                        "type": "short-answer",
+                        "answer": "Para que las personas mayores pudieran comprender"
+                    },
+                    {
+                        "question": "¿Cuál es el título del libro que inspiró al narrador?",
+                        "type": "multiple-choice",
+                        "options": ["Historias de la jungla", "Historias vividas", "Serpientes asombrosas", "El mundo animal"],
+                        "answer": "Historias vividas"
+                    },
+                    {
+                        "question": "¿A qué edad el narrador hizo su primer dibujo?",
+                        "type": "short-answer",
+                        "answer": "Seis años"
+                    }
+                ]
+            },
+            {
+                "title": "El Patito Feo",
+                "author": "Hans Christian Andersen",
+                "content": [
+                    "En el campo, cerca de un estanque, vivía una pata con sus patitos. Uno de ellos era muy diferente a los demás, era grande, feo y gris.",
+                    "Los otros patitos se burlaban de él y su propia madre lo veía con tristeza. El patito feo se sentía solo y abandonado.",
+                    "Un día, decidió huir del estanque y buscar un lugar donde pudiera ser aceptado. Vagó por muchos lugares, pasando frío y hambre.",
+                    "Cuando llegó el invierno, el patito feo estuvo a punto de morir de frío, pero fue rescatado por un campesino que lo llevó a su casa.",
+                    "En primavera, el patito volvió al estanque y vio un grupo de hermosos cisnes. Para su sorpresa, cuando se acercó a ellos, se dio cuenta de que él también se había convertido en un hermoso cisne."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Cómo era el patito diferente a los demás?",
+                        "type": "multiple-choice",
+                        "options": ["Pequeño y blanco", "Grande, feo y gris", "Flaco y marrón", "Lindo y colorido"],
+                        "answer": "Grande, feo y gris"
+                    },
+                    {
+                        "question": "¿Quién se burlaba del patito feo?",
+                        "type": "multiple-choice",
+                        "options": ["Los gansos", "Su madre", "Los otros patitos", "Los campesinos"],
+                        "answer": "Los otros patitos"
+                    },
+                    {
+                        "question": "¿Qué le sucedió al patito feo en primavera?",
+                        "type": "short-answer",
+                        "answer": "Se convirtió en un hermoso cisne"
+                    },
+                    {
+                        "question": "¿Quién rescató al patito feo en invierno?",
+                        "type": "multiple-choice",
+                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
+                        "answer": "Un campesino"
+                    },
+                    {
+                        "question": "¿Qué sentimiento predominaba en el patito feo al inicio de la historia?",
+                        "type": "short-answer",
+                        "answer": "Soledad"
+                    }
+                ]
+            }
+        ];
+
+        const novelasData = [
+            {
+                "title": "Don Quijote de la Mancha (Fragmento)",
+                "author": "Miguel de Cervantes Saavedra",
+                "content": [
+                    "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.",
+                    "Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.",
+                    "El resto della concluían sayo de velarte, calzas de velludo para las fiestas con sus pantuflos de lo mismo, y los días de entresemana se honraba con su vellori de lo más fino.",
+                    "Tenía en su casa una ama que pasaba de los cuarenta, y una sobrina que no llegaba a los veinte, y un mozo de campo y plaza, que así ensillaba el rocín como tomaba la podadera.",
+                    "Frisaba la edad de nuestro hidalgo con los cincuenta años; era de complexión recia, seco de carnes, enjuto de rostro, gran madrugador y amigo de la caza. Quieren decir que tenía el sobrenombre de Quijada o Quesada, que en esto hay alguna diferencia en los autores que de este caso escriben; aunque por conjeturas verosímiles se deja entender que se llamaba Quijana."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿En qué lugar vivía el hidalgo?",
+                        "type": "multiple-choice",
+                        "options": ["Andalucía", "La Mancha", "Extremadura", "Castilla"],
+                        "answer": "La Mancha"
+                    },
+                    {
+                        "question": "¿Qué edad frisaba el hidalgo?",
+                        "type": "multiple-choice",
+                        "options": ["Treinta", "Cuarenta", "Cincuenta", "Sesenta"],
+                        "answer": "Cincuenta"
+                    },
+                    {
+                        "question": "¿Cómo se llamaba el hidalgo según las conjeturas?",
+                        "type": "short-answer",
+                        "answer": "Quijana"
+                    },
+                    {
+                        "question": "¿Qué animal era flaco y tenía el hidalgo?",
+                        "type": "multiple-choice",
+                        "options": ["Caballo", "Rocín", "Asno", "Mula"],
+                        "answer": "Rocín"
+                    },
+                    {
+                        "question": "¿Qué comida consumían las más noches?",
+                        "type": "short-answer",
+                        "answer": "Salpicón"
+                    }
+                ]
+            },
+            {
+                "title": "Cien Años de Soledad (Fragmento)",
+                "author": "Gabriel García Márquez",
+                "content": [
+                    "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo.",
+                    "Macondo era entonces una aldea de veinte casas de barro y cañabrava construidas a la orilla de un río de aguas diáfanas que se precipitaban por un lecho de piedras pulidas, blancas y enormes como huevos prehistóricos.",
+                    "El mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo.",
+                    "Todos los años, por el mes de marzo, una familia de gitanos desarrapados plantaba su carpa cerca de la aldea, y con un gran alboroto de pitos y tambores daban a conocer los nuevos inventos.",
+                    "Primero llevaron el imán. Un gitano corpulento, con barba montaraz y manos de gorrión, que se presentó con el nombre de Melquíades, hizo una pública demostración de lo que él llamaba la octava maravilla del mundo."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Qué recordaba el coronel Aureliano Buendía frente al pelotón de fusilamiento?",
+                        "type": "multiple-choice",
+                        "options": ["Su infancia", "El día que conoció el hielo", "La guerra", "A su madre"],
+                        "answer": "El día que conoció el hielo"
+                    },
+                    {
+                        "question": "¿Cómo era Macondo al principio?",
+                        "type": "multiple-choice",
+                        "options": ["Una ciudad grande", "Un puerto", "Una aldea de veinte casas de barro", "Un campamento militar"],
+                        "answer": "Una aldea de veinte casas de barro"
+                    },
+                    {
+                        "question": "¿Qué traían los gitanos a Macondo cada año?",
+                        "type": "short-answer",
+                        "answer": "Nuevos inventos"
+                    },
+                    {
+                        "question": "¿Quién era Melquíades?",
+                        "type": "multiple-choice",
+                        "options": ["El padre del coronel", "Un habitante de Macondo", "Un gitano", "Un soldado"],
+                        "answer": "Un gitano"
+                    },
+                    {
+                        "question": "¿Qué fue lo primero que llevaron los gitanos?",
+                        "type": "short-answer",
+                        "answer": "El imán"
+                    }
+                ]
+            }
+        ];
+
+        const fabulasData = [
+            {
+                "title": "La Liebre y la Tortuga",
+                "author": "Esopo",
+                "content": [
+                    "Un día, una liebre se jactaba de su velocidad ante una tortuga, quien, con calma, le propuso una carrera.",
+                    "La liebre, confiada en su rapidez, aceptó riendo. Al inicio, la liebre corrió muy rápido, dejando a la tortuga muy atrás.",
+                    "Viendo que la tortuga avanzaba muy lentamente, la liebre decidió tomar una siesta a mitad del camino, segura de que tendría tiempo de sobra para ganar.",
+                    "Mientras la liebre dormía, la tortuga siguió avanzando, paso a paso, sin detenerse.",
+                    "Cuando la liebre despertó, vio con asombro que la tortuga estaba a punto de cruzar la meta. Corrió con todas sus fuerzas, pero ya era demasiado tarde. La tortuga ganó la carrera."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Quién propuso la carrera?",
+                        "type": "multiple-choice",
+                        "options": ["La liebre", "La tortuga", "Un zorro", "Un pájaro"],
+                        "answer": "La tortuga"
+                    },
+                    {
+                        "question": "¿Por qué la liebre se detuvo a mitad del camino?",
+                        "type": "multiple-choice",
+                        "options": ["Estaba cansada", "Quería esperar a la tortuga", "Decidió tomar una siesta", "Se perdió"],
+                        "answer": "Decidió tomar una siesta"
+                    },
+                    {
+                        "question": "¿Qué hizo la tortuga mientras la liebre dormía?",
+                        "type": "short-answer",
+                        "answer": "Siguió avanzando"
+                    },
+                    {
+                        "question": "¿Cuál es la moraleja principal de esta fábula?",
+                        "type": "multiple-choice",
+                        "options": ["La velocidad no importa", "La constancia vence a la rapidez", "Es bueno tomar siestas", "Siempre hay que jactarse"],
+                        "answer": "La constancia vence a la rapidez"
+                    },
+                    {
+                        "question": "¿Qué animal se jactaba de su velocidad?",
+                        "type": "short-answer",
+                        "answer": "La liebre"
+                    }
+                ]
+            },
+            {
+                "title": "El León y el Ratón",
+                "author": "Esopo",
+                "content": [
+                    "Un día, un león dormía plácidamente bajo la sombra de un árbol. Un pequeño ratón, sin darse cuenta, pasó corriendo sobre su cara y lo despertó.",
+                    "El león, furioso, atrapó al ratón con su pata y estaba a punto de matarlo. El ratón, asustado, le suplicó que lo perdonara, prometiendo que algún día le devolvería el favor.",
+                    "El león se rió de la idea de que un ratón tan pequeño pudiera ayudar a un rey de la selva, pero, conmovido por su súplica, lo dejó ir.",
+                    "Poco tiempo después, el león cayó en una trampa de cazadores y quedó atrapado en una red. Rugió con desesperación, pero nadie acudió en su ayuda.",
+                    "El ratón, al escuchar los rugidos, recordó su promesa. Corrió hacia el león y, con sus pequeños y afilados dientes, royó las cuerdas de la red hasta liberarlo. El león aprendió que incluso los más pequeños pueden ser de gran ayuda."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Quién despertó al león?",
+                        "type": "multiple-choice",
+                        "options": ["Un pájaro", "Un ratón", "Un cazador", "Otro león"],
+                        "answer": "Un ratón"
+                    },
+                    {
+                        "question": "¿Qué prometió el ratón al león?",
+                        "type": "multiple-choice",
+                        "options": ["Ser su amigo", "Darle comida", "Devolverle el favor", "Nunca volver a molestarlo"],
+                        "answer": "Devolverle el favor"
+                    },
+                    {
+                        "question": "¿Cómo ayudó el ratón al león?",
+                        "type": "short-answer",
+                        "answer": "Royendo las cuerdas de la red"
+                    },
+                    {
+                        "question": "¿Qué lección aprendió el león?",
+                        "type": "multiple-choice",
+                        "options": ["Que no debe dormir en el bosque", "Que los ratones son peligrosos", "Que incluso los más pequeños pueden ser de gran ayuda", "Que debe cazar ratones"],
+                        "answer": "Que incluso los más pequeños pueden ser de gran ayuda"
+                    },
+                    {
+                        "question": "¿En qué quedó atrapado el león?",
+                        "type": "short-answer",
+                        "answer": "En una red"
+                    }
+                ]
+            }
+        ];
+
+        const articulosData = [
+            {
+                "title": "La Importancia de Reciclar",
+                "author": "Equipo de Ecología Activa",
+                "content": [
+                    "El reciclaje es un proceso fundamental para la sostenibilidad de nuestro planeta. Consiste en transformar materiales usados en nuevos productos, reduciendo así la necesidad de consumir recursos naturales frescos.",
+                    "Cada año, millones de toneladas de residuos son generadas en todo el mundo. Gran parte de estos residuos terminan en vertederos, contaminando el suelo, el agua y el aire. El reciclaje ayuda a mitigar este problema.",
+                    "Además de la reducción de la contaminación, el reciclaje también ahorra energía. La fabricación de productos a partir de materiales reciclados requiere menos energía que la producción a partir de materias primas vírgenes.",
+                    "Fomentar el reciclaje en nuestras comunidades es vital. Pequeñas acciones como separar la basura en casa y utilizar contenedores específicos para cada tipo de residuo, marcan una gran diferencia.",
+                    "Educar a las nuevas generaciones sobre la importancia del reciclaje asegura un futuro más limpio y saludable para todos."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Qué es el reciclaje?",
+                        "type": "multiple-choice",
+                        "options": ["Quemar basura", "Transformar materiales usados en nuevos productos", "Tirar todo a la basura", "Enterrar residuos"],
+                        "answer": "Transformar materiales usados en nuevos productos"
+                    },
+                    {
+                        "question": "¿Qué se reduce al recicrar?",
+                        "type": "multiple-choice",
+                        "options": ["El consumo de energía", "La contaminación", "El uso de recursos naturales", "Todas las anteriores"],
+                        "answer": "Todas las anteriores"
+                    },
+                    {
+                        "question": "¿Qué tipo de contaminación ayuda a mitigar el reciclaje?",
+                        "type": "short-answer",
+                        "answer": "Suelo, agua y aire"
+                    },
+                    {
+                        "question": "¿Cómo podemos fomentar el reciclaje en casa?",
+                        "type": "multiple-choice",
+                        "options": ["Comprando más cosas", "Separando la basura", "Tirando todo al mismo cubo", "No haciendo nada"],
+                        "answer": "Separando la basura"
+                    },
+                    {
+                        "question": "¿Qué asegura la educación sobre el reciclaje a las nuevas generaciones?",
+                        "type": "short-answer",
+                        "answer": "Un futuro más limpio y saludable"
+                    }
+                ]
+            },
+            {
+                "title": "El Ciclo del Agua",
+                "author": "National Geographic Kids",
+                "content": [
+                    "El agua en nuestro planeta está siempre en movimiento, en un proceso continuo llamado el ciclo del agua. Este ciclo es esencial para la vida en la Tierra.",
+                    "Comienza con la evaporación, donde el calor del sol convierte el agua de océanos, ríos y lagos en vapor de agua, que sube a la atmósfera.",
+                    "En la atmósfera, el vapor de agua se enfría y se convierte en pequeñas gotas de agua o cristales de hielo, formando las nubes. Este proceso se llama condensación.",
+                    "Cuando las nubes se llenan de agua, esta cae de nuevo a la Tierra en forma de lluvia, nieve o granizo. Esto es la precipitación.",
+                    "Finalmente, el agua que cae puede ser absorbida por la tierra, fluir hacia ríos y lagos, o regresar a los océanos, completando el ciclo y preparándose para empezar de nuevo."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Cómo se llama el proceso continuo del agua en el planeta?",
+                        "type": "multiple-choice",
+                        "options": ["El ciclo de vida", "El ciclo del agua", "El ciclo de la energía", "El ciclo solar"],
+                        "answer": "El ciclo del agua"
+                    },
+                    {
+                        "question": "¿Qué ocurre durante la evaporación?",
+                        "type": "multiple-choice",
+                        "options": ["El agua se congela", "El agua se convierte en vapor", "El agua cae como lluvia", "El agua se filtra en la tierra"],
+                        "answer": "El agua se convierte en vapor"
+                    },
+                    {
+                        "question": "¿Qué se forma durante la condensación?",
+                        "type": "short-answer",
+                        "answer": "Nubes"
+                    },
+                    {
+                        "question": "¿En qué formas puede caer el agua a la Tierra durante la precipitación?",
+                        "type": "multiple-choice",
+                        "options": ["Vapor y niebla", "Lluvia, nieve o granizo", "Hielo y rocío", "Nubes y neblina"],
+                        "answer": "Lluvia, nieve o granizo"
+                    },
+                    {
+                        "question": "¿Qué es esencial para la vida en la Tierra según el texto?",
+                        "type": "short-answer",
+                        "answer": "El ciclo del agua"
+                    }
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const textCategorySelect = document.getElementById('textCategory');
+            const textTitle = document.getElementById('textTitle');
+            const textAuthor = document.getElementById('textAuthor');
+            const textContent = document.getElementById('textContent');
+            const readAloudBtn = document.getElementById('readAloudBtn');
+            const increaseFontSizeBtn = document.getElementById('increaseFontSizeBtn');
+            const decreaseFontSizeBtn = document.getElementById('decreaseFontSizeBtn');
+            const toggleThemeBtn = document.getElementById('toggleThemeBtn');
+            const startQuizBtn = document.getElementById('startQuizBtn');
+            const readingMessage = document.getElementById('readingMessage');
+            const quizSection = document.getElementById('quizSection');
+            const quizQuestionsContainer = document.getElementById('quizQuestions');
+            const submitQuizBtn = document.getElementById('submitQuizBtn');
+            const retryQuizBtn = document.getElementById('retryQuizBtn');
+            const quizFeedback = document.getElementById('quizFeedback');
+
+            const commentSection = document.getElementById('commentSection');
+            const textCommentInput = document.getElementById('textComment');
+            const submitCommentBtn = document.getElementById('submitCommentBtn');
+            const commentFeedback = document.getElementById('commentFeedback');
+
+            const studentNameInput = document.getElementById('studentName');
+            const studentGradeInput = document.getElementById('studentGrade');
+            const activateStudentBtn = document.getElementById('activateStudent');
+            const studentForm = document.querySelector('.student-form');
+            const studentInfo = document.querySelector('.student-info');
+            const currentStudentNameSpan = document.getElementById('currentStudentName');
+            const currentStudentGradeSpan = document.getElementById('currentStudentGrade');
+            const totalScoreSpan = document.getElementById('totalScore');
+            const levelAchievedSpan = document.getElementById('levelAchieved');
+            const readTextsList = document.getElementById('readTextsList');
+            const studentRankingList = document.getElementById('studentRanking');
+            const registerNewStudentBtn = document.getElementById('registerNewStudentBtn');
+
+
+            let currentText = null;
+            let currentCategory = 'cuentos';
+            let currentQuiz = null;
+            let currentFontSize = 1.1; // Rem
+            let currentStudent = null;
+            let studentScores = JSON.parse(localStorage.getItem('studentScores')) || {};
+            let lastDisplayedTextIndexPerCategory = {}; // Para asegurar que se elija un texto diferente
+
+            const loadTexts = async (category) => {
+                switch (category) {
+                    case 'cuentos':
+                        return cuentosData;
+                    case 'novelas':
+                        return novelasData;
+                    case 'fabulas':
+                        return fabulasData;
+                    case 'articulos':
+                        return articulosData;
+                    default:
+                        return [];
+                }
+            };
+
+            const displayText = (text) => {
+                currentText = text;
+                textTitle.textContent = text.title;
+                textAuthor.textContent = `Autor: ${text.author}`;
+                textContent.innerHTML = text.content.map(p => `<p>${p}</p>`).join('');
+                textContent.style.fontSize = `${currentFontSize}rem`;
+
+                readingMessage.style.display = 'none';
+                quizSection.style.display = 'none';
+                commentSection.style.display = 'none';
+                startQuizBtn.style.display = 'block';
+
+                window.speechSynthesis.cancel(); // Detener cualquier síntesis de voz en curso
+                readAloudBtn.textContent = '🗣️ Leer en Voz Alta'; // Resetear texto del botón de lectura
+            };
+
+            const selectRandomText = async () => {
+                const texts = await loadTexts(currentCategory);
+                if (texts.length > 0) {
+                    let newIndex;
+                    const lastIndex = lastDisplayedTextIndexPerCategory[currentCategory];
+
+                    if (texts.length > 1) {
+                        do {
+                            newIndex = Math.floor(Math.random() * texts.length);
+                        } while (newIndex === lastIndex); // Asegura un índice diferente si hay más de un texto
+                    } else {
+                        newIndex = 0; // Si solo hay un texto, siempre será el mismo
+                    }
+
+                    lastDisplayedTextIndexPerCategory[currentCategory] = newIndex;
+                    console.log(`Categoría: ${currentCategory}, Texto seleccionado: ${texts[newIndex].title}`);
+                    displayText(texts[newIndex]);
+                } else {
+                    textTitle.textContent = '';
+                    textAuthor.textContent = '';
+                    textContent.innerHTML = `<p class="placeholder-text">No hay textos disponibles en esta categoría.</p>`;
+                    startQuizBtn.style.display = 'none';
+                }
+            };
+
+            // --- Funcionalidad de Voz (speechSynthesis) ---
+            let currentUtterance = null; // Variable para mantener la referencia a la síntesis de voz
+
+            readAloudBtn.addEventListener('click', () => {
+                if (!('speechSynthesis' in window) || !currentText) {
+                    console.error('Tu navegador no soporta la lectura en voz alta o no hay texto seleccionado.');
+                    return;
+                }
+
+                if (window.speechSynthesis.speaking) {
+                    // Si está hablando (o pausado), cancela la lectura
+                    window.speechSynthesis.cancel();
+                    readAloudBtn.textContent = '🗣️ Leer en Voz Alta'; // Vuelve al estado inicial
+                    console.log('Lectura detenida.');
+                } else {
+                    // Si no está hablando, inicia una nueva lectura
+                    currentUtterance = new SpeechSynthesisUtterance(currentText.content.join(' '));
+                    currentUtterance.lang = 'es-ES';
+                    window.speechSynthesis.speak(currentUtterance);
+                    readAloudBtn.textContent = '🛑 Detener Lectura'; // Cambia el texto para indicar que se puede detener
+                    console.log('Iniciando nueva lectura.');
+
+                    currentUtterance.onend = () => {
+                        readAloudBtn.textContent = '🗣️ Leer en Voz Alta'; // Vuelve al estado inicial al finalizar
+                        currentUtterance = null;
+                        console.log('Lectura finalizada.');
+                    };
+                }
+            });
+
+            // --- Cambio de tamaño de texto ---
+            increaseFontSizeBtn.addEventListener('click', () => {
+                currentFontSize = Math.min(currentFontSize + 0.1, 2.0); // Límite superior
+                textContent.style.fontSize = `${currentFontSize}rem`;
+            });
+
+            decreaseFontSizeBtn.addEventListener('click', () => {
+                currentFontSize = Math.max(currentFontSize - 0.1, 0.8); // Límite inferior
+                textContent.style.fontSize = `${currentFontSize}rem`;
+            });
+
+            // --- Modo Claro/Oscuro ---
+            toggleThemeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            });
+
+            // Cargar preferencia de tema al iniciar
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+
+            // --- Registro y Seguimiento de Estudiantes ---
+            const saveStudentScores = () => {
+                localStorage.setItem('studentScores', JSON.stringify(studentScores));
+            };
+
+            const updateStudentUI = () => {
+                // studentForm is always visible
+                // studentInfo is always visible
+                if (currentStudent) {
+                    currentStudentNameSpan.textContent = currentStudent.name;
+                    currentStudentGradeSpan.textContent = currentStudent.grade;
+                    totalScoreSpan.textContent = currentStudent.totalScore;
+                    updateLevel(currentStudent.totalScore);
+                    // Hide the student input form when a student is active
+                    studentForm.style.display = 'none';
+                    studentInfo.style.display = 'block';
+                } else {
+                    studentNameInput.value = ''; // Limpiar campos al no haber estudiante activo
+                    studentGradeInput.value = '';
+                    currentStudentNameSpan.textContent = 'Ninguno'; // Placeholder
+                    currentStudentGradeSpan.textContent = 'N/A'; // Placeholder
+                    totalScoreSpan.textContent = '0';
+                    levelAchievedSpan.textContent = 'N/A';
+                    levelAchievedSpan.className = ''; // Limpiar clases de nivel
+                    // Show the student input form when no student is active
+                    studentForm.style.display = 'block';
+                    studentInfo.style.display = 'none'; // Hide student info when no student is active
+                }
+                renderReadTexts();
+                renderRanking();
+            };
+
+            const updateLevel = (score) => {
+                let level = '';
+                let levelClass = '';
+                if (score >= 400) {
+                    level = 'Logro Destacado (AD)';
+                    levelClass = 'level-ad'; // Verde
+                } else if (score >= 250) {
+                    level = 'Logrado (A)';
+                    levelClass = 'level-a'; // Anaranjado
+                } else if (score >= 100) {
+                    level = 'Proceso (B)';
+                    levelClass = 'level-b'; // Amarillo
+                } else {
+                    level = 'Inicio (C)';
+                    levelClass = 'level-c'; // Rojo
+                }
+                levelAchievedSpan.textContent = level;
+                levelAchievedSpan.className = '';
+                levelAchievedSpan.classList.add(levelClass);
+            };
+
+            const renderReadTexts = () => {
+                readTextsList.innerHTML = '';
+                if (currentStudent && currentStudent.readTexts) {
+                    currentStudent.readTexts.forEach(text => {
+                        const li = document.createElement('li');
+                        li.textContent = text;
+                        readTextsList.appendChild(li);
+                    });
+                }
+            };
+
+            const renderRanking = () => {
+                studentRankingList.innerHTML = '';
+                const sortedStudents = Object.values(studentScores).sort((a, b) => b.totalScore - a.totalScore);
+                sortedStudents.forEach((student, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${index + 1}. ${student.name} (${student.grade}) - ${student.totalScore} pts`;
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.classList.add('delete-student-btn');
+                    deleteBtn.textContent = '🗑️';
+                    deleteBtn.title = `Eliminar a ${student.name}`;
+                    deleteBtn.dataset.studentKey = student.name.toLowerCase().replace(/\s/g, '-'); // Usar la clave para identificar
+                    li.appendChild(deleteBtn);
+
+                    studentRankingList.appendChild(li);
+                });
+            };
+
+            // Función para eliminar estudiante
+            const deleteStudent = (studentKeyToDelete) => {
+                if (confirm(`¿Estás seguro de que quieres eliminar el registro de este estudiante?`)) { // Usar confirm para simplicidad, idealmente un modal
+                    delete studentScores[studentKeyToDelete];
+                    saveStudentScores();
+                    if (currentStudent && currentStudent.name.toLowerCase().replace(/\s/g, '-') === studentKeyToDelete) {
+                        currentStudent = null; // Si se elimina el estudiante activo, se desactiva
+                    }
+                    updateStudentUI();
+                    console.log(`Estudiante con clave ${studentKeyToDelete} eliminado.`);
+                }
+            };
+
+            // Delegación de eventos para los botones de eliminar
+            studentRankingList.addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-student-btn')) {
+                    const studentKeyToDelete = event.target.dataset.studentKey;
+                    deleteStudent(studentKeyToDelete);
+                }
+            });
+
+
+            activateStudentBtn.addEventListener('click', () => {
+                const name = studentNameInput.value.trim();
+                const grade = studentGradeInput.value.trim();
+
+                if (name && grade) {
+                    const studentKey = name.toLowerCase().replace(/\s/g, '-');
+                    if (!studentScores[studentKey]) {
+                        studentScores[studentKey] = {
+                            name: name,
+                            grade: grade,
+                            totalScore: 0,
+                            readTexts: []
+                        };
+                    }
+                    currentStudent = studentScores[studentKey];
+                    localStorage.setItem('lastActiveStudent', studentKey);
+                    saveStudentScores();
+                    updateStudentUI();
+                    console.log(`¡Bienvenido(a), ${name} de ${grade}!`);
+                } else {
+                    console.error('Por favor, ingresa tu nombre completo y grado para activar el seguimiento.');
+                }
+            });
+
+            registerNewStudentBtn.addEventListener('click', () => {
+                currentStudent = null;
+                localStorage.removeItem('lastActiveStudent');
+                updateStudentUI(); // Esto hará visible el formulario y limpiará los campos
+                console.log('Preparado para registrar un nuevo estudiante.');
+            });
+
+
+            const lastActiveStudentName = localStorage.getItem('lastActiveStudent');
+            if (lastActiveStudentName && studentScores[lastActiveStudentName]) {
+                currentStudent = studentScores[lastActiveStudentName];
+                updateStudentUI();
+            } else {
+                updateStudentUI(); // Asegurarse de que el formulario esté visible si no hay estudiante activo
+            }
+
+            // --- Quiz de Comprensión ---
+            startQuizBtn.addEventListener('click', () => {
+                if (!currentText || !currentText.quiz || currentText.quiz.length === 0) {
+                    console.warn('Este texto no tiene preguntas de comprensión asociadas.');
+                    return;
+                }
+                readingMessage.style.display = 'block';
+                setTimeout(() => {
+                    quizSection.style.display = 'block';
+                    readingMessage.style.display = 'none';
+                    startQuizBtn.style.display = 'none';
+                    generateQuiz(currentText.quiz);
+                }, 1500);
+            });
+
+            const generateQuiz = (quiz) => {
+                currentQuiz = quiz;
+                quizQuestionsContainer.innerHTML = '';
+                quizFeedback.textContent = '';
+                submitQuizBtn.style.display = 'block';
+                retryQuizBtn.style.display = 'none';
+
+                quiz.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.classList.add('question');
+                    questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+
+                    if (q.type === 'multiple-choice') {
+                        q.options.forEach((option, optionIndex) => {
+                            questionDiv.innerHTML += `
+                                <label>
+                                    <input type="radio" name="question${index}" value="${option}">
+                                    ${option}
+                                </label>
+                            `;
+                        });
+                    } else if (q.type === 'short-answer') {
+                        const inputId = `quizQuestion${index}`; // ID único para el input
+                        questionDiv.innerHTML += `
+                            <div class="input-with-speech">
+                                <input type="text" id="${inputId}" name="question${index}" class="short-answer-input" placeholder="Escribe tu respuesta aquí">
+                                <button class="speech-input-btn" data-target="${inputId}" title="Dictar respuesta">🎤</button>
+                            </div>
+                        `;
+                    }
+                    quizQuestionsContainer.appendChild(questionDiv);
+                });
+            };
+
+            submitQuizBtn.addEventListener('click', () => {
+                let correctAnswers = 0;
+                let totalQuestions = currentQuiz.length;
+
+                currentQuiz.forEach((q, index) => {
+                    const questionDiv = quizQuestionsContainer.children[index];
+                    let isCorrect = false;
+
+                    if (q.type === 'multiple-choice') {
+                        const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                        if (selectedOption && selectedOption.value === q.answer) {
+                            isCorrect = true;
+                        }
+                        document.querySelectorAll(`input[name="question${index}"]`).forEach(input => input.disabled = true);
+                    } else if (q.type === 'short-answer') {
+                        const input = document.querySelector(`input[name="question${index}"]`);
+                        if (input && input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
+                            isCorrect = true;
+                        }
+                        input.disabled = true;
+                        // También deshabilitar el botón de dictado de voz asociado
+                        const speechButton = input.nextElementSibling;
+                        if (speechButton && speechButton.classList.contains('speech-input-btn')) {
+                            speechButton.disabled = true;
+                        }
+                    }
+
+                    if (isCorrect) {
+                        correctAnswers++;
+                        let feedbackSpan = questionDiv.querySelector('.feedback-span');
+                        if (!feedbackSpan) {
+                            feedbackSpan = document.createElement('span');
+                            feedbackSpan.classList.add('feedback-span');
+                            questionDiv.appendChild(feedbackSpan);
+                        }
+                        feedbackSpan.style.marginLeft = '10px';
+                        feedbackSpan.style.fontWeight = 'bold';
+                        feedbackSpan.style.color = 'green';
+                        feedbackSpan.textContent = '✔️ Correcto';
+                    } else {
+                        let feedbackSpan = questionDiv.querySelector('.feedback-span');
+                        if (!feedbackSpan) {
+                            feedbackSpan = document.createElement('span');
+                            feedbackSpan.classList.add('feedback-span');
+                            questionDiv.appendChild(feedbackSpan);
+                        }
+                        feedbackSpan.style.marginLeft = '10px';
+                        feedbackSpan.style.fontWeight = 'bold';
+                        feedbackSpan.style.color = 'red';
+                        feedbackSpan.textContent = `❌ Incorrecto (Correcta: ${q.answer})`;
+                    }
+                });
+
+                const score = correctAnswers * 10;
+                quizFeedback.textContent = `Has acertado ${correctAnswers} de ${totalQuestions} preguntas. Tu puntaje en el quiz es: ${score} puntos.`;
+
+                if (currentStudent) {
+                    currentStudent.totalScore += score;
+                    if (!currentStudent.readTexts.includes(currentText.title)) {
+                        currentStudent.readTexts.push(currentText.title);
+                    }
+                    saveStudentScores();
+                    updateStudentUI();
+                }
+
+                submitQuizBtn.style.display = 'none';
+                retryQuizBtn.style.display = 'block';
+
+                setTimeout(() => {
+                    quizSection.style.display = 'none';
+                    commentSection.style.display = 'block';
+                    textCommentInput.value = '';
+                    commentFeedback.textContent = '';
+                    textCommentInput.disabled = false;
+                    submitCommentBtn.disabled = false;
+                }, 2000);
+            });
+
+            retryQuizBtn.addEventListener('click', () => {
+                generateQuiz(currentQuiz);
+            });
+
+            // --- Sección de Comentarios ---
+            submitCommentBtn.addEventListener('click', () => {
+                const comment = textCommentInput.value.trim();
+                if (comment) {
+                    console.log(`Comentario del estudiante sobre "${currentText.title}":\n${comment}`);
+                    commentFeedback.style.color = 'green';
+                    commentFeedback.textContent = '¡Gracias por tu comentario! Ha sido registrado.';
+                    textCommentInput.disabled = true;
+                    submitCommentBtn.disabled = true;
+                    // También deshabilitar el botón de dictado de voz asociado
+                    const speechButton = textCommentInput.nextElementSibling;
+                    if (speechButton && speechButton.classList.contains('speech-input-btn')) {
+                        speechButton.disabled = true;
+                    }
+                } else {
+                    commentFeedback.style.color = 'red';
+                    commentFeedback.textContent = 'Por favor, escribe un comentario antes de enviar.';
+                }
+            });
+
+            // --- Inicialización de Dictado de Voz ---
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const speechRecognitionSupported = SpeechRecognition !== undefined;
+
+            if (!speechRecognitionSupported) {
+                console.warn('El reconocimiento de voz no es compatible con este navegador.');
+                // Deshabilitar los botones de voz si no hay soporte
+                document.querySelectorAll('.speech-input-btn').forEach(btn => btn.disabled = true);
+            }
+
+            // Delegación de eventos para los botones de dictado de voz (incluyendo los generados dinámicamente)
+            document.addEventListener('click', (event) => {
+                if (event.target.classList.contains('speech-input-btn')) {
+                    const button = event.target;
+                    if (!speechRecognitionSupported) {
+                        alert('El reconocimiento de voz no es compatible con tu navegador. Por favor, actualiza o usa otro navegador.');
+                        return;
+                    }
+
+                    const targetId = button.dataset.target;
+                    const targetInput = document.getElementById(targetId);
+
+                    const recognition = new SpeechRecognition();
+                    recognition.continuous = false; // Para entradas cortas, no continua
+                    recognition.interimResults = false; // Solo resultados finales
+                    recognition.lang = 'es-ES'; // Idioma español
+
+                    let isRecognizing = false;
+
+                    recognition.onstart = () => {
+                        isRecognizing = true;
+                        button.textContent = '🔴 Grabando...';
+                        button.disabled = true; // Deshabilitar botón mientras graba
+                        console.log('Reconocimiento de voz iniciado.');
+                    };
+
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        targetInput.value = transcript; // Sobrescribir el valor del input
+                        console.log('Resultado del reconocimiento:', transcript);
+                    };
+
+                    recognition.onerror = (event) => {
+                        console.error('Error de reconocimiento de voz:', event.error);
+                        button.textContent = '🎤'; // Resetear texto del botón
+                        button.disabled = false; // Volver a habilitar el botón
+                        isRecognizing = false;
+                        alert(`Error en el reconocimiento de voz: ${event.error}. Asegúrate de que tu micrófono esté conectado y permitas el acceso.`);
+                    };
+
+                    recognition.onend = () => {
+                        isRecognizing = false;
+                        button.textContent = '🎤'; // Resetear texto del botón
+                        button.disabled = false; // Volver a habilitar el botón
+                        console.log('Reconocimiento de voz finalizado.');
+                    };
+
+                    // Iniciar reconocimiento
+                    recognition.start();
+                }
+            });
+
+            // Inicialización al cargar la página
+            selectRandomText();
+
+            // Event listener para el cambio de categoría
+            textCategorySelect.addEventListener('change', () => {
+                currentCategory = textCategorySelect.value;
+                selectRandomText(); // Llama a la función para seleccionar un nuevo texto
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
