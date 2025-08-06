@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lectukusay</title>
+    <title>LectuKushay</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Variables para colores */
         :root {
-            --primary-color: #00376e;
+            --primary-color: #00324e;
             --secondary-color: #129cec;
             --accent-color: #f32f19;
             --success-color: #fca503;
@@ -105,7 +105,7 @@
 
         header h1 {
             margin: 0;
-            font-size: 8.5rem;
+            font-size: 4.7rem;
             display: inline-block; /* Permitir que h1 se siente al lado de la imagen */
             vertical-align: middle; /* Alinear con la imagen */
             margin-right: 15px; /* Espacio entre el título y el slogan */
@@ -115,9 +115,9 @@
 
         #logo {
             vertical-align: middle;
-            margin-right: 75px;
-            border-radius: 10%;
-            max-width: 150px; /* Tamaño máximo del logo */
+            margin-right: 10px;
+            border-radius: 80%;
+            max-width: 90px; /* Tamaño máximo del logo */
             height: auto;
         }
 
@@ -125,8 +125,9 @@
             vertical-align: middle;
             margin-right: 05px;
             border-radius: 10%;
-            max-width: 400px; /* Tamaño máximo del logo */
+            max-width: 90px; /* Tamaño máximo del logo */
             height: auto;
+            opacity: 0.5; /* opacidad del titulo */
         }
         .slogan-container {
             margin-top: 0.1rem; /* Espacio entre el título y el slogan */
@@ -135,7 +136,7 @@
 
         .slogan-container p {
             margin: 0; /* Eliminar márgenes predeterminados del párrafo dentro del marquee */
-            font-size: 2.2rem;
+            font-size: 1.2rem;
         }
 
         main {
@@ -147,13 +148,16 @@
 
         .sidebar {
             flex: 0 0 280px; /* Ancho fijo para la barra lateral */
-            background-color: #b8d4f0;
-            padding: 1.5rem;
+            background-color: #b8d4f017;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(5, 1, 250, 0.979);
+            box-shadow: 0 2px 8px #00324e;
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            margin-left: -15px;
+            max-width: 480px;
+        
         }
 
         /* Títulos en el sidebar y secciones de contenido */
@@ -296,10 +300,10 @@
             background-color: var(--card-background-light);
             padding: 1rem 1.5rem;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgb(18, 1, 243);
+            box-shadow: 0 2px 8px #00324e;
             flex-wrap: wrap;
             gap: 1rem;
-            background-color: #b1c8df;
+            background-color: #b8d4f017;
         }
 
         .controls select {
@@ -319,7 +323,7 @@
             background-color: var(--card-background-light);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgb(55, 0, 252);
+            box-shadow: 0 2px 8px #00324e;
             min-height: 300px; /* Para asegurar un tamaño mínimo */
         }
 
@@ -461,6 +465,7 @@
         @media (max-width: 1024px) {
             main {
                 flex-direction: column;
+    
             }
 
             .sidebar {
@@ -526,7 +531,7 @@
 <body>
     <header>
         <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg">
-        <b><h1>Lectukusay</h1></b>
+        <b><h1>LectuKushay</h1></b>
         <div class="slogan-container">
             <!-- Nota: La etiqueta <marquee> está obsoleta y puede no ser compatible en futuros navegadores. -->
             <b><marquee behavior="scroll" direction="left" scrollamount="5"><p>¡La alegría de leer comienza aquí!</p></marquee></b>
@@ -629,7 +634,7 @@
     </main>
 
     <footer>
-            <p>© 2025 LectuMundo - Plataforma Educativa Interactiva</p>
+            <p>© 2025 LectuKushay Plataforma Educativa Interactiva</p>
             <p>© 2025 José Lenis Cayao Bustamante</p>
             <p>Desarrollado para fomentar la lectura y comprensión en estudiantes de secundaria</p>
     </footer>
