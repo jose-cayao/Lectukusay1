@@ -584,7 +584,8 @@
                         <option value="cuentos">Cuentos</option>
                         <option value="novelas">Novelas</option>
                         <option value="fabulas">Fábulas</option>
-                        <option value="articulos">Artículos Informativos</option>
+                        <option value="articulos">Artículos</option>
+                        <option value="poesia">Poesía</option>
                     </select>
                 </div>
                 <div class="text-actions">
@@ -978,7 +979,87 @@
                 ]
             }
         ];
-
+ const poesiaData = [
+          {
+            "title": "El Sembrador de Estrellas",
+            "author": "Federico García Lorca",
+            "content": [
+              "En el cielo de la noche, un hombre viejo",
+              "con un saco de diamantes y de espejos.",
+              "El viento le lleva la risa, el eco,",
+              "y siembra luces donde no hay reflejo.",
+              "",
+              "Cada estrella una promesa, un suspiro,",
+              "un faro que guía al marinero herido.",
+              "Con manos de tierra y corazón de río,",
+              "va pintando el lienzo, el infinito."
+            ],
+            "quiz": [
+              {
+                "question": "¿Quién es el personaje principal del poema?",
+                "type": "multiple-choice",
+                "options": ["Un marinero", "Un hombre viejo", "El viento", "Un pintor"],
+                "answer": "Un hombre viejo"
+              },
+              {
+                "question": "¿Qué siembra el personaje principal en el cielo?",
+                "type": "short-answer",
+                "answer": "Estrellas"
+              },
+              {
+                "question": "¿Qué representa el 'faro que guía al marinero herido'?",
+                "type": "multiple-choice",
+                "options": ["El saco de diamantes", "Las promesas", "Las estrellas", "La risa del hombre"],
+                "answer": "Las estrellas"
+              },
+              {
+                "question": "¿Con qué compara el poema al 'lienzo, el infinito'?",
+                "type": "multiple-choice",
+                "options": ["Un río", "El corazón", "El cielo", "La tierra"],
+                "answer": "El cielo"
+              }
+            ]
+          },
+          {
+            "title": "Mariposas de Papel",
+            "author": "Alfonsina Storni",
+            "content": [
+              "Tengo mariposas de papel,",
+              "hechas de mis sueños más finos.",
+              "Con alas de colores pastel,",
+              "las dejo volar hacia otros destinos.",
+              "",
+              "Vuela, mariposa, vuela alto,",
+              "que el aire te lleve sin pesar.",
+              "En cada aleteo, un canto,",
+              "en cada caída, un despertar."
+            ],
+            "quiz": [
+              {
+                "question": "¿De qué están hechas las mariposas del poema?",
+                "type": "short-answer",
+                "answer": "De papel"
+              },
+              {
+                "question": "¿Qué representan los 'sueños más finos'?",
+                "type": "multiple-choice",
+                "options": ["Los colores de las alas", "Las mariposas de papel", "El aire", "Los destinos"],
+                "answer": "Las mariposas de papel"
+              },
+              {
+                "question": "¿Qué es lo que la autora le pide a la mariposa?",
+                "type": "short-answer",
+                "answer": "Que vuele alto"
+              },
+              {
+                "question": "¿Cuál es el sentimiento principal en el poema?",
+                "type": "multiple-choice",
+                "options": ["Tristeza", "Enojo", "Esperanza", "Miedo"],
+                "answer": "Esperanza"
+              }
+            ]
+          }
+        ]; 
         document.addEventListener('DOMContentLoaded', () => {
             const textCategorySelect = document.getElementById('textCategory');
             const textTitle = document.getElementById('textTitle');
@@ -1033,6 +1114,8 @@
                         return fabulasData;
                     case 'articulos':
                         return articulosData;
+                    case 'poesia':
+                        return poesiaData;
                     default:
                         return [];
                 }
@@ -1502,6 +1585,7 @@
     </script>
 </body>
 </html>
+
 
 
 
