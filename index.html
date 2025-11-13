@@ -27,7 +27,86 @@
             --level-a-color: #ff8c00; /* Anaranjado para Logrado */
             --level-ad-color: #27ae60; /* Verde para Logro Destacado */
         }
+/* Estilos para la doble columna */
+.two-column-layout {
+    display: flex;
+    gap: 20px; /* Espacio entre columnas */
+    margin-bottom: 20px;
+}
 
+.column-text {
+    flex: 1; /* Distribuye el espacio equitativamente */
+    padding: 15px;
+    /* Usamos el mismo color de borde que la separación principal para mantener la coherencia */
+    border-right: 1px solid #ddd; 
+}
+
+.column-text:last-child {
+    border-right: none;
+}
+
+/* Ajuste del autor y el título de las sub-columnas */
+.column-text h3 {
+    margin-top: 0;
+}
+
+.author-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Estilos para el resumen de respuestas */
+.results-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.results-list li {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-left: 5px solid;
+    transition: background-color 0.3s;
+}
+
+.results-list li.correct {
+    background-color: #e6ffed; /* Verde muy claro */
+    border-color: #4CAF50; /* Verde */
+}
+
+.results-list li.incorrect {
+    background-color: #ffeded; /* Rojo muy claro */
+    border-color: #F44336; /* Rojo */
+}
+
+.results-list p {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+/* --- Compatibilidad con Modo Oscuro (Dark Mode) --- */
+
+body.dark-mode .column-text {
+    border-right: 1px solid #4a637d; /* Borde oscuro para la doble columna */
+}
+
+body.dark-mode .author-label {
+    color: #bdc3c7;
+}
+
+body.dark-mode .results-list li.correct {
+    background-color: #1a361c;
+    color: #a5d6a7;
+    border-color: #388e3c;
+}
+
+body.dark-mode .results-list li.incorrect {
+    background-color: #361a1a;
+    color: #ef9a9a;
+    border-color: #d32f2f;
+}
         body {
             font-family: 'Poppins', sans-serif;
             margin: 20;
@@ -96,11 +175,14 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 17px;
+            padding: 15px;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: rgb(255, 251, 0);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.966);
+         
+         
+
         }
 
         header h1 {
@@ -109,7 +191,7 @@
             display: inline-block; /* Permitir que h1 se siente al lado de la imagen */
             vertical-align: middle; /* Alinear con la imagen */
             margin-right: 15px; /* Espacio entre el título y el slogan */
-            margin-bottom: 13px;
+            margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
@@ -127,7 +209,7 @@
             border-radius: 10%;
             max-width: 90px; /* Tamaño máximo del logo */
             height: auto;
-             opacity: 0.5; /* opacidad del titulo */
+            opacity: 0.5; /* opacidad del titulo */
         }
         .slogan-container {
             margin-top: 0.1rem; /* Espacio entre el título y el slogan */
@@ -147,7 +229,7 @@
         }
 
         .sidebar {
-            flex: 0 0 280px; /* Ancho fijo para la barra lateral */
+            flex: 0 0 280px; /* Ancho fijo para la barra lateral en desktop */
             background-color: #b8d4f017;
             padding: 20px;
             border-radius: 10px;
@@ -155,86 +237,149 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            margin-left: -15px;
-            max-width: 480px;
+            margin-left: 0;
+            overflow-y: auto;
+            max-height: calc(100vh - 120px);
+        
         }
 
         /* Títulos en el sidebar y secciones de contenido */
         .sidebar h2, .sidebar h3,
         .text-display h2,
         .quiz-section h2, .comment-section h2,
-        .visual-options h3 {
-            color: #2b85df;; /* Color negro para los títulos */
+        .visual-options h3,
+        .eval-section h2 {
+            color: var(--primary-color);
             margin-top: 0;
-            border-bottom: 2px solid var(--primary-color); /* Borde con color primario */
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.7rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mejorar contraste de texto en cards */
+        .sidebar h3 {
+            font-size: 1.1rem;
+            color: #00324e;
         }
 
         /* Estilo para los contenedores de input con botón de voz */
         .input-with-speech {
             display: flex;
-            align-items: center;
-            gap: 5px; /* Pequeño espacio entre input y botón */
-            margin-bottom: 0.8rem; /* Mantener margen original para el grupo */
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
         }
 
         .input-with-speech input {
-            flex-grow: 1; /* Permitir que el input ocupe el espacio disponible */
-            margin-bottom: 0; /* Eliminar margen individual ya que está en el div padre */
-            width: auto; /* Ancho automático para que flex-grow funcione */
             padding: 0.8rem;
-            border-radius: 8px; /* Bordes más redondeados */
-            border: 2px solid var(--primary-color); /* Borde más visible */
+            border-radius: 8px;
+            border: 2px solid var(--primary-color);
             font-size: 1rem;
-            box-sizing: border-box; /* Incluir padding y border en el ancho/alto */
+            box-sizing: border-box;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
         }
 
         .input-with-speech input:focus {
-            border-color: var(--secondary-color); /* Borde amarillo al enfocar */
-            box-shadow: 0 0 8px rgba(247, 179, 43, 0.7); /* Sombra más pronunciada al enfocar */
-            outline: none; /* Eliminar el contorno por defecto */
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(18, 156, 236, 0.7);
+            outline: none;
+        }
+
+        .input-with-speech button {
+            padding: 0.6rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            min-height: 44px;
+            transition: background-color 0.2s;
+            align-self: flex-start;
+            width: auto;
+            min-width: 44px;
+        }
+
+        .input-with-speech button:hover {
+            background-color: #0d7ab8;
+        }
+
+        .input-with-speech button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         /* Estilo para todos los botones */
         .student-form button, .btn-primary, .btn-secondary, .text-actions button, .visual-options button {
-            background-color: var(--primary-color); /* Botones en azul */
+            background-color: var(--primary-color);
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 0.8rem 1.2rem; /* Padding consistente */
-            border-radius: 10px; /* Bordes más redondeados */
+            transition: all 0.2s ease;
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
             font-size: 1rem;
+            font-weight: 600;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .student-form button:hover, .btn-primary:hover, .btn-secondary:hover, .text-actions button:hover, .visual-options button:hover {
-            background-color: #3a6a9a; /* Azul más oscuro al pasar el ratón */
+        .student-form button:hover, .btn-primary:hover, .text-actions button:hover, .visual-options button:hover {
+            background-color: #024073;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #129cec;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0d7ab8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .student-form button:active, .btn-primary:active, .btn-secondary:active, 
+        .text-actions button:active, .visual-options button:active {
+            transform: translateY(0);
         }
 
         /* Estilo específico para los botones de dictado de voz */
         .speech-input-btn {
-            background-color: var(--primary-color); /* Usar color primario (azul acero) para botones de micrófono */
+            background-color: var(--secondary-color);
             color: white;
             border: none;
-            border-radius: 10px; /* Bordes más redondeados */
-            padding: 0.5rem 0.7rem; /* Padding más pequeño */
+            border-radius: 8px;
+            padding: 0.6rem;
             cursor: pointer;
-            font-size: 1.2rem; /* Hacer el icono del micrófono un poco más grande */
-            transition: background-color 0.3s ease;
-            flex-shrink: 0; /* Evitar que el botón se encoja */
+            font-size: 1.2rem;
+            min-height: 44px;
+            min-width: 44px;
+            transition: all 0.2s ease;
         }
 
         .speech-input-btn:hover {
-            background-color: #3a6a9a; /* Azul acero más oscuro al pasar el ratón */
+            background-color: #0d7ab8;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Separación específica para botones de la sección de Evaluaciones */
+        .evaluations button {
+            margin-right: 0.6rem;
+            margin-bottom: 0.6rem;
         }
 
         /* Modo oscuro para los botones de dictado de voz */
         body.dark-mode .speech-input-btn {
-            background-color: var(--primary-color); /* Azul en modo oscuro */
-            color: var(--text-dark); /* Texto oscuro para contraste */
+            background-color: var(--secondary-color);
+            color: white;
         }
         body.dark-mode .speech-input-btn:hover {
             background-color: #3a6a9a; /* Azul más oscuro al pasar el ratón */
@@ -461,14 +606,33 @@
         }
 
         /* Media Queries para Responsividad */
+        /* Laptop/Desktop (1200px en adelante) - estilos base */
+        
+        /* Tablet en horizontal y laptops pequeños (1025px - 1199px) */
+        @media (max-width: 1199px) {
+            main {
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                flex: 0 0 250px;
+            }
+        }
+        
+        /* Tablet (768px - 1024px) */
         @media (max-width: 1024px) {
             main {
                 flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
             }
 
             .sidebar {
-                flex: none;
+                flex: 0 0 auto;
                 width: 100%;
+                max-width: 100%;
+                margin-left: 0;
             }
 
             .controls {
@@ -478,58 +642,228 @@
 
             .text-actions {
                 margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
             .text-actions button {
                 margin-left: 0;
-                margin-right: 0.5rem;
-                margin-bottom: 0.5rem;
+                margin-right: 0;
+                margin-bottom: 0;
+                flex: 0 1 auto;
             }
-        }
-
-        @media (max-width: 768px) {
+            
             header h1 {
                 font-size: 1.8rem;
-            }
-
-            main {
-                padding: 1rem;
-            }
-
-            .sidebar, .text-display, .quiz-section, .comment-section, .controls {
-                padding: 1rem;
             }
 
             .text-display h2 {
-                font-size: 1.8rem;
-            }
-
-            #textContent {
-                font-size: 1rem;
+                font-size: 1.6rem;
             }
         }
 
-        @media (max-width: 480px) {
+        /* Tablet pequeña/Smartphone en horizontal (481px - 768px) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+            
             header h1 {
                 font-size: 1.5rem;
+            }
+
+            main {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+
+            .sidebar, .text-display, .quiz-section, .eval-section, .controls {
+                padding: 0.75rem;
+            }
+            
+            .sidebar {
+                gap: 1rem;
+            }
+
+            .text-display h2 {
+                font-size: 1.3rem;
+            }
+
+            #textContent {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+            
+            .text-actions {
+                gap: 0.35rem;
+            }
+            
+            .text-actions button {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+                min-height: 40px;
+            }
+
+            button, input, select {
+                min-height: 40px;
+            }
+
+            .student-form input, .student-form button {
+                min-height: 40px;
+            }
+
+            .input-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Smartphone (hasta 480px) */
+        @media (max-width: 480px) {
+            body {
+                font-size: 13px;
+            }
+            
+            header h1 {
+                font-size: 1.2rem;
+            }
+            
+            header img {
+                height: 40px;
+            }
+
+            main {
+                padding: 0.5rem;
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                padding: 0.75rem;
+                gap: 0.75rem;
+                max-height: none;
             }
 
             .student-form input, .student-form button,
             .controls select, .text-actions button {
                 font-size: 0.9rem;
-                padding: 0.6rem;
+                padding: 0.6rem 0.8rem;
+                width: 100%;
+                min-height: 44px; /* Tamaño mínimo de toque para accesibilidad */
+            }
+
+            .input-label {
+                font-size: 0.85rem;
+                margin-bottom: 0.2rem;
             }
 
             .text-display h2 {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
             }
+            
+            #textContent {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+            
+            .text-actions {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+            
+            .text-actions button {
+                width: 100%;
+                min-height: 44px;
+            }
+            
+            .controls {
+                gap: 0.5rem;
+                padding: 0.75rem;
+            }
+            
+            .text-selector {
+                width: 100%;
+            }
+
+            .input-with-speech {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+
+            .speech-input-btn {
+                min-height: 44px;
+                padding: 0.5rem;
+            }
+
+            /* Mejorar legibilidad de preguntas */
+            .question {
+                padding: 0.75rem;
+                margin-bottom: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .question p {
+                margin: 0.3rem 0;
+            }
+
+            label {
+                padding: 0.4rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Centrar título de Evaluación */
+        #evalSection #evalTitle {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mejoras de accesibilidad para inputs */
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 3px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        button:focus {
+            outline: 3px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        /* Mejorar contraste en botones */
+        .btn-primary, .btn-secondary {
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(18, 156, 236, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #0a5fa6;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
     <header>
-        <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg">
-        <b><h1>LectuKushay</h1></b>       
+        <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg" alt="Logo LectuKushay - Plataforma de lectura educativa">
+        <b><h1>LectuKushay</h1></b>
         <div class="slogan-container">
             <!-- Nota: La etiqueta <marquee> está obsoleta y puede no ser compatible en futuros navegadores. -->
             <b><marquee behavior="scroll" direction="left" scrollamount="5"><p>¡La alegría de leer comienza aquí!</p></marquee></b>
@@ -546,14 +880,16 @@
             <div class="student-form">
                 <h3>Ingresa tus datos:</h3>
                 <div class="input-with-speech">
-                    <input type="text" id="studentName" placeholder="Nombre(s) y Apellido(s)">
+                    <label for="studentName" class="input-label">Nombre completo:</label>
+                    <input type="text" id="studentName" placeholder="Ej: Juan Pérez" required aria-label="Nombre completo del estudiante">
                     <button class="speech-input-btn" data-target="studentName" title="Dictar nombre">🎤</button>
                 </div>
                 <div class="input-with-speech">
-                    <input type="text" id="studentGrade" placeholder="Grado">
+                    <label for="studentGrade" class="input-label">Grado:</label>
+                    <input type="text" id="studentGrade" placeholder="Ej: 3ro A" required aria-label="Grado del estudiante">
                     <button class="speech-input-btn" data-target="studentGrade" title="Dictar grado">🎤</button>
                 </div>
-                <button id="activateStudent">Activar</button>
+                <button id="activateStudent" class="btn-primary">Activar Estudiante</button>
             </div>
             <div class="student-info"> <!-- Removed style="display:none;" -->
                 <p>¡Bienvenido(a), <span id="currentStudentName"></span>!</p>
@@ -561,6 +897,7 @@
                 <p>Puntaje Total: <span id="totalScore">0</span></p>
                 <p>Nivel Alcanzado: <span id="levelAchieved" class="level-c">Inicio (C)</span></p>
                 <button id="registerNewStudentBtn" class="btn-secondary" style="margin-top: 1rem;">Registrar Nuevo Estudiante</button>
+                
             </div>
             <div class="reading-record">
                 <h3>Record de Lectura:</h3>
@@ -574,6 +911,12 @@
                     <!-- El ranking de estudiantes se cargará aquí -->
                 </ol>
             </div>
+            <div class="evaluations">
+                <h3>Evaluaciones</h3>
+                <button id="startEntryEvalBtn" class="btn-secondary">Iniciar Evaluación de Entrada</button>
+                <button id="startExitEvalBtn" class="btn-secondary">Iniciar Evaluación de Salida</button>
+                <button id="exportAnswersBtn" class="btn-secondary">Exportar Respuestas (.xls)</button>
+            </div>
         </aside>
 
         <section class="content-area">
@@ -581,11 +924,16 @@
                 <div class="text-selector">
                     <label for="textCategory">Elige tu aventura:</label>
                     <select id="textCategory">
-                        <option value="cuentos">Cuentos</option>
-                        <option value="novelas">Novelas</option>
-                        <option value="fabulas">Fábulas</option>
-                        <option value="articulos">Artículos</option>
-                        <option value="poesia">Poesía</option>
+                        <option value="actividad01">Actividad 01</option>
+                        <option value="actividad02">Actividad 02</option>
+                        <option value="actividad03">Actividad 03</option>
+                        <option value="actividad04">Actividad 04</option>
+                        <option value="actividad05">Actividad 05</option>
+                        <option value="actividad06">Actividad 06</option>
+                        <option value="actividad07">Actividad 07</option>
+                        <option value="actividad08">Actividad 08</option>
+                        <option value="actividad09">Actividad 09</option>
+                        <option value="actividad10">Actividad 10</option>
                     </select>
                 </div>
                 <div class="text-actions">
@@ -593,13 +941,14 @@
                     <button id="readAloudBtn">🗣️ Leer en Voz Alta</button>
                     <button id="increaseFontSizeBtn">A+</button>
                     <button id="decreaseFontSizeBtn">A-</button>
+                    <button id="exportActivityBtn" class="btn-secondary">Exportar Actividad (.xls)</button>
                 </div>
             </nav>
 
-            <article class="text-display">
+            <article class="text-display" role="article">
                 <h2 id="textTitle"></h2>
-                <div id="textAuthor" class="author"></div>
-                <div id="textContent">
+                <div id="textAuthor" class="author" role="doc-subtitle"></div>
+                <div id="textContent" role="main">
                     <p class="placeholder-text">Selecciona una categoría de texto y luego un texto para empezar a leer. ¡La aventura te espera!</p>
                 </div>
                 <button id="startQuizBtn" class="btn-primary" style="display:none;">Terminé de leer, ¡a la comprensión!</button>
@@ -609,81 +958,203 @@
                 <p>¡Bien hecho! Has terminado esta lectura. 🎉</p>
             </section>
 
-            <section id="quizSection" class="quiz-section" style="display:none;">
+            <section id="quizSection" class="quiz-section" style="display:none;" role="region" aria-label="Sección de preguntas de comprensión">
                 <h2>Preguntas de Comprensión</h2>
                 <div id="quizQuestions">
                     <!-- Preguntas del quiz se cargarán aquí -->
                 </div>
                 <button id="submitQuizBtn" class="btn-primary">Enviar Respuestas</button>
                 <button id="retryQuizBtn" class="btn-secondary" style="display:none;">Intentar de Nuevo</button>
-                <p id="quizFeedback"></p>
+                <p id="quizFeedback" role="alert" aria-live="polite"></p>
             </section>
 
-            <section id="commentSection" class="comment-section" style="display:none;">
-                <h2>Tu Reflexión sobre el Texto</h2>
-                <p>¿Qué te pareció la lectura? ¿Qué ideas o sentimientos te generó? ¡Comparte tus pensamientos!</p>
-                <div class="comment-input-area">
-                    <textarea id="textComment" placeholder="Escribe aquí tu comentario..."></textarea>
-                    <button class="speech-input-btn" data-target="textComment" title="Dictar comentario">🎤</button>
-                </div>
-                <button id="submitCommentBtn" class="btn-primary">Enviar Comentario</button>
-                <p id="commentFeedback" style="margin-top: 1rem; font-weight: bold;"></p>
+            <!-- Comentarios de estudiante removidos (requerimiento) -->
+            <section id="evalSection" class="eval-section" style="display:none;" role="region" aria-label="Sección de evaluación">
+                <h2 id="evalTitle">Evaluación</h2>
+                <div id="evalProgress" style="margin-bottom:0.5rem; font-weight:bold;" role="status" aria-live="polite"></div>
+                <div id="evalTextContainer" class="eval-text-container" role="main"></div>
+                <div id="evalQuizContainer" class="eval-quiz-container"></div>
+                <button id="submitEvalBtn" class="btn-primary">Enviar Respuestas</button>
+                <div id="evalSummary" style="margin-top:1rem;" role="status" aria-live="polite"></div>
             </section>
         </section>
     </main>
 
     <footer>
-            <p>© 2025 LectuKushay-Plataforma Educativa Interactiva</p>
+            <p>© 2025 LectuKushay Plataforma Educativa Interactiva</p>
             <p>© 2025 José Lenis Cayao Bustamante</p>
             <p>Desarrollado para fomentar la lectura y comprensión en estudiantes de secundaria</p>
     </footer>
 
     <script>
         // --- Data de Textos (JSON embebido) ---
-        const cuentosData = [
+         const entradaData = [
             {
-                "title": "El Principito",
-                "author": "Antoine de Saint-Exupéry",
+                "title": "¿Qué significa llevar una vida saludable?",
+                "author": "Lic. Julissa Choque Pazos / Psicóloga del Centro de Salud ‘San Juan Macías - Minedu 2023",
                 "content": [
-                    "Cuando yo tenía seis años vi una vez un cuadro magnífico en un libro sobre el Bosque Virgen que se llamaba “Historias vividas”. Representaba una serpiente boa que se tragaba una fiera. He aquí la copia del dibujo.",
-                    "En el libro se afirmaba: “Las serpientes boa se tragan su presa entera, sin masticarla. Luego no pueden moverse y duermen durante los seis meses de su digestión.”",
-                    "Reflexioné mucho en aquel momento sobre las aventuras de la jungla y, a mi vez, logré hacer con un lápiz de color mi primer dibujo. Mi dibujo número 1. Era así:",
-                    "Les enseñé mi obra maestra a las personas mayores y les pregunté si mi dibujo les daba miedo. Me respondieron: “¿Por qué un sombrero iba a dar miedo?”",
-                    "Mi dibujo no representaba un sombrero. Representaba una serpiente boa que digería un elefante. Dibujé entonces el interior de la serpiente boa para que las personas mayores pudieran comprender. Siempre tienen necesidad de explicaciones."
-                ],
+                "Las definiciones y enfoques pueden variar significativamente. En este escenario, se debate sobre si existe una única fórmula para una vida saludable o si esta es una construcción personal y subjetiva, basada en factores individuales y valores culturales.",
+                    "Mientras algunos sostienen que la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada, otros argumentan que la salud mental y emocional, así como la calidad del sueño y las relaciones interpersonales, son igualmente cruciales. El dilema se intensifica cuando se considera la presión social y los estándares estéticos que pueden distorsionar la percepción de una vida saludable.",
+                    "También, es esencial reflexionar sobre cómo los valores culturales y las expectativas individuales influyen en nuestras elecciones y percepciones. La comunidad de bienestar se encuentra desafiada a promover una definición holística de la salud, que incluya aspectos físicos, mentales y emocionales, y a reconocer la diversidad de caminos que pueden llevar a una vida plena y equilibrada",
+                    "La reflexión sobre estos temas nos invita a considerar cómo las distintas definiciones de vida saludable pueden adaptarse a nuestras necesidades individuales y contextos culturales. En este cruce de perspectivas y hábitos, la apertura al diálogo crítico y la aceptación de la diversidad de enfoques se vuelven esenciales para moldear una visión de la vida saludable que resuene con la autenticidad y bienestar de cada individuo.",
+                 ],
                 "quiz": [
                     {
-                        "question": "¿Qué animal representaba el primer dibujo del narrador?",
+                        "question": "Según la autora del primer texto, ¿qué está en debate sobre tener una vida saludable",
                         "type": "multiple-choice",
-                        "options": ["Un elefante", "Un sombrero", "Una serpiente boa digiriendo un elefante", "Una fiera"],
-                        "answer": "Una serpiente boa digiriendo un elefante"
+                        "options": ["Si la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada", "Si para tener una vida saludable son cruciales la salud mental y emocional, la calidad de sueño y relaciones interpersonales", "Si la vida saludable incluye aspectos físicos, mentales y emocionales", "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"],
+                        "answer": "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"
                     },
                     {
-                        "question": "¿Cuánto tiempo duermen las serpientes boa después de tragar su presa?",
+                        "question": "Según Carla Pachas, ¿qué tipo de acciones debemos evitar al buscar un estilo de vida saludable?",
                         "type": "multiple-choice",
-                        "options": ["Un mes", "Tres meses", "Seis meses", "Un año"],
-                        "answer": "Seis meses"
+                        "options": ["Acciones que impliquen sacrificios abrumadores o sufrimientos humanos.", "Acciones que permitan adoptar hábitos equilibrados, como una alimentación variada", "Acciones sostenibles y realistas a largo plazo", "Acciones para disfrutar de los pequeños placeres"],
+                        "answer": "Acciones que impliquen sacrificios abrumadores o sufrimientos humanos."
                     },
                     {
-                        "question": "¿Por qué el narrador dibujó el interior de la serpiente boa?",
-                        "type": "short-answer",
-                        "answer": "Para que las personas mayores pudieran comprender"
-                    },
-                    {
-                        "question": "¿Cuál es el título del libro que inspiró al narrador?",
+                        "question": "En el texto de Julissa Choque, ¿a qué se refiere la palabra holística?",
                         "type": "multiple-choice",
-                        "options": ["Historias de la jungla", "Historias vividas", "Serpientes asombrosas", "El mundo animal"],
-                        "answer": "Historias vividas"
+                        "options": ["A la integralidad.", "A un desafío.", "A la inclusión.", "A la diversidad"],
+                        "answer": "A la integralidad."
                     },
                     {
-                        "question": "¿A qué edad el narrador hizo su primer dibujo?",
-                        "type": "short-answer",
-                        "answer": "Seis años"
+                        "question": "Lee esta parte del texto, “(…) debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales)”. ¿Con qué intención la autora incluye la información entre paréntesis?",
+                        "type": "multiple-choice",
+                        "options": ["Precisar datos específicos.", "Insertar información complementaria. ", "Aclarar la definición adecuada.", "Narrar un hecho complementario."],
+                        "answer": "Insertar información complementaria."
                     }
                 ]
             },
             {
-                "title": "El Patito Feo",
+                "title": "Vida Saludable: Equilibrio y Extremos",
+                "author": "Lic. Carla Pachas Vidal - Minedu 2023",
+                "content": [
+                "En la era actual, la búsqueda de un estilo de vida saludable se ha convertido en un objetivo válido, pero debemos evitar extremos que puedan generarnos más estrés que beneficios. En medio de las modas y las presiones sociales, es esencial recordar que buscar la vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos.",
+                "Practicar la moderación como un camino para la vida saludable nos permite comprender que el bienestar no debe convertirse en una fuente de ansiedad. De esta manera, adoptar hábitos equilibrados, como una alimentación variada y la incorporación de actividad física agradable, se vuelve más sostenible y realista a largo plazo.",
+                "A pesar de las expectativas actuales, para vivir una vida saludable también debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales). La obsesión con la perfección en la dieta o el ejercicio puede generar más estrés que beneficios reales.",
+                "En resumen, el bienestar no debe convertirse en una carga nos insta a apreciar la diversidad y flexibilidad en nuestras elecciones diarias. En un mundo obsesionado con los estándares, encontrar el equilibrio en la búsqueda de la salud es la verdadera clave para cultivar una vida plena y sostenible.",    
+            ],
+                "quiz": [
+                    {
+                        "question": "¿Qué idea es común entre ambos textos?",
+                        "type": "multiple-choice",
+                        "options": ["Debemos aceptar y disfrutar el equilibrio de acuerdo con nuestra diversidad y bienestar.", "Debemos adoptar buenos hábitos y disfrutar de los pequeños placeres.", "Debemos encontrar una visión saludable sin la obsesión de la perfección", "Debemos respetar nuestros valores culturales y percepciones sociales"],
+                        "answer": "Debemos encontrar una visión saludable sin la obsesión de la perfección."
+                    },
+                    {
+                        "question": "Según Carla Pachas, buscar una vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos. ¿Cuál de las siguientes ideas presentes en el texto de Julissa Choque incide sobre este mismo aspecto y complementa lo dicho por Carla Pachas?",
+                        "type": "multiple-choice",
+                        "options": ["La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras.", "La presión social y los estándares estéticos pueden distorsionar la idea de una vida saludable.", "La vida saludable se vincula con la actividad física regular y una dieta balanceada.", "Son cruciales la salud mental y emocional, la calidad del sueño y las relaciones interpersonales."],
+                        "answer": "La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras."
+                    }
+                ]
+            },
+            {
+                "title": "Una genialidad",
+                "author": "Adaptación",
+                "content": [
+                    "En el ejército de Felipe Santiago Salaverry había unos treinta oficiales excedentes, a los que se les llamaba “rabones”. Iban en las marchas a la vanguardia, siendo los primeros en llegar a los pueblos, donde cometían atropellos infinitos. Al entrar las tropas, ya ellos habían tomado los mejores alojamientos y matado el hambre y la sed. Con frecuencia, recibía Salaverry quejas de los vecinos por sus abusos, hasta que —fastidiado— llamó al jefe del Estado Mayor, José María Lastres, y le dijo: “Coronel, reúnalos, califíquelos y destínelos”.",
+                    "Al día siguiente, le preguntó don Felipe Santiago: “Y bien, coronel... ¿qué ha dispuesto con los rabones?”.",
+                    "—	He colocado a veinte en el ejército, pero con los otros, que son corrompidos, francamente no sé qué hacer.",
+                    "—	¿No sabe qué hacer con ellos? Pues, fusílelos.",
+                    "—	¡Fusilarlos, mi general! –exclamó asustado Lastres.",
+                    "—	Sí, fusílelos hoy mismo. La patria ganará deshaciéndose de oficiales indignos de la honrosa carrera de las armas.",
+                    "—	Que los mate el enemigo y no nosotros –arguyó Lastres, y le costó lograr que Salaverry revocase la orden.",
+                    "—	Impóngales la orden de tomar un fusil y batirse siempre que haya cambio de balas. Ya que no pueden servir como oficiales, que sirvan como hombres –dijo Salaverry.",
+                    "Pero, la genialidad de Lastres no fue secreto para los rabones. Sabiendo que arriesgaban el pellejo, cambiaron un tanto su conducta, comportándose heroicamente en Uchumayo y Socabaya. Todos menos tres, en diez días, murieron como bravos en defensa de su bandera y del caudillo que representaba la causa de la voluntad peruana."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Cuál de los siguientes hechos ocurrió primero en la historia?",
+                        "type": "multiple-choice",
+                        "options": ["Salaverry recibía quejas de los vecinos por el actuar de los “rabones”. ", "Había unos 30 oficiales excedentes que se llamaban 'rabones.'.", "Don Felipe preguntá a Lastres sobre la disposición de los rabones.","Lastre arguye para que Salaverry revoqué la orden."],
+                        "answer": "Había unos 30 oficiales excedentes que se llamaban 'rabones'."
+                    },
+                    {
+                        "question": "Según el texto, ¿Quién dio la orden para el cambio de actitud de los “rabones”?",
+                        "type": "multiple-choice",
+                        "options": ["Felipe Santiago Salaverry.", "Ricardo Palma.", "Los vecinos de los pueblos.", "José María Lastres."],
+                        "answer": "José María Lastres."
+                    },
+                    {
+                       "question": "¿Cuál es la idea principal de la historia ?",
+                        "type": "multiple-choice",
+                        "options": ["La valentía de los “rabones” ", "La genialidad de Lastres.", "El liderazgo de Salaverry.", "La redención de los “rabones”"],
+                        "answer": "La genialidad de Lastres."
+                    },
+                    {
+                        "question": "En la historia, ¿qué significa la palabra “rabones”?",
+                        "type": "multiple-choice",
+                        "options": ["Se refiere a los oficiales de Salaverry. ", "Se refiere a los oficiales nuevos.", "Se refiere a los oficiales excedentes.", "Se refiere a los oficiales de Lastres"],
+                        "answer": "Se refiere a los oficiales excedentes. "
+                    },
+                    {
+                        "question": " Un estudiante ha leído esta tradición y opinó lo siguiente - Luego, de leer esta historia, creo que Salaverry impuso la disciplina militar para el cambio de conducta en los “rabones” ¿Cuál de las siguientes ideas podría apoyar la opinión de este estudiante?",
+                        "type": "multiple-choice",
+                        "options": ["Que Salaverry ordenó a Lastres fusilarlos por el mal comportamiento", "Que los “rabones” eran los primeros en llegar a los pueblos y consumir los alimentos y bebidas.", "Que los “rabones” al conocer la orden de Salaverry, cambiaron y se comportaron heroicamente", "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."],
+                        "answer": "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."
+                    },
+                    {
+                        "question": "6.	Lee las siguientes frases: •	…, a los que se les llamaba “rabones”. •	…abusos, hasta que —fastidiado— llamó al jefe… ¿Cuál es la función de las comillas y las rayas (—fastidiado—) en el texto?",
+                        "type": "multiple-choice",
+                        "options": ["El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor.", "El primero es para resaltar el tema del texto y el segundo, comenta las características del personaje.", "El primero es para enfatizar el significado de la palabra y el segundo, incorpora sinónimos al personaje.", "El primero es para resaltar términos nuevos en el texto y el segundo, incluye un término nuevo."],
+                        "answer": "El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor."
+                    }
+                ]
+            },
+             {
+                    "title": "La batalla de maratón",
+                    "author": "Elena Martínez - 10 de febrero de 2022 - Minedu 2023",
+                    "content": [
+                    "En el amanecer del 12 de septiembre del 490 a.C., la llanura de Maratón fue testigo de uno de los enfrentamientos más notables de la Antigua Grecia: la Batalla de Maratón. Este episodio histórico no solo marcó un punto de inflexión en la Segunda Guerra Médica, sino que también dejó lecciones perdurables sobre estrategia militar y determinación.",
+                    "La contienda tuvo lugar entre las fuerzas griegas, lideradas por Atenas y Platea, y el Imperio Persa, bajo el mando de Darío I. A pesar de contar con muchos menos soldados, los griegos adoptaron una estrategia valiente y audaz que resultó decisiva. Estos rompieron las líneas persas, desencadenando un caos que culminó con una victoria sorprendente para los griegos. Esta movida exitosa, combinada con el coraje de los soldados, destacó la importancia de la táctica y la preparación en el campo de batalla.",
+                    "La Batalla de Maratón no solo fue un triunfo militar, sino también un símbolo de resistencia y determinación. El corredor Fidípides, enviado a Atenas para anunciar la victoria, corrió aproximadamente 42 kilómetros, dando origen al maratón moderno y perpetuando la historia de Maratón en la cultura popular.",
+                    "Este evento histórico nos muestra cómo la astucia estratégica y la valentía pueden superar las probabilidades aparentemente insuperables. La Batalla de Maratón marcó un hito en la historia militar y sirvió como recordatorio de que, incluso en las situaciones más desafiantes, la tenacidad y la astucia pueden prevalecer."
+                ], 
+                "quiz": [
+                    {
+                        "question": "De acuerdo con el texto, en la Batalla de Maratón ¿quién lideró este triunfo militar?",
+                        "type": "multiple-choice",
+                        "options": ["Atenas y Platea.", "Darío.", "Fidípedes.", "Los persas."],
+                        "answer": "Atenas y Platea."
+                    },
+                    {
+                        "question": "Según el texto, ¿a qué se refiere la frase “punto de inflexión”?",
+                        "type": "multiple-choice",
+                        "options": ["Momento de valentía.", "Momento de cambio.", "Momento de intrepidez.", "Momento de coraje."],
+                        "answer": "Momento de cambio."
+                    },
+                    {
+                        "question": "Según el texto, ¿cuáles son las lecciones que nos deja la Batalla de Maratón?",
+                        "type": "multiple-choice",
+                        "options": ["Valentía y audacia.", "Coraje y preparación en el campo.", "Resistencia y determinación.", "Astucia y valentía."],
+                        "answer": "Resistencia y determinación."
+                    },
+                    {
+                        "question": "Respecto a la Batalla de Maratón, cómo episodio histórico, ¿qué lecciones podemos deducir?",
+                        "type": "multiple-choice",
+                        "options": ["Cómo la valiente estrategia y la audacia superan las adversidades.", "Cómo a mayor número de soldados se superan los desafíos.", "Cómo ser corredor y tener resistencia superan las adversidades.", "Cómo ser persa y tener astucia, superan los desafíos."],
+                        "answer": "Cómo la valiente estrategia y la audacia superan las adversidades."
+                    },
+                    {
+                        "question": "Luego de leer el texto, ¿cuál es el tema principal del texto?",
+                        "type": "multiple-choice",
+                        "options": ["La Batalla de Maratón y su implicancia histórica.", "La Batalla de Maratón y el resultado del enfrentamiento.", "El origen del maratón moderno y el triunfo militar.", "El origen del maratón moderno y la inmortalización de su historia."],
+                        "answer": "La Batalla de Maratón y su implicancia histórica."
+                    },
+                    {
+                        "question": "De acuerdo con el texto, ¿cómo se relaciona la Batalla de Maratón con el origen del maratón moderno?",
+                        "type": "multiple-choice",
+                        "options": ["La batalla y la acción de Fidípedes son símbolos de valentía. ", "El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", "El nombre de la batalla da origen al maratón moderno."],
+                        "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
+                    }
+                ]
+                }
+        ];
+        const cuentosData = [
+
+            {
+                "title": "Actividad 01",
                 "author": "Hans Christian Andersen",
                 "content": [
                     "En el campo, cerca de un estanque, vivía una pata con sus patitos. Uno de ellos era muy diferente a los demás, era grande, feo y gris.",
@@ -725,9 +1196,95 @@
             }
         ];
 
+        // Placeholders para actividades adicionales (06-10)
+        const actividad06Data = [
+            {
+                "title": "Actividad 06",
+                "author": "Autor",
+                "content": [
+                    "Contenido de la actividad 06. Reemplaza con el texto real cuando esté disponible."
+                ],
+                "quiz": [
+                    {
+                        "question": "Pregunta ejemplo actividad 06",
+                        "type": "short-answer",
+                        "answer": "respuesta"
+                    }
+                ]
+            }
+        ];
+
+        const actividad07Data = [
+            {
+                "title": "Actividad 07",
+                "author": "Autor",
+                "content": [
+                    "Contenido de la actividad 07. Reemplaza con el texto real cuando esté disponible."
+                ],
+                "quiz": [
+                    {
+                        "question": "Pregunta ejemplo actividad 07",
+                        "type": "short-answer",
+                        "answer": "respuesta"
+                    }
+                ]
+            }
+        ];
+
+        const actividad08Data = [
+            {
+                "title": "Actividad 08",
+                "author": "Autor",
+                "content": [
+                    "Contenido de la actividad 08. Reemplaza con el texto real cuando esté disponible."
+                ],
+                "quiz": [
+                    {
+                        "question": "Pregunta ejemplo actividad 08",
+                        "type": "short-answer",
+                        "answer": "respuesta"
+                    }
+                ]
+            }
+        ];
+
+        const actividad09Data = [
+            {
+                "title": "Actividad 09",
+                "author": "Autor",
+                "content": [
+                    "Contenido de la actividad 09. Reemplaza con el texto real cuando esté disponible."
+                ],
+                "quiz": [
+                    {
+                        "question": "Pregunta ejemplo actividad 09",
+                        "type": "short-answer",
+                        "answer": "respuesta"
+                    }
+                ]
+            }
+        ];
+
+        const actividad10Data = [
+            {
+                "title": "Actividad 10",
+                "author": "Autor",
+                "content": [
+                    "Contenido de la actividad 10. Reemplaza con el texto real cuando esté disponible."
+                ],
+                "quiz": [
+                    {
+                        "question": "Pregunta ejemplo actividad 10",
+                        "type": "short-answer",
+                        "answer": "respuesta"
+                    }
+                ]
+            }
+        ];
+
         const novelasData = [
             {
-                "title": "Don Quijote de la Mancha (Fragmento)",
+                "title": "Actividad 02",
                 "author": "Miguel de Cervantes Saavedra",
                 "content": [
                     "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.",
@@ -812,7 +1369,7 @@
 
         const fabulasData = [
             {
-                "title": "La Liebre y la Tortuga",
+                "title": "Actividad 03",
                 "author": "Esopo",
                 "content": [
                     "Un día, una liebre se jactaba de su velocidad ante una tortuga, quien, con calma, le propuso una carrera.",
@@ -897,7 +1454,7 @@
 
         const articulosData = [
             {
-                "title": "La Importancia de Reciclar",
+                "title": "Actividad 04",
                 "author": "Equipo de Ecología Activa",
                 "content": [
                     "El reciclaje es un proceso fundamental para la sostenibilidad de nuestro planeta. Consiste en transformar materiales usados en nuevos productos, reduciendo así la necesidad de consumir recursos naturales frescos.",
@@ -979,9 +1536,9 @@
                 ]
             }
         ];
- const poesiaData = [
+        const poesiaData = [
           {
-            "title": "El Sembrador de Estrellas",
+            "title": "Actividad 05",
             "author": "Federico García Lorca",
             "content": [
               "En el cielo de la noche, un hombre viejo",
@@ -1059,7 +1616,172 @@
               }
             ]
           }
-        ]; 
+        ];  
+        
+        // Datos para evaluación de salida (vacíos por defecto; puedes poblarlos con ejercicios similares a 'entrada')
+        const salidaData = [
+             {
+                "title": "¿Qué significa llevar una vida saludable?",
+                "author": "Lic. Julissa Choque Pazos / Psicóloga del Centro de Salud ‘San Juan Macías - Minedu 2023",
+                "content": [
+                "Las definiciones y enfoques pueden variar significativamente. En este escenario, se debate sobre si existe una única fórmula para una vida saludable o si esta es una construcción personal y subjetiva, basada en factores individuales y valores culturales.",
+                    "Mientras algunos sostienen que la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada, otros argumentan que la salud mental y emocional, así como la calidad del sueño y las relaciones interpersonales, son igualmente cruciales. El dilema se intensifica cuando se considera la presión social y los estándares estéticos que pueden distorsionar la percepción de una vida saludable.",
+                    "También, es esencial reflexionar sobre cómo los valores culturales y las expectativas individuales influyen en nuestras elecciones y percepciones. La comunidad de bienestar se encuentra desafiada a promover una definición holística de la salud, que incluya aspectos físicos, mentales y emocionales, y a reconocer la diversidad de caminos que pueden llevar a una vida plena y equilibrada",
+                    "La reflexión sobre estos temas nos invita a considerar cómo las distintas definiciones de vida saludable pueden adaptarse a nuestras necesidades individuales y contextos culturales. En este cruce de perspectivas y hábitos, la apertura al diálogo crítico y la aceptación de la diversidad de enfoques se vuelven esenciales para moldear una visión de la vida saludable que resuene con la autenticidad y bienestar de cada individuo.",
+                 ],
+                "quiz": [
+                    {
+                        "question": "Según la autora del primer texto, ¿qué está en debate sobre tener una vida saludable",
+                        "type": "multiple-choice",
+                        "options": ["Si la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada", "Si para tener una vida saludable son cruciales la salud mental y emocional, la calidad de sueño y relaciones interpersonales", "Si la vida saludable incluye aspectos físicos, mentales y emocionales", "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"],
+                        "answer": "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"
+                    },
+                    {
+                        "question": "Según Carla Pachas, ¿qué tipo de acciones debemos evitar al buscar un estilo de vida saludable?",
+                        "type": "multiple-choice",
+                        "options": ["Acciones que impliquen sacrificios abrumadores o sufrimientos humanos.", "Acciones que permitan adoptar hábitos equilibrados, como una alimentación variada", "Acciones sostenibles y realistas a largo plazo", "Acciones para disfrutar de los pequeños placeres"],
+                        "answer": "Acciones que impliquen sacrificios abrumadores o sufrimientos humanos."
+                    },
+                    {
+                        "question": "En el texto de Julissa Choque, ¿a qué se refiere la palabra holística?",
+                        "type": "multiple-choice",
+                        "options": ["A la integralidad.", "A un desafío.", "A la inclusión.", "A la diversidad"],
+                        "answer": "A la integralidad."
+                    },
+                    {
+                        "question": "Lee esta parte del texto, “(…) debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales)”. ¿Con qué intención la autora incluye la información entre paréntesis?",
+                        "type": "multiple-choice",
+                        "options": ["Precisar datos específicos.", "Insertar información complementaria. ", "Aclarar la definición adecuada.", "Narrar un hecho complementario."],
+                        "answer": "Insertar información complementaria."
+                    }
+                ]
+            },
+            {
+                "title": "Vida Saludable: Equilibrio y Extremos",
+                "author": "Lic. Carla Pachas Vidal - Minedu 2023",
+                "content": [
+                "En la era actual, la búsqueda de un estilo de vida saludable se ha convertido en un objetivo válido, pero debemos evitar extremos que puedan generarnos más estrés que beneficios. En medio de las modas y las presiones sociales, es esencial recordar que buscar la vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos.",
+                "Practicar la moderación como un camino para la vida saludable nos permite comprender que el bienestar no debe convertirse en una fuente de ansiedad. De esta manera, adoptar hábitos equilibrados, como una alimentación variada y la incorporación de actividad física agradable, se vuelve más sostenible y realista a largo plazo.",
+                "A pesar de las expectativas actuales, para vivir una vida saludable también debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales). La obsesión con la perfección en la dieta o el ejercicio puede generar más estrés que beneficios reales.",
+                "En resumen, el bienestar no debe convertirse en una carga nos insta a apreciar la diversidad y flexibilidad en nuestras elecciones diarias. En un mundo obsesionado con los estándares, encontrar el equilibrio en la búsqueda de la salud es la verdadera clave para cultivar una vida plena y sostenible.",    
+            ],
+                "quiz": [
+                    {
+                        "question": "¿Qué idea es común entre ambos textos?",
+                        "type": "multiple-choice",
+                        "options": ["Debemos aceptar y disfrutar el equilibrio de acuerdo con nuestra diversidad y bienestar.", "Debemos adoptar buenos hábitos y disfrutar de los pequeños placeres.", "Debemos encontrar una visión saludable sin la obsesión de la perfección", "Debemos respetar nuestros valores culturales y percepciones sociales"],
+                        "answer": "Debemos encontrar una visión saludable sin la obsesión de la perfección."
+                    },
+                    {
+                        "question": "Según Carla Pachas, buscar una vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos. ¿Cuál de las siguientes ideas presentes en el texto de Julissa Choque incide sobre este mismo aspecto y complementa lo dicho por Carla Pachas?",
+                        "type": "multiple-choice",
+                        "options": ["La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras.", "La presión social y los estándares estéticos pueden distorsionar la idea de una vida saludable.", "La vida saludable se vincula con la actividad física regular y una dieta balanceada.", "Son cruciales la salud mental y emocional, la calidad del sueño y las relaciones interpersonales."],
+                        "answer": "La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras."
+                    }
+                ]
+            },
+            {
+                "title": "Una genialidad",
+                "author": "Adaptación",
+                "content": [
+                    "En el ejército de Felipe Santiago Salaverry había unos treinta oficiales excedentes, a los que se les llamaba “rabones”. Iban en las marchas a la vanguardia, siendo los primeros en llegar a los pueblos, donde cometían atropellos infinitos. Al entrar las tropas, ya ellos habían tomado los mejores alojamientos y matado el hambre y la sed. Con frecuencia, recibía Salaverry quejas de los vecinos por sus abusos, hasta que —fastidiado— llamó al jefe del Estado Mayor, José María Lastres, y le dijo: “Coronel, reúnalos, califíquelos y destínelos”.",
+                    "Al día siguiente, le preguntó don Felipe Santiago: “Y bien, coronel... ¿qué ha dispuesto con los rabones?”.",
+                    "—	He colocado a veinte en el ejército, pero con los otros, que son corrompidos, francamente no sé qué hacer.",
+                    "—	¿No sabe qué hacer con ellos? Pues, fusílelos.",
+                    "—	¡Fusilarlos, mi general! –exclamó asustado Lastres.",
+                    "—	Sí, fusílelos hoy mismo. La patria ganará deshaciéndose de oficiales indignos de la honrosa carrera de las armas.",
+                    "—	Que los mate el enemigo y no nosotros –arguyó Lastres, y le costó lograr que Salaverry revocase la orden.",
+                    "—	Impóngales la orden de tomar un fusil y batirse siempre que haya cambio de balas. Ya que no pueden servir como oficiales, que sirvan como hombres –dijo Salaverry.",
+                    "Pero, la genialidad de Lastres no fue secreto para los rabones. Sabiendo que arriesgaban el pellejo, cambiaron un tanto su conducta, comportándose heroicamente en Uchumayo y Socabaya. Todos menos tres, en diez días, murieron como bravos en defensa de su bandera y del caudillo que representaba la causa de la voluntad peruana."
+                ],
+                "quiz": [
+                    {
+                        "question": "¿Cuál de los siguientes hechos ocurrió primero en la historia?",
+                        "type": "multiple-choice",
+                        "options": ["Salaverry recibía quejas de los vecinos por el actuar de los “rabones”. ", "Había unos 30 oficiales excedentes que se llamaban 'rabones.'.", "Don Felipe preguntá a Lastres sobre la disposición de los rabones.","Lastre arguye para que Salaverry revoqué la orden."],
+                        "answer": "Había unos 30 oficiales excedentes que se llamaban 'rabones'."
+                    },
+                    {
+                        "question": "Según el texto, ¿Quién dio la orden para el cambio de actitud de los “rabones”?",
+                        "type": "multiple-choice",
+                        "options": ["Felipe Santiago Salaverry.", "Ricardo Palma.", "Los vecinos de los pueblos.", "José María Lastres."],
+                        "answer": "José María Lastres."
+                    },
+                    {
+                       "question": "¿Cuál es la idea principal de la historia ?",
+                        "type": "multiple-choice",
+                        "options": ["La valentía de los “rabones” ", "La genialidad de Lastres.", "El liderazgo de Salaverry.", "La redención de los “rabones”"],
+                        "answer": "La genialidad de Lastres."
+                    },
+                    {
+                        "question": "En la historia, ¿qué significa la palabra “rabones”?",
+                        "type": "multiple-choice",
+                        "options": ["Se refiere a los oficiales de Salaverry. ", "Se refiere a los oficiales nuevos.", "Se refiere a los oficiales excedentes.", "Se refiere a los oficiales de Lastres"],
+                        "answer": "Se refiere a los oficiales excedentes. "
+                    },
+                    {
+                        "question": " Un estudiante ha leído esta tradición y opinó lo siguiente - Luego, de leer esta historia, creo que Salaverry impuso la disciplina militar para el cambio de conducta en los “rabones” ¿Cuál de las siguientes ideas podría apoyar la opinión de este estudiante?",
+                        "type": "multiple-choice",
+                        "options": ["Que Salaverry ordenó a Lastres fusilarlos por el mal comportamiento", "Que los “rabones” eran los primeros en llegar a los pueblos y consumir los alimentos y bebidas.", "Que los “rabones” al conocer la orden de Salaverry, cambiaron y se comportaron heroicamente", "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."],
+                        "answer": "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."
+                    },
+                    {
+                        "question": "6.	Lee las siguientes frases: •	…, a los que se les llamaba “rabones”. •	…abusos, hasta que —fastidiado— llamó al jefe… ¿Cuál es la función de las comillas y las rayas (—fastidiado—) en el texto?",
+                        "type": "multiple-choice",
+                        "options": ["El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor.", "El primero es para resaltar el tema del texto y el segundo, comenta las características del personaje.", "El primero es para enfatizar el significado de la palabra y el segundo, incorpora sinónimos al personaje.", "El primero es para resaltar términos nuevos en el texto y el segundo, incluye un término nuevo."],
+                        "answer": "El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor."
+                    }
+                ]
+            },
+             {
+                    "title": "La batalla de maratón",
+                    "author": "Elena Martínez - 10 de febrero de 2022 - Minedu 2023",
+                    "content": [
+                    "En el amanecer del 12 de septiembre del 490 a.C., la llanura de Maratón fue testigo de uno de los enfrentamientos más notables de la Antigua Grecia: la Batalla de Maratón. Este episodio histórico no solo marcó un punto de inflexión en la Segunda Guerra Médica, sino que también dejó lecciones perdurables sobre estrategia militar y determinación.",
+                    "La contienda tuvo lugar entre las fuerzas griegas, lideradas por Atenas y Platea, y el Imperio Persa, bajo el mando de Darío I. A pesar de contar con muchos menos soldados, los griegos adoptaron una estrategia valiente y audaz que resultó decisiva. Estos rompieron las líneas persas, desencadenando un caos que culminó con una victoria sorprendente para los griegos. Esta movida exitosa, combinada con el coraje de los soldados, destacó la importancia de la táctica y la preparación en el campo de batalla.",
+                    "La Batalla de Maratón no solo fue un triunfo militar, sino también un símbolo de resistencia y determinación. El corredor Fidípides, enviado a Atenas para anunciar la victoria, corrió aproximadamente 42 kilómetros, dando origen al maratón moderno y perpetuando la historia de Maratón en la cultura popular.",
+                    "Este evento histórico nos muestra cómo la astucia estratégica y la valentía pueden superar las probabilidades aparentemente insuperables. La Batalla de Maratón marcó un hito en la historia militar y sirvió como recordatorio de que, incluso en las situaciones más desafiantes, la tenacidad y la astucia pueden prevalecer."
+                ], 
+                "quiz": [
+                    {
+                        "question": "De acuerdo con el texto, en la Batalla de Maratón ¿quién lideró este triunfo militar?",
+                        "type": "multiple-choice",
+                        "options": ["Atenas y Platea.", "Darío.", "Fidípedes.", "Los persas."],
+                        "answer": "Atenas y Platea."
+                    },
+                    {
+                        "question": "Según el texto, ¿a qué se refiere la frase “punto de inflexión”?",
+                        "type": "multiple-choice",
+                        "options": ["Momento de valentía.", "Momento de cambio.", "Momento de intrepidez.", "Momento de coraje."],
+                        "answer": "Momento de cambio."
+                    },
+                    {
+                        "question": "Según el texto, ¿cuáles son las lecciones que nos deja la Batalla de Maratón?",
+                        "type": "multiple-choice",
+                        "options": ["Valentía y audacia.", "Coraje y preparación en el campo.", "Resistencia y determinación.", "Astucia y valentía."],
+                        "answer": "Resistencia y determinación."
+                    },
+                    {
+                        "question": "Respecto a la Batalla de Maratón, cómo episodio histórico, ¿qué lecciones podemos deducir?",
+                        "type": "multiple-choice",
+                        "options": ["Cómo la valiente estrategia y la audacia superan las adversidades.", "Cómo a mayor número de soldados se superan los desafíos.", "Cómo ser corredor y tener resistencia superan las adversidades.", "Cómo ser persa y tener astucia, superan los desafíos."],
+                        "answer": "Cómo la valiente estrategia y la audacia superan las adversidades."
+                    },
+                    {
+                        "question": "Luego de leer el texto, ¿cuál es el tema principal del texto?",
+                        "type": "multiple-choice",
+                        "options": ["La Batalla de Maratón y su implicancia histórica.", "La Batalla de Maratón y el resultado del enfrentamiento.", "El origen del maratón moderno y el triunfo militar.", "El origen del maratón moderno y la inmortalización de su historia."],
+                        "answer": "La Batalla de Maratón y su implicancia histórica."
+                    },
+                    {
+                        "question": "De acuerdo con el texto, ¿cómo se relaciona la Batalla de Maratón con el origen del maratón moderno?",
+                        "type": "multiple-choice",
+                        "options": ["La batalla y la acción de Fidípedes son símbolos de valentía. ", "El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", "El nombre de la batalla da origen al maratón moderno."],
+                        "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
+                    }
+                ]
+                }
+            ];
         document.addEventListener('DOMContentLoaded', () => {
             const textCategorySelect = document.getElementById('textCategory');
             const textTitle = document.getElementById('textTitle');
@@ -1077,10 +1799,16 @@
             const retryQuizBtn = document.getElementById('retryQuizBtn');
             const quizFeedback = document.getElementById('quizFeedback');
 
-            const commentSection = document.getElementById('commentSection');
-            const textCommentInput = document.getElementById('textComment');
-            const submitCommentBtn = document.getElementById('submitCommentBtn');
-            const commentFeedback = document.getElementById('commentFeedback');
+            // Elementos para Evaluaciones y export
+            const evalSection = document.getElementById('evalSection');
+            const evalTitle = document.getElementById('evalTitle');
+            const evalTextContainer = document.getElementById('evalTextContainer');
+            const evalQuizContainer = document.getElementById('evalQuizContainer');
+            const submitEvalBtn = document.getElementById('submitEvalBtn');
+            const evalSummary = document.getElementById('evalSummary');
+            const startEntryEvalBtn = document.getElementById('startEntryEvalBtn');
+            const startExitEvalBtn = document.getElementById('startExitEvalBtn');
+            const exportAnswersBtn = document.getElementById('exportAnswersBtn');
 
             const studentNameInput = document.getElementById('studentName');
             const studentGradeInput = document.getElementById('studentGrade');
@@ -1097,7 +1825,7 @@
 
 
             let currentText = null;
-            let currentCategory = 'cuentos';
+            let currentCategory = 'actividad01';
             let currentQuiz = null;
             let currentFontSize = 1.1; // Rem
             let currentStudent = null;
@@ -1106,16 +1834,26 @@
 
             const loadTexts = async (category) => {
                 switch (category) {
-                    case 'cuentos':
+                    case 'actividad01':
                         return cuentosData;
-                    case 'novelas':
+                    case 'actividad02':
                         return novelasData;
-                    case 'fabulas':
+                    case 'actividad03':
                         return fabulasData;
-                    case 'articulos':
+                    case 'actividad04':
                         return articulosData;
-                    case 'poesia':
+                    case 'actividad05':
                         return poesiaData;
+                    case 'actividad06':
+                        return actividad06Data;
+                    case 'actividad07':
+                        return actividad07Data;
+                    case 'actividad08':
+                        return actividad08Data;
+                    case 'actividad09':
+                        return actividad09Data;
+                    case 'actividad10':
+                        return actividad10Data;
                     default:
                         return [];
                 }
@@ -1123,32 +1861,63 @@
 
             const displayText = (text) => {
                 currentText = text;
-                textTitle.textContent = text.title;
-                textAuthor.textContent = `Autor: ${text.author}`;
-                textContent.innerHTML = text.content.map(p => `<p>${p}</p>`).join('');
-                textContent.style.fontSize = `${currentFontSize}rem`;
 
-                readingMessage.style.display = 'none';
-                quizSection.style.display = 'none';
-                commentSection.style.display = 'none';
+                // --- MODIFICACIÓN: Lógica de la Evaluación de Entrada (Botón de Ingreso y Doble Columna) ---
+                if (currentCategory === 'entrada' && entradaData.length >= 2) {
+                    textTitle.textContent = 'Evaluación de Entrada'; // Título de categoría
+                    textAuthor.textContent = 'Instrucciones: Lee atentamente y responde el cuestionario al final.';
+                    textContent.innerHTML = `<p class="placeholder-text">Presiona el botón 'Iniciar Evaluación' para comenzar la lectura y ver el texto en doble columna.</p>`;
+                    startQuizBtn.textContent = '▶️ Iniciar Evaluación';
+                } else {
+                    // Comportamiento estándar para las demás categorías
+                    textTitle.textContent = text.title;
+                    textAuthor.textContent = `Autor: ${text.author}`;
+                    textContent.innerHTML = text.content.map(p => `<p>${p}</p>`).join('');
+                    textContent.style.fontSize = `${currentFontSize}rem`;
+                    startQuizBtn.textContent = '✅ Iniciar Quiz de Comprensión';
+                }
+                // --- FIN MODIFICACIÓN DE ENTRADA ---
+
+                    readingMessage.style.display = 'none';
+                    quizSection.style.display = 'none';
+                    // ocultar sección de evaluación si está visible
+                    if (evalSection) evalSection.style.display = 'none';
                 startQuizBtn.style.display = 'block';
 
-                window.speechSynthesis.cancel(); // Detener cualquier síntesis de voz en curso
-                readAloudBtn.textContent = '🗣️ Leer en Voz Alta'; // Resetear texto del botón de lectura
+                window.speechSynthesis.cancel();
+                readAloudBtn.textContent = '🗣️ Leer en Voz Alta';
             };
 
             const selectRandomText = async () => {
                 const texts = await loadTexts(currentCategory);
                 if (texts.length > 0) {
                     let newIndex;
+
+                    // Si la categoría es 'entrada', no seleccionamos al azar, preparamos el botón de inicio
+                    if (currentCategory === 'entrada') {
+                        // El botón de inicio mostrará los primeros dos textos
+                        newIndex = 0; 
+                        // Creamos un currentText temporal que el displayText pueda usar
+                        currentText = { 
+                            title: 'Evaluación de Entrada', 
+                            author: '', 
+                            content: [], 
+                            quiz: [...texts[0].quiz, ...texts[1].quiz] 
+                        }; 
+                        displayText(currentText);
+                        return;
+                    }
+
+
+                    // Lógica para textos estándar (articulos, poesia, etc.)
                     const lastIndex = lastDisplayedTextIndexPerCategory[currentCategory];
 
                     if (texts.length > 1) {
                         do {
                             newIndex = Math.floor(Math.random() * texts.length);
-                        } while (newIndex === lastIndex); // Asegura un índice diferente si hay más de un texto
+                        } while (newIndex === lastIndex);
                     } else {
-                        newIndex = 0; // Si solo hay un texto, siempre será el mismo
+                        newIndex = 0;
                     }
 
                     lastDisplayedTextIndexPerCategory[currentCategory] = newIndex;
@@ -1161,7 +1930,7 @@
                     startQuizBtn.style.display = 'none';
                 }
             };
-
+            
             // --- Funcionalidad de Voz (speechSynthesis) ---
             let currentUtterance = null; // Variable para mantener la referencia a la síntesis de voz
 
@@ -1170,6 +1939,13 @@
                     console.error('Tu navegador no soporta la lectura en voz alta o no hay texto seleccionado.');
                     return;
                 }
+                
+                // NO PERMITIMOS LECTURA EN VOZ ALTA EN EL ESTADO INICIAL DE 'ENTRADA'
+                if (currentCategory === 'entrada' && textContent.querySelector('.placeholder-text')) {
+                    alert('Presiona "Iniciar Evaluación" para leer el texto.');
+                    return;
+                }
+
 
                 if (window.speechSynthesis.speaking) {
                     // Si está hablando (o pausado), cancela la lectura
@@ -1178,7 +1954,9 @@
                     console.log('Lectura detenida.');
                 } else {
                     // Si no está hablando, inicia una nueva lectura
-                    currentUtterance = new SpeechSynthesisUtterance(currentText.content.join(' '));
+                    // Para el caso de doble columna, lee todo el contenido visible
+                    const textToSpeak = currentText.content.join(' '); 
+                    currentUtterance = new SpeechSynthesisUtterance(textToSpeak);
                     currentUtterance.lang = 'es-ES';
                     window.speechSynthesis.speak(currentUtterance);
                     readAloudBtn.textContent = '🛑 Detener Lectura'; // Cambia el texto para indicar que se puede detener
@@ -1296,6 +2074,15 @@
 
                     studentRankingList.appendChild(li);
                 });
+
+                // Listeners para los botones de Evaluación en la barra lateral
+                startEntryEvalBtn && startEntryEvalBtn.addEventListener('click', () => {
+                    startEvaluation('entrada');
+                });
+
+                startExitEvalBtn && startExitEvalBtn.addEventListener('click', () => {
+                    startEvaluation('salida');
+                });
             };
 
             // Función para eliminar estudiante
@@ -1360,8 +2147,10 @@
                 updateStudentUI(); // Asegurarse de que el formulario esté visible si no hay estudiante activo
             }
 
-            // --- Quiz de Comprensión ---
-            startQuizBtn.addEventListener('click', () => {
+            // --- Quiz de Comprensión (Funciones y Listeners Modificados) ---
+
+            // Función auxiliar para el flujo normal del quiz
+            const startQuizAfterReading = () => {
                 if (!currentText || !currentText.quiz || currentText.quiz.length === 0) {
                     console.warn('Este texto no tiene preguntas de comprensión asociadas.');
                     return;
@@ -1373,8 +2162,59 @@
                     startQuizBtn.style.display = 'none';
                     generateQuiz(currentText.quiz);
                 }, 1500);
-            });
+            }
 
+            // MODIFICACIÓN: Listener del botón de inicio (actúa como "Ingresar" en entrada)
+            const handleStartQuizClick = async () => {
+                if (currentCategory === 'entrada' && textContent.querySelector('.placeholder-text')) {
+                    // Lógica especial para mostrar los textos de entrada en dos columnas
+                    const texts = await loadTexts('entrada');
+                    if (texts.length >= 2) {
+                        
+                        // Combinar los dos primeros textos en un formato de doble columna
+                        textContent.innerHTML = `
+                            <div class="two-column-layout">
+                                <div class="column-text">
+                                    <h3>${texts[0].title}</h3>
+                                    <p class="author-label">Autor: ${texts[0].author}</p>
+                                    ${texts[0].content.map(p => `<p>${p}</p>`).join('')}
+                                </div>
+                                <div class="column-text">
+                                    <h3>${texts[1].title}</h3>
+                                    <p class="author-label">Autor: ${texts[1].author}</p>
+                                    ${texts[1].content.map(p => `<p>${p}</p>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                        // Se actualiza el currentText con el quiz combinado
+                        currentText = {
+                            title: 'Evaluación de Entrada - Leído',
+                            author: 'Evaluación de Entrada',
+                            content: [...texts[0].content, ...texts[1].content],
+                            quiz: [...texts[0].quiz, ...texts[1].quiz]
+                        }; 
+                        
+                        // Cambiar el botón para que ahora inicie el quiz
+                        startQuizBtn.textContent = 'Responder las preguntas';
+                        
+                        // Reemplazar el listener temporal por el listener de quiz normal
+                        startQuizBtn.removeEventListener('click', handleStartQuizClick); 
+                        startQuizBtn.addEventListener('click', startQuizAfterReading); 
+                        
+                        // Aplicar tamaño de fuente
+                        textContent.style.fontSize = `${currentFontSize}rem`;
+                        return;
+                    }
+                }
+                
+                // Si no es 'entrada' o si ya se mostró el texto, llama al flujo normal
+                startQuizAfterReading();
+            };
+
+            startQuizBtn.addEventListener('click', handleStartQuizClick);
+
+
+            // Definición de generateQuiz (parte previamente solicitada)
             const generateQuiz = (quiz) => {
                 currentQuiz = quiz;
                 quizQuestionsContainer.innerHTML = '';
@@ -1409,24 +2249,35 @@
                 });
             };
 
+            // MODIFICACIÓN: Listener del botón de enviar quiz (Añadido resumen de respuestas)
             submitQuizBtn.addEventListener('click', () => {
                 let correctAnswers = 0;
                 let totalQuestions = currentQuiz.length;
+                let resultsSummary = '<ol class="results-list">'; // Lista ordenada para el resumen
 
                 currentQuiz.forEach((q, index) => {
                     const questionDiv = quizQuestionsContainer.children[index];
                     let isCorrect = false;
+                    let userAnswer = 'Sin responder';
+                    let questionResultClass = 'incorrect';
+
 
                     if (q.type === 'multiple-choice') {
                         const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                        if (selectedOption && selectedOption.value === q.answer) {
-                            isCorrect = true;
+                        if (selectedOption) {
+                            userAnswer = selectedOption.value;
+                            if (userAnswer === q.answer) {
+                                isCorrect = true;
+                            }
                         }
                         document.querySelectorAll(`input[name="question${index}"]`).forEach(input => input.disabled = true);
                     } else if (q.type === 'short-answer') {
                         const input = document.querySelector(`input[name="question${index}"]`);
-                        if (input && input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
-                            isCorrect = true;
+                        if (input) {
+                            userAnswer = input.value.trim();
+                            if (input.value.trim().toLowerCase() === q.answer.toLowerCase()) {
+                                isCorrect = true;
+                            }
                         }
                         input.disabled = true;
                         // También deshabilitar el botón de dictado de voz asociado
@@ -1438,6 +2289,7 @@
 
                     if (isCorrect) {
                         correctAnswers++;
+                        questionResultClass = 'correct';
                         let feedbackSpan = questionDiv.querySelector('.feedback-span');
                         if (!feedbackSpan) {
                             feedbackSpan = document.createElement('span');
@@ -1460,10 +2312,27 @@
                         feedbackSpan.style.color = 'red';
                         feedbackSpan.textContent = `❌ Incorrecto (Correcta: ${q.answer})`;
                     }
+
+                    // Lógica para el Resumen Final (MODIFICACIÓN)
+                    resultsSummary += `<li class="${questionResultClass}">
+                        <p><strong>Pregunta ${index + 1}:</strong> ${q.question}</p>
+                        <p>Tu Respuesta: <em>${userAnswer || 'Sin responder'}</em></p>
+                        <p>Respuesta Correcta: <strong>${q.answer}</strong></p>
+                    </li>`;
                 });
+                
+                resultsSummary += '</ol>'; // Cerrar la lista de resumen
 
                 const score = correctAnswers * 10;
-                quizFeedback.textContent = `Has acertado ${correctAnswers} de ${totalQuestions} preguntas. Tu puntaje en el quiz es: ${score} puntos.`;
+                
+                // Mostrar el feedback del score con el resumen detallado (MODIFICACIÓN)
+                quizFeedback.innerHTML = `
+                    <h3>Resultados del Quiz</h3>
+                    <p>Has acertado ${correctAnswers} de ${totalQuestions} preguntas. Tu puntaje en el quiz es: <strong>${score} puntos</strong>.</p>
+                    <hr>
+                    <h4>Resumen por Ejercicio:</h4>
+                    ${resultsSummary}
+                `;
 
                 if (currentStudent) {
                     currentStudent.totalScore += score;
@@ -1479,11 +2348,11 @@
 
                 setTimeout(() => {
                     quizSection.style.display = 'none';
-                    commentSection.style.display = 'block';
-                    textCommentInput.value = '';
-                    commentFeedback.textContent = '';
-                    textCommentInput.disabled = false;
-                    submitCommentBtn.disabled = false;
+                    // Mostrar la sección de evaluación / resumen en lugar de comentarios
+                    if (evalSection) {
+                        evalSection.style.display = 'block';
+                        evalSummary.innerHTML = quizFeedback.innerHTML || '<p>Resumen disponible.</p>';
+                    }
                 }, 2000);
             });
 
@@ -1492,100 +2361,372 @@
             });
 
             // --- Sección de Comentarios ---
-            submitCommentBtn.addEventListener('click', () => {
-                const comment = textCommentInput.value.trim();
-                if (comment) {
-                    console.log(`Comentario del estudiante sobre "${currentText.title}":\n${comment}`);
-                    commentFeedback.style.color = 'green';
-                    commentFeedback.textContent = '¡Gracias por tu comentario! Ha sido registrado.';
-                    textCommentInput.disabled = true;
-                    submitCommentBtn.disabled = true;
-                    // También deshabilitar el botón de dictado de voz asociado
-                    const speechButton = textCommentInput.nextElementSibling;
-                    if (speechButton && speechButton.classList.contains('speech-input-btn')) {
-                        speechButton.disabled = true;
-                    }
-                } else {
-                    commentFeedback.style.color = 'red';
-                    commentFeedback.textContent = 'Por favor, escribe un comentario antes de enviar.';
+           // --- Inicialización de Dictado de Voz ---
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                const speechRecognitionSupported = SpeechRecognition !== undefined;
+
+                if (!speechRecognitionSupported) {
+                    console.warn('El reconocimiento de voz no es compatible con este navegador.');
+                    document.querySelectorAll('.speech-input-btn').forEach(btn => btn.disabled = true);
                 }
-            });
 
-            // --- Inicialización de Dictado de Voz ---
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const speechRecognitionSupported = SpeechRecognition !== undefined;
+                // Delegación de eventos para los botones de dictado de voz
+                document.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('speech-input-btn')) {
+                        const button = event.target;
+                        if (!speechRecognitionSupported) {
+                            alert('El reconocimiento de voz no es compatible con tu navegador. Por favor, actualiza o usa otro navegador.');
+                            return;
+                        }
 
-            if (!speechRecognitionSupported) {
-                console.warn('El reconocimiento de voz no es compatible con este navegador.');
-                // Deshabilitar los botones de voz si no hay soporte
-                document.querySelectorAll('.speech-input-btn').forEach(btn => btn.disabled = true);
-            }
+                        // SOLO soporta inputs de respuesta corta (ya no hay textarea de comentarios)
+                        const targetId = button.dataset.target;
+                        const targetInput = document.getElementById(targetId);
 
-            // Delegación de eventos para los botones de dictado de voz (incluyendo los generados dinámicamente)
-            document.addEventListener('click', (event) => {
-                if (event.target.classList.contains('speech-input-btn')) {
-                    const button = event.target;
-                    if (!speechRecognitionSupported) {
-                        alert('El reconocimiento de voz no es compatible con tu navegador. Por favor, actualiza o usa otro navegador.');
+                        if (!targetInput) return; 
+
+                        const recognition = new SpeechRecognition();
+                        recognition.continuous = false; 
+                        recognition.interimResults = false; 
+                        recognition.lang = 'es-ES'; 
+
+                        recognition.onstart = () => {
+                            button.textContent = '🔴 Grabando...';
+                            button.disabled = true; 
+                        };
+
+                        recognition.onresult = (event) => {
+                            const transcript = event.results[0][0].transcript;
+                            targetInput.value = transcript; 
+                        };
+
+                        recognition.onerror = (event) => {
+                            console.error('Error de reconocimiento de voz:', event.error);
+                            button.textContent = '🎤'; 
+                            button.disabled = false; 
+                            alert(`Error en el reconocimiento de voz: ${event.error}. Asegúrate de que tu micrófono esté conectado y permitas el acceso.`);
+                        };
+
+                        recognition.onend = () => {
+                            button.textContent = '🎤'; 
+                            button.disabled = false; 
+                        };
+
+                        recognition.start();
+                    }
+                });
+
+                // --- Función para exportar .xls (HTML que Excel abre) ---
+                // Generar y descargar un .xls (HTML que Excel abre) a partir de un array de filas
+                const downloadXLS = (rows, filename = 'respuestas.xls') => {
+                    if (!rows || !rows.length) {
+                        alert('No hay datos para exportar.');
                         return;
                     }
+                    let html = '<table><thead><tr>';
+                    const headers = Object.keys(rows[0] || {});
+                    headers.forEach(h => { html += `<th>${h}</th>`; });
+                    html += '</tr></thead><tbody>';
+                    rows.forEach(r => {
+                        html += '<tr>';
+                        headers.forEach(h => {
+                            const cell = (r[h] !== undefined && r[h] !== null) ? r[h] : '';
+                            html += `<td>${String(cell).replace(/</g,'&lt;')}</td>`;
+                        });
+                        html += '</tr>';
+                    });
+                    html += '</tbody></table>';
 
-                    const targetId = button.dataset.target;
-                    const targetInput = document.getElementById(targetId);
+                    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                };
 
-                    const recognition = new SpeechRecognition();
-                    recognition.continuous = false; // Para entradas cortas, no continua
-                    recognition.interimResults = false; // Solo resultados finales
-                    recognition.lang = 'es-ES'; // Idioma español
+                // Handler del botón exportar (Evaluaciones): exporta SOLO resultados de evaluaciones acumuladas
+                exportAnswersBtn && exportAnswersBtn.addEventListener('click', () => {
+                    if (evalState && Array.isArray(evalState.rows) && evalState.rows.length) {
+                        const now = new Date();
+                        const fname = `evaluacion_${evalState.mode}_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}.xls`;
+                        downloadXLS(evalState.rows, fname);
+                    } else {
+                        alert('No hay resultados de evaluación para exportar.');
+                    }
+                });
 
-                    let isRecognizing = false;
+                // Handler para exportar la actividad actual (no mezclada con evaluaciones)
+                const exportActivityBtn = document.getElementById('exportActivityBtn');
+                exportActivityBtn && exportActivityBtn.addEventListener('click', () => {
+                    const now = new Date();
+                    const fecha = now.toLocaleDateString();
+                    const hora = now.toLocaleTimeString();
+                    const student = currentStudent ? currentStudent.name : 'N/A';
+                    const grade = currentStudent ? currentStudent.grade : 'N/A';
+                    const category = currentCategory || 'N/A';
+                    const textTitleValue = currentText ? currentText.title : 'N/A';
 
-                    recognition.onstart = () => {
-                        isRecognizing = true;
-                        button.textContent = '🔴 Grabando...';
-                        button.disabled = true; // Deshabilitar botón mientras graba
-                        console.log('Reconocimiento de voz iniciado.');
-                    };
+                    const rows = [];
+                    if (currentQuiz && currentQuiz.length) {
+                        currentQuiz.forEach((q, i) => {
+                            let userAnswer = 'Sin responder';
+                            if (q.type === 'multiple-choice') {
+                                const sel = document.querySelector(`input[name="question${i}"]:checked`);
+                                userAnswer = sel ? sel.value : userAnswer;
+                            } else {
+                                const inp = document.querySelector(`#quizQuestion${i}`);
+                                userAnswer = inp ? inp.value.trim() : userAnswer;
+                            }
+                            const result = (userAnswer && String(userAnswer).toLowerCase() === String(q.answer).toLowerCase()) ? 'Correcto' : 'Incorrecto';
+                            rows.push({
+                                'Fecha': fecha,
+                                'Hora': hora,
+                                'Estudiante': student,
+                                'Grado': grade,
+                                'Categoría': category,
+                                'Texto': textTitleValue,
+                                'Pregunta': q.question,
+                                'Respuesta del estudiante': userAnswer,
+                                'Respuesta correcta': q.answer,
+                                'Resultado': result
+                            });
+                        });
+                    } else {
+                        alert('No hay respuestas de actividad para exportar. Realiza primero el quiz de la actividad.');
+                        return;
+                    }
+                    const fname = `actividad_${category}_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}.xls`;
+                    if (rows.length) downloadXLS(rows, fname);
+                });
 
-                    recognition.onresult = (event) => {
-                        const transcript = event.results[0][0].transcript;
-                        targetInput.value = transcript; // Sobrescribir el valor del input
-                        console.log('Resultado del reconocimiento:', transcript);
-                    };
+                // --- Flujo secuencial de Evaluación (entrada/salida) ---
+                let evalState = null; // { mode, exercises: [], currentIndex, rows }
+                let currentEvalQuiz = null; // { quiz, exIndex }
 
-                    recognition.onerror = (event) => {
-                        console.error('Error de reconocimiento de voz:', event.error);
-                        button.textContent = '🎤'; // Resetear texto del botón
-                        button.disabled = false; // Volver a habilitar el botón
-                        isRecognizing = false;
-                        alert(`Error en el reconocimiento de voz: ${event.error}. Asegúrate de que tu micrófono esté conectado y permitas el acceso.`);
-                    };
+                const buildExercisesFromData = (data) => {
+                    const exercises = [];
+                    if (!Array.isArray(data) || data.length === 0) return exercises;
 
-                    recognition.onend = () => {
-                        isRecognizing = false;
-                        button.textContent = '🎤'; // Resetear texto del botón
-                        button.disabled = false; // Volver a habilitar el botón
-                        console.log('Reconocimiento de voz finalizado.');
-                    };
+                    if (data.length >= 4) {
+                        // Primer ejercicio = combinación de los dos primeros en doble columna
+                        exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
+                        exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 2'});
+                        exercises.push({ type: 'single', text: data[3], quiz: data[3].quiz || [], title: 'Ejercicio 3'});
+                    } else if (data.length === 3) {
+                        exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
+                        exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 2'});
+                        // Duplicar el último para completar 3 ejercicios (informar al usuario)
+                        exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 3 (duplicado)'});
+                        alert('Nota: La evaluación contiene 3 ejercicios; se duplicó el último texto por falta de uno adicional.');
+                    } else if (data.length === 2) {
+                        exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
+                        exercises.push({ type: 'single', text: data[0], quiz: data[0].quiz || [], title: 'Ejercicio 2 (duplicado)'});
+                        exercises.push({ type: 'single', text: data[1], quiz: data[1].quiz || [], title: 'Ejercicio 3 (duplicado)'});
+                        alert('Nota: Datos insuficientes; se duplicaron textos para completar 3 ejercicios.');
+                    } else { // 1 or less
+                        exercises.push({ type: 'single', text: data[0], quiz: data[0].quiz || [], title: 'Ejercicio 1'});
+                        exercises.push({ type: 'single', text: data[0], quiz: data[0].quiz || [], title: 'Ejercicio 2 (duplicado)'});
+                        exercises.push({ type: 'single', text: data[0], quiz: data[0].quiz || [], title: 'Ejercicio 3 (duplicado)'});
+                        alert('Datos de evaluación muy limitados; se duplicaron textos para formar 3 ejercicios.');
+                    }
+                    return exercises;
+                };
 
-                    // Iniciar reconocimiento
-                    recognition.start();
-                }
+                const showExercise = (index) => {
+                    if (!evalState || !evalState.exercises || index < 0 || index >= evalState.exercises.length) return;
+                    const ex = evalState.exercises[index];
+                    evalTextContainer.innerHTML = '';
+                    evalQuizContainer.innerHTML = '';
+                    if (evalState && evalState.mode === 'entrada') {
+                        evalTitle.textContent = 'Evaluación de entrada';
+                    } else if (evalState && evalState.mode === 'salida') {
+                        evalTitle.textContent = 'Evaluación de salida';
+                    } else {
+                        evalTitle.textContent = 'Evaluación';
+                    }
+                    evalProgress.textContent = `Ejercicio ${index + 1} de ${evalState.exercises.length}`;
+
+                    if (ex.type === 'double') {
+                        const left = ex.columns[0];
+                        const right = ex.columns[1];
+                        evalTextContainer.innerHTML = `
+                            <div class="two-column-layout">
+                                <div class="column-text">
+                                    <h3>${left.title}</h3>
+                                    <p class="author-label">Autor: ${left.author || ''}</p>
+                                    ${left.content.map(p => `<p>${p}</p>`).join('')}
+                                </div>
+                                <div class="column-text">
+                                    <h3>${right.title}</h3>
+                                    <p class="author-label">Autor: ${right.author || ''}</p>
+                                    ${right.content.map(p => `<p>${p}</p>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                    } else if (ex.type === 'single') {
+                        const t = ex.text;
+                        evalTextContainer.innerHTML = `
+                            <h3>${t.title}</h3>
+                            <p class="author-label">Autor: ${t.author || ''}</p>
+                            ${t.content.map(p => `<p>${p}</p>`).join('')}
+                        `;
+                    }
+
+                    // Generar el quiz para este ejercicio
+                    generateEvalQuiz(ex.quiz || [], index);
+                };
+
+                const generateEvalQuiz = (quiz, exIndex) => {
+                    currentEvalQuiz = { quiz: quiz || [], exIndex };
+                    evalQuizContainer.innerHTML = '';
+                    if (!quiz || quiz.length === 0) {
+                        evalQuizContainer.innerHTML = '<p>No hay preguntas para este ejercicio.</p>';
+                        return;
+                    }
+                    quiz.forEach((q, qIndex) => {
+                        const qDiv = document.createElement('div');
+                        qDiv.classList.add('question');
+                        qDiv.innerHTML = `<p>${qIndex + 1}. ${q.question}</p>`;
+                        const name = `eval_${exIndex}_q${qIndex}`;
+                        if (q.type === 'multiple-choice') {
+                            q.options.forEach(opt => {
+                                qDiv.innerHTML += `
+                                    <label>
+                                        <input type="radio" name="${name}" value="${opt}">
+                                        ${opt}
+                                    </label>
+                                `;
+                            });
+                        } else {
+                            const inputId = `eval_${exIndex}_input_${qIndex}`;
+                            qDiv.innerHTML += `
+                                <div class="input-with-speech">
+                                    <input type="text" id="${inputId}" name="${name}" class="short-answer-input" placeholder="Escribe tu respuesta aquí">
+                                    <button class="speech-input-btn" data-target="${inputId}" title="Dictar respuesta">🎤</button>
+                                </div>
+                            `;
+                        }
+                        evalQuizContainer.appendChild(qDiv);
+                    });
+                };
+
+                submitEvalBtn && submitEvalBtn.addEventListener('click', () => {
+                    if (!evalState) return;
+                    const exIndex = evalState.currentIndex;
+                    const ex = evalState.exercises[exIndex];
+                    const quiz = ex.quiz || [];
+                    let correct = 0;
+                    const now = new Date();
+                    const fecha = now.toLocaleDateString();
+                    const hora = now.toLocaleTimeString();
+                    const rowsThisExercise = [];
+
+                    quiz.forEach((q, i) => {
+                        let userAnswer = 'Sin responder';
+                        if (q.type === 'multiple-choice') {
+                            const sel = document.querySelector(`input[name="eval_${exIndex}_q${i}"]:checked`);
+                            userAnswer = sel ? sel.value : userAnswer;
+                        } else {
+                            const inp = document.getElementById(`eval_${exIndex}_input_${i}`);
+                            userAnswer = inp ? inp.value.trim() : userAnswer;
+                        }
+                        const result = (userAnswer && String(userAnswer).toLowerCase() === String(q.answer).toLowerCase()) ? 'Correcto' : 'Incorrecto';
+                        if (result === 'Correcto') correct++;
+                        rowsThisExercise.push({
+                            'Fecha': fecha,
+                            'Hora': hora,
+                            'Estudiante': currentStudent ? currentStudent.name : 'N/A',
+                            'Grado': currentStudent ? currentStudent.grade : 'N/A',
+                            'Categoría': evalState.mode,
+                            'Texto': ex.type === 'double' ? `${ex.columns[0].title} | ${ex.columns[1].title}` : (ex.text ? ex.text.title : ''),
+                            'Pregunta': q.question,
+                            'Respuesta del estudiante': userAnswer,
+                            'Respuesta correcta': q.answer,
+                            'Resultado': result
+                        });
+                    });
+
+                    const score = correct * 10;
+                    // Guardar resultados
+                    evalState.rows.push(...rowsThisExercise);
+                    // Actualizar puntaje del estudiante
+                    if (currentStudent) {
+                        currentStudent.totalScore += score;
+                        saveStudentScores();
+                        updateStudentUI();
+                    }
+
+                    // Mostrar resumen de este ejercicio
+                    const summaryHtml = `
+                        <h4>Resumen Ejercicio ${exIndex + 1}</h4>
+                        <p>Aciertos: ${correct} de ${quiz.length}. Puntaje: ${score} pts.</p>
+                    `;
+                    evalSummary.innerHTML = summaryHtml + (evalSummary.innerHTML || '');
+
+                    // Avanzar automáticamente al siguiente ejercicio o finalizar
+                    evalState.currentIndex++;
+                    if (evalState.currentIndex < evalState.exercises.length) {
+                        // Mostrar siguiente ejercicio
+                        setTimeout(() => {
+                            showExercise(evalState.currentIndex);
+                        }, 800);
+                    } else {
+                        // Finalizado: mostrar resumen final y habilitar exportación
+                        setTimeout(() => {
+                            evalTextContainer.innerHTML = '';
+                            evalQuizContainer.innerHTML = '';
+                            if (evalState && evalState.mode === 'entrada') {
+                                evalTitle.textContent = 'Evaluación de entrada';
+                            } else if (evalState && evalState.mode === 'salida') {
+                                evalTitle.textContent = 'Evaluación de salida';
+                            } else {
+                                evalTitle.textContent = 'Evaluación';
+                            }
+                            evalProgress.textContent = `Completada`;
+                            // Mostrar resumen completo
+                            let finalHtml = '<h3>Resumen Final</h3>';
+                            const totalCorrect = evalState.rows.filter(r => r.Resultado === 'Correcto' || r.Resultado === 'Correcto').length;
+                            finalHtml += `<p>Total de preguntas registradas: ${evalState.rows.length}</p>`;
+                            finalHtml += `<p>Estudiante: ${currentStudent ? currentStudent.name : 'N/A'}</p>`;
+                            finalHtml += '<p>Puedes exportar los resultados usando "Exportar Respuestas (.xls)".</p>';
+                            evalSummary.innerHTML = finalHtml + '<hr>' + evalSummary.innerHTML;
+                            // Preparar descarga inmediata opcional: no descargar automáticamente, esperar al usuario
+                        }, 500);
+                    }
+                });
+
+                // Iniciar evaluación (botones ya agregados) -- función pública
+                const startEvaluation = (mode) => {
+                    const data = (mode === 'entrada') ? entradaData : salidaData;
+                    const exercises = buildExercisesFromData(data);
+                    if (!exercises || exercises.length === 0) {
+                        alert('No hay ejercicios configurados para esta evaluación.');
+                        return;
+                    }
+                    evalState = { mode, exercises, currentIndex: 0, rows: [] };
+                    evalSummary.innerHTML = '';
+                    if (evalSection) evalSection.style.display = 'block';
+                    showExercise(0);
+                };
+
+                // Inicialización al cargar la página
+                selectRandomText();
+
+                // Event listener para el cambio de categoría
+                textCategorySelect.addEventListener('change', () => {
+                    currentCategory = textCategorySelect.value;
+                    
+                    startQuizBtn.removeEventListener('click', startQuizAfterReading); 
+                    startQuizBtn.removeEventListener('click', handleStartQuizClick); 
+                    startQuizBtn.addEventListener('click', handleStartQuizClick); 
+                    
+                    selectRandomText();
+                });
             });
-
-            // Inicialización al cargar la página
-            selectRandomText();
-
-            // Event listener para el cambio de categoría
-            textCategorySelect.addEventListener('change', () => {
-                currentCategory = textCategorySelect.value;
-                selectRandomText(); // Llama a la función para seleccionar un nuevo texto
-            });
-        });
-    </script>
+        </script>
 </body>
 </html>
-
-
-
-
