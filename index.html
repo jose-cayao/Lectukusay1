@@ -38,7 +38,8 @@
     flex: 1; /* Distribuye el espacio equitativamente */
     padding: 15px;
     /* Usamos el mismo color de borde que la separación principal para mantener la coherencia */
-    border-right: 1px solid #ddd; 
+    border-right: 1px solid #ddd;
+    text-align: justify;
 }
 
 .column-text:last-child {
@@ -48,6 +49,8 @@
 /* Ajuste del autor y el título de las sub-columnas */
 .column-text h3 {
     margin-top: 0;
+    text-align: center;
+    font-size: 2.0rem;
 }
 
 .author-label {
@@ -55,6 +58,39 @@
     color: #666;
     margin-top: -10px;
     margin-bottom: 10px;
+    text-align: left;
+}
+
+.column-text p {
+    text-align: justify;
+    line-height: 1.8;
+    margin: 0.8rem 0;
+}
+
+/* Estilos para evaluaciones */
+.eval-text-container {
+    margin-bottom: 2rem;
+}
+
+.eval-text-container h3 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.eval-text-container p {
+    text-align: justify;
+    line-height: 1.8;
+    margin: 0.8rem 0;
+}
+
+.eval-text-container .author-label {
+    text-align: left;
+    font-size: 0.95em;
+    color: #666;
+    margin: 0.5rem 0 1rem 0;
 }
 
 /* Estilos para el resumen de respuestas */
@@ -464,11 +500,18 @@ body.dark-mode .results-list li.incorrect {
         }
 
         .text-display, .quiz-section, .comment-section {
-            background-color: var(--card-background-light);
-            padding: 2rem;
+            background-color: transparent;
+            padding: 0;
             border-radius: 10px;
-            box-shadow: 0 2px 8px #00324e;
-            min-height: 300px; /* Para asegurar un tamaño mínimo */
+            box-shadow: none;
+            min-height: auto;
+            width: 100%;
+        }
+
+        #textTitle {
+            font-size: 2.4rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .text-display .author {
@@ -476,16 +519,19 @@ body.dark-mode .results-list li.incorrect {
             font-style: italic;
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
+            text-align: left;
         }
 
         #textContent { /* Aplicar el tamaño de fuente directamente aquí */
             line-height: 1.8;
             margin-bottom: 1rem;
             font-size: 1.1rem; /* Tamaño de texto inicial */
+            text-align: justify;
         }
 
         #textContent p { /* Eliminar font-size de aquí para que el del padre funcione */
             margin-bottom: 1rem;
+            text-align: justify;
         }
 
         .placeholder-text {
@@ -633,6 +679,8 @@ body.dark-mode .results-list li.incorrect {
                 width: 100%;
                 max-width: 100%;
                 margin-left: 0;
+                padding: 1rem;
+                max-height: none;
             }
 
             .controls {
@@ -678,7 +726,15 @@ body.dark-mode .results-list li.incorrect {
                 gap: 0.75rem;
             }
 
-            .sidebar, .text-display, .quiz-section, .eval-section, .controls {
+            .sidebar {
+                flex: 1;
+                max-width: 100%;
+                max-height: none;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .text-display, .quiz-section, .eval-section, .controls {
                 padding: 0.75rem;
             }
             
@@ -739,9 +795,13 @@ body.dark-mode .results-list li.incorrect {
             }
             
             .sidebar {
-                padding: 0.75rem;
-                gap: 0.75rem;
+                flex: 1;
+                width: 100%;
+                max-width: 100%;
+                padding: 1rem;
+                gap: 1rem;
                 max-height: none;
+                background-color: #b8d4f017;
             }
 
             .student-form input, .student-form button,
@@ -858,9 +918,643 @@ body.dark-mode .results-list li.incorrect {
             opacity: 0.6;
             cursor: not-allowed;
         }
+
+        /* ===== Estilos para Pantalla de Bienvenida ===== */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #00324e 0%, #129cec 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeInOverlay 0.5s ease-in;
+        }
+
+        .welcome-overlay.hide {
+            animation: fadeOutOverlay 0.8s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOutOverlay {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .welcome-container {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-title {
+            font-size: 3.5rem;
+            color: white;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Contenedor de burbujas */
+        .bubbles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Estilos de las burbujas */
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(18, 156, 236, 0.4));
+            box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2);
+            animation: rise linear infinite;
+        }
+
+        .bubble:nth-child(1) {
+            left: 10%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 3s;
+            animation-delay: 0s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(242, 47, 25, 0.4));
+        }
+
+        .bubble:nth-child(2) {
+            left: 20%;
+            width: 15px;
+            height: 15px;
+            animation-duration: 3.5s;
+            animation-delay: 0.3s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(252, 165, 3, 0.4));
+        }
+
+        .bubble:nth-child(3) {
+            left: 30%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 2.8s;
+            animation-delay: 0.6s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(18, 156, 236, 0.5));
+        }
+
+        .bubble:nth-child(4) {
+            left: 40%;
+            width: 18px;
+            height: 18px;
+            animation-duration: 4s;
+            animation-delay: 0.2s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(242, 47, 25, 0.3));
+        }
+
+        .bubble:nth-child(5) {
+            left: 50%;
+            width: 28px;
+            height: 28px;
+            animation-duration: 3.2s;
+            animation-delay: 0.4s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(252, 165, 3, 0.5));
+        }
+
+        .bubble:nth-child(6) {
+            left: 60%;
+            width: 22px;
+            height: 22px;
+            animation-duration: 3.8s;
+            animation-delay: 0.1s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(18, 156, 236, 0.4));
+        }
+
+        .bubble:nth-child(7) {
+            left: 70%;
+            width: 26px;
+            height: 26px;
+            animation-duration: 2.9s;
+            animation-delay: 0.5s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(242, 47, 25, 0.4));
+        }
+
+        .bubble:nth-child(8) {
+            left: 80%;
+            width: 16px;
+            height: 16px;
+            animation-duration: 3.6s;
+            animation-delay: 0.3s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(252, 165, 3, 0.3));
+        }
+
+        .bubble:nth-child(9) {
+            left: 90%;
+            width: 24px;
+            height: 24px;
+            animation-duration: 3.3s;
+            animation-delay: 0.6s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(18, 156, 236, 0.5));
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: 0;
+                opacity: 0;
+                transform: translateX(0) scale(1);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+                transform: translateX(100px) scale(0.5);
+            }
+        }
+
+        .welcome-instruction {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            animation: fadeIn 1.5s ease-out 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ===== Estilos para Estado Inicial (Sin Contenido) ===== */
+        .initial-welcome {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: auto;
+            height: 200px;
+            padding: 15px;
+            text-align: center;
+            background: linear-gradient(135deg, #00324e 0%, #129cec 50%, #87CEEB 100%);
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 50, 78, 0.15);
+            overflow: hidden;
+        }
+
+        .initial-content {
+            position: relative;
+            z-index: 10;
+            animation: slideInDown 1s ease-out;
+            padding: 20px 40px;
+            background: transparent;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .initial-title {
+            font-size: 3.5rem;
+            color: #ffffff;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(18, 156, 236, 0.6);
+            letter-spacing: 2px;
+        }
+
+        .initial-subtitle {
+            font-size: 1.6rem;
+            color: #f0e68c;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Contenedor de burbujas animadas */
+        .initial-bubbles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .initial-bubble {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(18, 156, 236, 0.3));
+            box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+            animation: initialRise linear infinite;
+            opacity: 0.7;
+        }
+
+        .initial-bubble:nth-child(1) {
+            left: 10%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 4s;
+            animation-delay: 0s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(242, 47, 25, 0.3));
+        }
+
+        .initial-bubble:nth-child(2) {
+            left: 25%;
+            width: 15px;
+            height: 15px;
+            animation-duration: 4.5s;
+            animation-delay: 0.3s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(252, 165, 3, 0.3));
+        }
+
+        .initial-bubble:nth-child(3) {
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 3.8s;
+            animation-delay: 0.6s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(18, 156, 236, 0.4));
+        }
+
+        .initial-bubble:nth-child(4) {
+            left: 65%;
+            width: 18px;
+            height: 18px;
+            animation-duration: 4.2s;
+            animation-delay: 0.2s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(242, 47, 25, 0.25));
+        }
+
+        .initial-bubble:nth-child(5) {
+            left: 80%;
+            width: 28px;
+            height: 28px;
+            animation-duration: 3.9s;
+            animation-delay: 0.4s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(252, 165, 3, 0.35));
+        }
+
+        .initial-bubble:nth-child(6) {
+            left: 40%;
+            width: 20px;
+            height: 20px;
+            animation-duration: 4.6s;
+            animation-delay: 0.1s;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(18, 156, 236, 0.35));
+        }
+
+        @keyframes initialRise {
+            0% {
+                bottom: -20px;
+                opacity: 0;
+                transform: translateX(0) scale(1);
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                bottom: 120%;
+                opacity: 0;
+                transform: translateX(50px) scale(0.5);
+            }
+        }
+
+        /* Decoración con imagen adolescentes */
+        .initial-decoration {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .initial-decoration img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            object-position: center;
+            opacity: 0;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            display: none;
+        }
+
+        .rural-figures {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+            display: none;
+        }
+
+        .child {
+            animation: childBounce 3s ease-in-out infinite;
+        }
+
+        .child-1 {
+            animation-delay: 0s;
+        }
+
+        .child-2 {
+            animation-delay: 0.5s;
+        }
+
+        .cloud {
+            animation: floatCloud 8s ease-in-out infinite;
+        }
+
+        .cloud-1 {
+            animation-delay: 0s;
+        }
+
+        .cloud-2 {
+            animation-delay: 2s;
+        }
+
+        @keyframes childBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes floatCloud {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(30px);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos Responsivos para todos los dispositivos */
+        @media (max-width: 1200px) {
+            .initial-welcome {
+                height: 300px;
+                padding: 30px;
+            }
+            .initial-title {
+                font-size: 3rem;
+            }
+            .initial-subtitle {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .initial-welcome {
+                height: 280px;
+                padding: 20px;
+                flex-direction: column;
+            }
+            .initial-decoration {
+                width: 60%;
+                height: 100%;
+            }
+            .initial-title {
+                font-size: 2.2rem;
+            }
+            .initial-subtitle {
+                font-size: 1.1rem;
+            }
+            .initial-bubbles-container {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .initial-welcome {
+                height: 250px;
+                padding: 15px;
+            }
+            .initial-decoration {
+                width: 100%;
+                opacity: 0.6;
+            }
+            .initial-content {
+                z-index: 15;
+                background: rgba(255, 255, 255, 0.8);
+                padding: 15px;
+                border-radius: 8px;
+            }
+            .initial-title {
+                font-size: 1.8rem;
+                margin-bottom: 5px;
+            }
+            .initial-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        .initial-welcome.hidden {
+            display: none;
+            min-height: 0;
+            padding: 0;
+            margin: 0;
+            height: 0;
+        }
+
+        /* Cuando la pantalla inicial está oculta, reducir el espacio del article */
+        .text-display:has(.initial-welcome.hidden) {
+            min-height: auto;
+            padding: 0;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        /* ===== Media Queries para Responsividad ===== */
+
+        /* Celulares pequeños (hasta 480px) */
+        @media (max-width: 480px) {
+            .initial-welcome {
+                min-height: 350px;
+                padding: 20px;
+            }
+
+            .initial-title {
+                font-size: 2rem;
+                margin-bottom: 5px;
+            }
+
+            .initial-subtitle {
+                font-size: 1rem;
+            }
+
+            .initial-decoration {
+                height: 120px;
+            }
+        }
+
+        /* Celulares medianos (481px - 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .initial-welcome {
+                min-height: 420px;
+                padding: 30px;
+            }
+
+            .initial-title {
+                font-size: 2.5rem;
+                margin-bottom: 8px;
+            }
+
+            .initial-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .initial-decoration {
+                height: 140px;
+            }
+        }
+
+        /* Tablets y dispositivos medianos (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .initial-welcome {
+                min-height: 500px;
+                padding: 35px;
+            }
+
+            .initial-title {
+                font-size: 3rem;
+                margin-bottom: 10px;
+            }
+
+            .initial-subtitle {
+                font-size: 1.4rem;
+            }
+
+            .initial-decoration {
+                height: 160px;
+            }
+        }
+
+        /* Laptops y pantallas grandes (1025px en adelante) */
+        @media (min-width: 1025px) {
+            .initial-welcome {
+                min-height: 600px;
+                padding: 40px;
+            }
+
+            .initial-title {
+                font-size: 3.5rem;
+                margin-bottom: 10px;
+            }
+
+            .initial-subtitle {
+                font-size: 1.6rem;
+            }
+
+            .initial-decoration {
+                height: 180px;
+            }
+        }
+
+        /* Pantallas muy grandes (1400px en adelante) */
+        @media (min-width: 1400px) {
+            .initial-welcome {
+                min-height: 650px;
+                padding: 50px;
+            }
+
+            .initial-title {
+                font-size: 4rem;
+            }
+
+            .initial-subtitle {
+                font-size: 1.8rem;
+            }
+
+            .initial-decoration {
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Pantalla de Bienvenida con Burbujas Animadas -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="bubbles-container">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        <div class="welcome-container">
+            <h1 class="welcome-title">¡Bienvenidos a<br>Lectukushay!</h1>
+            <p class="welcome-instruction">Haz clic en cualquier lugar para continuar</p>
+        </div>
+    </div>
+
     <header>
         <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg" alt="Logo LectuKushay - Plataforma de lectura educativa">
         <b><h1>LectuKushay</h1></b>
@@ -946,9 +1640,38 @@ body.dark-mode .results-list li.incorrect {
             </nav>
 
             <article class="text-display" role="article">
-                <h2 id="textTitle"></h2>
-                <div id="textAuthor" class="author" role="doc-subtitle"></div>
-                <div id="textContent" role="main">
+                <!-- Estado Inicial: Pantalla de Presentación -->
+                <div id="initialWelcome" class="initial-welcome">
+                    <!-- Fondo decorativo con burbujas -->
+                    <div class="initial-bubbles-container">
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                        <div class="initial-bubble"></div>
+                    </div>
+                    
+                    <!-- Contenido de texto -->
+                    <div class="initial-content">
+                        <h2 class="initial-title">LectuKushay</h2>
+                        <p class="initial-subtitle">La alegría de leer comienza aquí</p>
+                    </div>
+                    
+                    <!-- Decoración con imagen adolescentes leyendo -->
+                    <div class="initial-decoration">
+                        <img src="E:\UNC//Lectu_imagen.png" alt="250" loading="lazy">
+                    </div>
+                </div>
+                
+                <!-- Contenido del texto (oculto inicialmente) -->
+                <h2 id="textTitle" style="display:none;"></h2>
+                <div id="textAuthor" class="author" role="doc-subtitle" style="display:none;"></div>
+                <div id="textContent" role="main" style="display:none;">
                     <p class="placeholder-text">Selecciona una categoría de texto y luego un texto para empezar a leer. ¡La aventura te espera!</p>
                 </div>
                 <button id="startQuizBtn" class="btn-primary" style="display:none;">Terminé de leer, ¡a la comprensión!</button>
@@ -971,6 +1694,7 @@ body.dark-mode .results-list li.incorrect {
             <!-- Comentarios de estudiante removidos (requerimiento) -->
             <section id="evalSection" class="eval-section" style="display:none;" role="region" aria-label="Sección de evaluación">
                 <h2 id="evalTitle">Evaluación</h2>
+                <p id="evalSubtitle" class="eval-subtitle" style="display:none; font-weight:600; color:var(--primary-color); margin-top:0.5rem;">Instrumento de recolección de información del proyecto: Aplicación de la herramienta tecnológica Lectukushay v.1 para mejorar la comprensión lectora en estudiantes del VII ciclo de la Institución Educativa N° 16142 Señor Cautivo, Sallique, Jaén, Cajamarca, 2025</p>
                 <div id="evalProgress" style="margin-bottom:0.5rem; font-weight:bold;" role="status" aria-live="polite"></div>
                 <div id="evalTextContainer" class="eval-text-container" role="main"></div>
                 <div id="evalQuizContainer" class="eval-quiz-container"></div>
@@ -989,7 +1713,7 @@ body.dark-mode .results-list li.incorrect {
     <script>
         // --- Data de Textos (JSON embebido) ---
          const entradaData = [
-            {
+                     {
                 "title": "¿Qué significa llevar una vida saludable?",
                 "author": "Lic. Julissa Choque Pazos / Psicóloga del Centro de Salud ‘San Juan Macías - Minedu 2023",
                 "content": [
@@ -1046,6 +1770,12 @@ body.dark-mode .results-list li.incorrect {
                         "type": "multiple-choice",
                         "options": ["La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras.", "La presión social y los estándares estéticos pueden distorsionar la idea de una vida saludable.", "La vida saludable se vincula con la actividad física regular y una dieta balanceada.", "Son cruciales la salud mental y emocional, la calidad del sueño y las relaciones interpersonales."],
                         "answer": "La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras."
+                    },
+                                        {
+                        "question": "Según los textos leídos, ¿Cuál es la postura más adecuada para promover una vida saludable en la sociedad actual?",
+                        "type": "multiple-choice",
+                        "options": ["Imponer una única definición de vida saludable basada en estándares físicos y estéticos.", "Priorizar solo la actividad física y la alimentación estricta como base de la salud.", "Reconocer que la vida saludable depende del equilibrio entre lo físico, mental y emocional, respetando la diversidad cultural e individual.", "Evitar cualquier placer personal para mantener hábitos estrictamente saludables."],
+                        "answer": "Reconocer que la vida saludable depende del equilibrio entre lo físico, mental y emocional, respetando la diversidad cultural e individual."
                     }
                 ]
             },
@@ -1095,10 +1825,16 @@ body.dark-mode .results-list li.incorrect {
                         "answer": "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."
                     },
                     {
-                        "question": "6.	Lee las siguientes frases: •	…, a los que se les llamaba “rabones”. •	…abusos, hasta que —fastidiado— llamó al jefe… ¿Cuál es la función de las comillas y las rayas (—fastidiado—) en el texto?",
+                        "question": "Lee las siguientes frases: •	…, a los que se les llamaba “rabones”. •	…abusos, hasta que —fastidiado— llamó al jefe… ¿Cuál es la función de las comillas y las rayas (—fastidiado—) en el texto?",
                         "type": "multiple-choice",
                         "options": ["El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor.", "El primero es para resaltar el tema del texto y el segundo, comenta las características del personaje.", "El primero es para enfatizar el significado de la palabra y el segundo, incorpora sinónimos al personaje.", "El primero es para resaltar términos nuevos en el texto y el segundo, incluye un término nuevo."],
                         "answer": "El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor."
+                    },
+                                        {
+                        "question": "Desde una perspectiva ética y ciudadana, ¿qué valoración es más pertinente sobre la decisión tomada para corregir la conducta de los “rabones”?",
+                        "type": "multiple-choice",
+                        "options": ["Fue adecuada porque el castigo severo siempre garantiza el orden militar.", "Fue cuestionable porque expuso la vida de los soldados sin considerar alternativas formativas.", "Fue correcta porque permitió que los “rabones” reflexionaran sobre su conducta y asumieran responsabilidades.", "Fue innecesaria porque los abusos no afectaban directamente al ejército."],
+                        "answer": "Fue correcta porque permitió que los “rabones” reflexionaran sobre su conducta y asumieran responsabilidades."
                     }
                 ]
             },
@@ -1147,6 +1883,63 @@ body.dark-mode .results-list li.incorrect {
                         "type": "multiple-choice",
                         "options": ["La batalla y la acción de Fidípedes son símbolos de valentía. ", "El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", "El nombre de la batalla da origen al maratón moderno."],
                         "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
+                    },
+                    {
+                        "question": "De acuerdo con el texto, ¿cómo se relaciona la Batalla de Maratón con el origen del maratón moderno?",
+                        "type": "multiple-choice",
+                        "options": ["La batalla y la acción de Fidípedes son símbolos de valentía.", " El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", " El nombre de la batalla da origen al maratón moderno."],
+                        "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
+                    }   
+                ]
+                },
+                {
+                    "title": "La dieta mental para tener un cerebro sano",
+                    "author": "El País – Evaluación diagnóstica del Minedu 2021",
+                    "content": [
+                    "El cerebro funciona con energía bioquímica y, como cualquier otro órgano de nuestro cuerpo, es necesario nutrirlo. Este objetivo solo puede ser logrado con una “dieta mental” compuesta por distintas actividades que no siempre incluimos en nuestro día a día. Los científicos David Rock y Daniel J. Siegel han propuesto “la dieta de la mente saludable”, la cual consta de siete actividades que debemos realizar con frecuencia. Veamos qué tendría que incluir nuestro variado menú.",
+                    "1.	Duerme bien. Aunque habitualmente se piensa que es necesario dormir 8 horas diarias, en realidad, esto depende de cada persona. Así pues, es necesario que conozcas cuánto tiempo es el adecuado para que tu cuerpo y tu mente estén en pleno rendimiento. A modo de prueba, la primera semana duerme 6 horas al día; la segunda, 7; la tercera, 8; y la cuarta, 9. ¿Cómo te sientes al despertarte en cada semana? Toma nota de aquellos días en que te sentiste mejor y compáralos con los otros. Por cierto, según algunos de sus biógrafos, Albert Einstein, el físico extraordinario que aportó mucho a la ciencia, dormía normalmente 10 horas diarias, excepto en el caso de que estuviera trabajando en ideas que consideraba importantes; en ese caso, dormía 11. Dormir bien recarga la mente, repara el cuerpo, consolida la memoria y asienta piezas de información que hemos ido aprendiendo durante el día.",
+                    "2.	Juega a menudo. Es usual pensar que el juego es solo para niños, que la vida es un asunto serio y que nuestro tiempo debe ser productivo. La ironía es que las actividades lúdicas son absolutamente necesarias en nuestra vida por múltiples razones: reducen las reacciones ante el estrés, fortalecen las relaciones personales, inspiran la creatividad, nos hacen más flexibles emocionalmente, nos permiten asimilar mejor el aprendizaje, etc. Por ello, juega con tu familia y tus amigos; utiliza juguetes u objetos de arte que tengas a la mano para entretenerte; piensa en ideas para un descanso divertido con tus compañeros; averigua los programas recreativos que ofrece tu comunidad y participa en ellos. En una palabra: ¡juega!",
+                    "3.	No hagas nada haciendo algo. Debes dedicar tiempo a realizar actividades triviales que no demanden gran concentración. Esto te permitirá realizar una actividad sin focalizarte en ella, como cuando oyes música sin reparar en la letra. Tener estos momentos te ayudará a mejorar tu eficacia para alcanzar un objetivo. Por ello, a veces, antes de ponerte a hacer una tarea compleja, es recomendable que “pierdas el tiempo” realizando otras actividades sin importancia, ya que estas sirven como un preámbulo necesario para que tu mente funcione eficientemente y puedas encontrar la solución a algún problema.",
+                    "4.	Desarrolla la introspección y vive el presente. Para lograr esto, es imprescindible que realices actividades como pasear en plena naturaleza, escuchar una música tranquila o realizar algún tipo de meditación o relajación. Asimismo, no vivas recordando el pasado o angustiado por lo que sucederá en el futuro. Concéntrate en tus experiencias del aquí y el ahora. Hacerlo te ayudará a bajar el nivel de estrés y de angustia, además de reducir la presión arterial y la tensión muscular.",
+                    "5.	Haz amigos e interactúa con ellos. Atesora un tiempo dedicado a construir relaciones saludables en las que disfrutes de la compañía de tus amigos y de tener una buena conversación con ellos. Tener relaciones amicales sanas aleja la soledad de tu vida.",
+                    "6.	Ejercítate físicamente. Para estar y sentirte sano, realiza una amplia variedad de ejercicios físicos: desde caminar, bailar o trotar, hasta practicar uno o más deportes de tu agrado. El ejercicio físico ayuda a la plasticidad del cerebro; es decir, permite mejorar el aprendizaje e incrementar la creatividad. Además, potencia las actividades neuronales que retardan el envejecimiento.",
+                    "7.	Focalízate en objetivos. Dedica tiempo y esfuerzo a realizar tus tareas. Para focalizarte en las tareas de un modo más eficiente, es recomendable que te centres solo en una. ¡No caigas en la multitarea!, pues te robará tiempo y malgastará tu energía.",
+                    "Receta",
+                    "Revisa las actividades que has realizado en las últimas semanas e identifica cuáles de las recomendaciones propuestas anteriormente has estado siguiendo y cuáles no.",
+                    "Reflexiona si tienes la posibilidad, los medios o las personas necesarias para poder realizar todas y cada una de las siete actividades de la dieta.",
+                    "Elabora un plan de acción para aquellas actividades en que sientes que no estás avanzando o cuya realización te genera mayor dificultad."
+
+                ], 
+                "quiz": [
+                    {
+                        "question": "¿Cuál de las siguientes recomendaciones ayuda a la plasticidad del cerebro?",
+                        "type": "multiple-choice",
+                        "options": ["Hacer ejercicios físicos.", "Practicar la introspección.", "Realizar actividades triviales.", "Hacer amigos e interactuar con ellos."],
+                        "answer": "Hacer ejercicios físicos."
+                    },
+                    {
+                        "question": "¿Por qué el autor considera una ironía que las actividades lúdicas sean necesarias para realizar diversas actividades?",
+                        "type": "multiple-choice",
+                        "options": ["Porque muchas personas piensan que el juego reduce el estrés y fortalece las relaciones personales.", "Porque muchas personas piensan que el juego es cosa de niños y la vida es un asunto serio.", "Porque muchas personas piensan que el juego nos hace más flexibles emocionalmente.", "Porque muchas personas piensan que el juego nos hace más permeables al aprendizaje."],
+                        "answer": "Porque muchas personas piensan que el juego es cosa de niños y la vida es un asunto serio."
+                    },
+                    {
+                        "question": "¿De qué trata principalmente el texto?",
+                        "type": "multiple-choice",
+                        "options": ["De los juegos que tenemos que practicar para consolidar la memoria.", "De la cantidad de horas que debemos dormir para mantenernos sanos.", "De las actividades que debemos realizar para tener un cerebro sano.", "De la utilidad de la introspección para relajar nuestro cerebro."],
+                        "answer": "De las actividades que debemos realizar para tener un cerebro sano."
+                    },
+                                        {
+                        "question": "¿Para qué el autor incluyó la receta en una parte del texto?",
+                        "type": "multiple-choice",
+                        "options": ["Para que el lector evalúe su cumplimiento de la “dieta mental”.", "Para que el lector reflexione sobre la importancia de la “dieta mental” para su salud.", "Para que el lector conozca una receta de alimentación saludable para su cerebro.", "Para que el lector mejore la capacidad creativa de su cerebro."],
+                        "answer": "Para que el lector evalúe su cumplimiento de la “dieta mental”."
+                    },
+                    {
+                        "question": "Luis, además de sentir estrés, está angustiado porque piensa que el examen será muy difícil y le ha empezado a doler el cuello. Según el texto, ¿cuál de los siguientes consejos le sería más útil a Luis?",
+                        "type": "multiple-choice",
+                        "options": ["Duerme bien.", "Focalízate en objetivos.", "No hagas nada haciendo algo.", "Desarrolla la introspección y vive el presente."],
+                        "answer": "Desarrolla la introspección y vive el presente."
                     }
                 ]
                 }
@@ -1154,14 +1947,35 @@ body.dark-mode .results-list li.incorrect {
         const cuentosData = [
 
             {
-                "title": "Actividad 01",
-                "author": "Hans Christian Andersen",
+                "title": "La luz es como el agua",
+                "author": "Gabriel García Márquez",
                 "content": [
-                    "En el campo, cerca de un estanque, vivía una pata con sus patitos. Uno de ellos era muy diferente a los demás, era grande, feo y gris.",
-                    "Los otros patitos se burlaban de él y su propia madre lo veía con tristeza. El patito feo se sentía solo y abandonado.",
-                    "Un día, decidió huir del estanque y buscar un lugar donde pudiera ser aceptado. Vagó por muchos lugares, pasando frío y hambre.",
-                    "Cuando llegó el invierno, el patito feo estuvo a punto de morir de frío, pero fue rescatado por un campesino que lo llevó a su casa.",
-                    "En primavera, el patito volvió al estanque y vio un grupo de hermosos cisnes. Para su sorpresa, cuando se acercó a ellos, se dio cuenta de que él también se había convertido en un hermoso cisne."
+                    "En Navidad los niños volvieron a pedir un bote de remos.",
+                    "-De acuerdo -dijo el papá, lo compraremos cuando volvamos a Cartagena.Totó, de nueve años, y Joel, de siete, estaban más decididos de lo que suspadres creían.",
+                    "-No -dijeron a coro-. Nos hace falta ahora y aquí.",
+                    "-Para empezar -dijo la madre-, aquí no hay más aguas navegables que la que sale de la ducha.",
+                    "Tanto ella como el esposo tenían razón. En la casa de Cartagena de Indias había un patio con un muelle sobre la bahía, y un refugio para dos yates grandes. En cambio aquí en Madrid vivían apretados en el piso quinto del número 47 del paseo de la Castellana. Pero al final ni él ni ella pudieron negarse, porque les habían prometido un bote de remos con su sextante y su brújula si se ganaban el laurel del tercer año de primaria, y se lo habían ganado. Así que el papá compró todo sin decirle nada a su esposa, que era la más reacia a pagar deudas de juego. Era un precioso bote de aluminio con un hilo dorado en la línea de flotación.",
+                    "-El bote está en el garaje -reveló el papá en el almuerzo-. El problema es que no hay cómo subirlo ni por el ascensor ni por la escalera, y en el garaje no hay más espacio disponible.",
+                    "Sin embargo, la tarde del sábado siguiente los niños invitaron a sus condiscípulos para subir el bote por las escaleras, y lograron llevarlo hasta el cuarto de servicio.",
+                    "-Felicitaciones -les dijo el papá ¿ahora qué?",
+                    "-Ahora nada -dijeron los niños-. Lo único que queríamos era tener el bote en el cuarto, y ya está.",
+                    "La noche del miércoles, como todos los miércoles, los padres se fueron al cine. Los niños, dueños y señores de la casa, cerraron puertas y ventanas, y rompieron la bombilla encendida de una lámpara de la sala. Un chorro de luz dorada y fresca como el agua empezó a salir de la bombilla rota, y lo dejaron correr hasta que el nivel llego a cuatro palmos. Entonces cortaron la corriente, sacaron el bote, y navegaron a placer por entre las islas de la casa.",
+                    "Esta aventura fabulosa fue el resultado de una ligereza mía cuando participaba en un seminario sobre la poesía de los utensilios domésticos. Totó me preguntó cómo era que la luz se encendía con sólo apretar un botón, y yo no tuve el valor de pensarlo dos veces.",
+                    "-La luz es como el agua -le contesté: uno abre el grifo, y sale.",
+                    "De modo que siguieron navegando los miércoles en la noche, aprendiendo el manejo del sextante y la brújula, hasta que los padres regresaban del cine y los encontraban dormidos como ángeles de tierra firme. Meses después, ansiosos de ir más lejos, pidieron un equipo de pesca submarina. Con todo: máscaras, aletas, tanques y escopetas de aire comprimido.",
+                    "-Está mal que tengan en el cuarto de servicio un bote de remos que no les sirve para nada –dijo el padre-. Pero está peor que quieran tener además equipos de buceo.",
+                    "-¿Y si nos ganamos la gardenia de oro del primer semestre? -dijo Joel.",
+                    "-No -dijo la madre, asustada-. Ya no más.",
+                    "El padre le reprochó su intransigencia.",
+                    "-Es que estos niños no se ganan ni un clavo por cumplir con su deber -dijo ella-, pero por un capricho son capaces de ganarse hasta la silla del maestro.",
+                    "Los padres no dijeron al fin ni que sí ni que no. Pero Totó y Joel, que habían sido los últimos en los dos años anteriores, se ganaron en julio las dos gardenias de oro y el reconocimiento público del rector. Esa misma tarde, sin que hubieran vuelto a pedirlos, encontraron en el dormitorio los equipos de buzos en su empaque original. De modo que el miércoles siguiente, mientras los padres veían El último tango en París, llenaron el apartamento hasta la altura de dos brazas, bucearon como tiburones mansos por debajo de los muebles y las camas, y rescataron del fondo de la luz las cosas que durante años se habían perdido en la oscuridad.",
+                    "En la premiación final los hermanos fueron aclamados como ejemplo para la escuela, y les dieron diplomas de excelencia. Esta vez no tuvieron que pedir nada, porque los padres les preguntaron qué querían. Ellos fueron tan razonables, que sólo quisieron una fiesta en casa para agasajar a los compañeros de curso.",
+                    "El papá, a solas con su mujer, estaba radiante.",
+                    "-Es una prueba de madurez -dijo.",
+                    "-Dios te oiga -dijo la madre.",
+                    "El miércoles siguiente, mientras los padres veían La Batalla de Argel , la gente que pasó por la Castellana vio una cascada de luz que caía de un viejo edificio escondido entre los árboles. Salía por los balcones, se derramaba a raudales por la fachada, y se encauzó por la gran avenida en un torrente dorado que iluminó la ciudad hasta el Guadarrama.",
+                    "Llamados de urgencia, los bomberos forzaron la puerta del quinto piso, y encontraron la casa rebosada de luz hasta el techo. El sofá y los sillones forrados en piel de leopardo flotaban en la sala a distintos niveles, entre las botellas del bar y el piano de cola y su mantón de Manila que aleteaba a media agua como una mantarraya de oro. Los utensilios domésticos, en la plenitud de su poesía, volaban con sus propias alas por el cielo de la cocina. Los instrumentos de la banda de guerra, que los niños usaban para bailar, flotaban al garete entre los peces de colores liberados de la pecera de mamá, que eran los únicos que flotaban vivos y felices en la vasta ciénaga iluminada. En el cuarto de baño flotaban los cepillos de dientes de todos, los preservativos de papá, los pomos de cremas y la dentadura de repuesto de mamá, y el televisor de la alcoba principal flotaba de costado, todavía encendido en el último episodio de la película de media noche prohibida para niños.",
+                    "Al final del corredor, flotando entre dos aguas, Totó estaba sentado en la popa del bote, aferrado a los remos y con la máscara puesta, buscando el faro del puerto hasta donde le alcanzó el aire de los tanques, y Joel flotaba en la proa buscando todavía la altura de la estrella polar con el sextante, y flotaban por toda la casa sus treinta y siete compañeros de clase, eternizados en el instante de hacer pipí en la maceta de geranios, de cantar el himno de la escuela con la letra cambiada por versos de burla contra el rector, de beberse a escondidas un vaso de brandy de la botella de papá. Pues habían abierto tantas luces al mismo tiempo que la casa se había rebosado, y todo el cuarto año elemental de la escuela de San Julián el Hospitalario se había ahogado en el piso quinto del número 47 del Paseo de la Castellana. En Madrid de España, una ciudad remota de veranos ardientes y vientos helados, sin mar ni río, y cuyos aborígenes de tierra firme nunca fueron maestros en la ciencia de navegar en la luz."
                 ],
                 "quiz": [
                     {
@@ -1178,7 +1992,8 @@ body.dark-mode .results-list li.incorrect {
                     },
                     {
                         "question": "¿Qué le sucedió al patito feo en primavera?",
-                        "type": "short-answer",
+                        "type": "multiple-choice",
+                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
                         "answer": "Se convirtió en un hermoso cisne"
                     },
                     {
@@ -1189,7 +2004,8 @@ body.dark-mode .results-list li.incorrect {
                     },
                     {
                         "question": "¿Qué sentimiento predominaba en el patito feo al inicio de la historia?",
-                        "type": "short-answer",
+                        "type": "multiple-choice",
+                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
                         "answer": "Soledad"
                     }
                 ]
@@ -1199,16 +2015,45 @@ body.dark-mode .results-list li.incorrect {
         // Placeholders para actividades adicionales (06-10)
         const actividad06Data = [
             {
-                "title": "Actividad 06",
-                "author": "Autor",
+                "title": "Las muchas vidas",
+                "author": "Alonso Cueto. En el diario la República - 2014",
                 "content": [
-                    "Contenido de la actividad 06. Reemplaza con el texto real cuando esté disponible."
+                    "Estar en un “estado de gracia” es frecuente en Alfredo Bryce, que esta semana cumplirá setenta y cinco años de una vida vivida hasta los extremos, en el culto a la literatura como el reflejo del desorden y la diversidad existencial. Si hubiera de definir su obra, quizá podríamos decir que es la exploración del humor como el camino más directo y complejo a la verdad de cada ser humano.",
+                    "Es ocasión para que sus lectores agradezcamos las muchas vidas que nos ha dado: la de Julius y sus avatares en El palacio; la de Susy, Juan Lucas y los Lastarria; la de esa escena inolvidable en la que la humilde Arminda le regala unas medias al niño, desde el fondo del corazón. Tenemos que agradecer también la soledad y la sensibilidad de Jimmy en Paracas, quien una noche fatídica descubre que su padre ha vendido su cuerpo al hijo del jefe. Y también a Sevilla, que muere en Madrid cerrando los ojos, porque el mundo es demasiado ancho, complicado, alto y vertiginoso, en esa maravillosa novela que es Muerte de Sevilla en Madrid.",
+                    "Esta es una característica de sus personajes: el asombro ante la maldad y la complejidad del mundo, tal como se les aparece a los niños. La mirada del niño lúcido frente a un mundo avasallante es siempre una premisa de sus historias. Este drama suele resolverse mediante el humor y la oralidad, como enlaces afectivos. Pocas veces hemos percibido la ilusión de la oralidad, la certeza de que alguien nos habla desde una página escrita, como ocurre en su obra. Es lo que sucede con Martín Romaña y La vida exagerada de Martín Romaña, La última mudanza de Felipe Carrillo, El cuaderno azul, su sillón Voltaire y su amor obsesivo por Octavia de Cádiz, “bálsamo de su soledad y su desamparo”. Alguna vez Iván Thays me dijo, con razón, que Bryce es capaz de describir la hermosura de una mujer de tal modo que el lector, de inmediato, empieza a quererla. Todos los personajes de Bryce están enamorados y todos fracasan en el amor, pero triunfan en la amistad, como lo demuestra Goig, el bóxer que cruza el océano para estar con su amo, en su cuento infantil.",
+                    "Si tuviéramos que hablar de esa vida, entraríamos en una ciudad de casas sin puertas. En una de las casas, Bryce lee unos poemas de Quevedo; en otra, repite en voz alta una frase de Gómez de la Serna: “La gallina está harta de denunciar ante la policía el robo de sus huevos”. En otra, está escribiendo una novela, dando una clase, cantando una habanera llamada “La Bella Lola” o cenando sopa china o espaguetis a la carbonara con sus amigos. En otra, está en París, la ciudad luz, de la que tuvo que irse porque “se le habían quemado los plomos”. La ciudad que habita Bryce tiene paredes de palabras, y sus calles no son rectas, sino curvas e inesperadas. En los cuartos de sus casas juegan los niños antes de que la madre venga a ordenarlo todo. Son los cuartos de Laurence Sterne y de Julio Cortázar, no los de la razón y el orden.",
+                    "En esta vida, los padecimientos, las equivocaciones y los problemas han sido parte del camino. Pero la obra está allí, y sabemos que estará siempre. Setenta y cinco años no son nada, y él ha hecho que parezcan mucho para nosotros, sus lectores, que seguiremos disfrutando de sus tantas vidas y palabras."
                 ],
                 "quiz": [
                     {
-                        "question": "Pregunta ejemplo actividad 06",
+                        "question": "Busca en el diccionario las siguientes palabras: bálsamo, fatídica y padecimiento. Escribe luego una oración con cada una de ellas.",
                         "type": "short-answer",
-                        "answer": "respuesta"
+                        "answer": "bálsamo: consuelo, alivio. Medicamento compuesto de sustancias comúnmente aromáticas que se aplica como remedio en heridas, llagas y enfermedades. Ejemplo: Me curo los raspones con bálsamos. fatídica: funesta. Dicho de una cosa o de una persona: que anuncia o pronostica el porvenir, especialmente si anuncia desgracias. Ejemplo: Aquella tarde tomó una fatídica decisión sobre su vida. padecimiento: acción de padecer o sufrir daño, injuria, enfermedad, etc. Ejemplo: Dentro de las cárceles se viven muchos padecimientos."
+                    },
+                    {
+                        "question": "¿Cómo define Alonso Cueto la obra de Alfredo Bryce?",
+                        "type": "short-answer",
+                        "answer": "Alfredo Bryce es un escritor que recoge muy bien muchos aspectos de la vida. Sus obras caracterizan a distintos tipos de personajes. Así como su vida es un gran ejercicio literario, el caos también ha reinado en ella."
+                    },
+                    {
+                        "question": "Se mencionan a varios autores en el artículo, por ejemplo, Lawrence Sterne y Julio Cortázar. Averigua quiénes fueron, durante qué época escribieron y cuáles fueron sus obras fundamentales.",
+                        "type": "short-answer",
+                        "answer": "Laurence Sterne fue un novelista inglés del siglo XVIII. Él escribió “Cartas a Eliza” y “Un romance político”. Julio Cortázar fue un cuentista argentino del siglo XX. Autor de numerosos relatos de gran calidad literaria, destacó también por su novela Rayuela."
+                    },
+                    {
+                        "question": "Identifica las ideas temáticas de cada párrafo y, a partir de estas, elabora un resumen.",
+                        "type": "short-answer",
+                        "answer": "La obra literaria de Bryce explora muchas historias que han impactado gratamente a muchos lectores."
+                    },
+                    {
+                        "question": "¿Qué dice el autor del texto sobre los personajes de Bryce? ¿Cuáles son sus características más resaltantes?",
+                        "type": "short-answer",
+                        "answer": "Por un lado, sus protagonistas infantiles son entrañables. Por otro, sus personajes femeninos enamoran por su encanto. Así, sus personajes muestran asombro frente a la maldad o bien resuelven sus dramas con humor"
+                    },
+                    {
+                        "question": "¿Cuál es la intención del autor de esta nota?",
+                        "type": "short-answer",
+                        "answer": "Bryce está por cumplir setenta y cinco años de vida. El propósito de Alonso Cueto es rendirle un homenaje a un colega escritor que admira."
                     }
                 ]
             }
@@ -1621,163 +2466,163 @@ body.dark-mode .results-list li.incorrect {
         // Datos para evaluación de salida (vacíos por defecto; puedes poblarlos con ejercicios similares a 'entrada')
         const salidaData = [
              {
-                "title": "¿Qué significa llevar una vida saludable?",
-                "author": "Lic. Julissa Choque Pazos / Psicóloga del Centro de Salud ‘San Juan Macías - Minedu 2023",
+                "title": "¿Qué dicen los expertos sobre el consumo de leche?",
+                "author": "Diego Velásquez - Minedu 2019",
                 "content": [
-                "Las definiciones y enfoques pueden variar significativamente. En este escenario, se debate sobre si existe una única fórmula para una vida saludable o si esta es una construcción personal y subjetiva, basada en factores individuales y valores culturales.",
-                    "Mientras algunos sostienen que la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada, otros argumentan que la salud mental y emocional, así como la calidad del sueño y las relaciones interpersonales, son igualmente cruciales. El dilema se intensifica cuando se considera la presión social y los estándares estéticos que pueden distorsionar la percepción de una vida saludable.",
-                    "También, es esencial reflexionar sobre cómo los valores culturales y las expectativas individuales influyen en nuestras elecciones y percepciones. La comunidad de bienestar se encuentra desafiada a promover una definición holística de la salud, que incluya aspectos físicos, mentales y emocionales, y a reconocer la diversidad de caminos que pueden llevar a una vida plena y equilibrada",
-                    "La reflexión sobre estos temas nos invita a considerar cómo las distintas definiciones de vida saludable pueden adaptarse a nuestras necesidades individuales y contextos culturales. En este cruce de perspectivas y hábitos, la apertura al diálogo crítico y la aceptación de la diversidad de enfoques se vuelven esenciales para moldear una visión de la vida saludable que resuene con la autenticidad y bienestar de cada individuo.",
+                    "En los últimos años, han surgido algunos cuestionamientos acerca del valor nutricional de la leche, que generalmente se consume procesada. Producto de ello, muchas personas han reducido su consumo de leche o la han eliminado de su alimentación. Pese a las críticas, diversas investigaciones demuestran que la leche es un alimento fundamental para la salud.",
+                    "La leche es una fuente importante de calcio. Como ha señalado la Dra. Rocío Mateo, especialista del Instituto de Investigación Sanitaria de Aragón (España):Con un par de vasos de leche diarios cubriríamos más de la mitad de los requerimientos de calcio, lo mismo que tomando un vaso de leche y un yogur; pero si, además, tomamos un trozo de queso (de unos 30-40 gramos), estaríamos cubriendo la totalidad de nuestras necesidades de calcio. A mayor consumo y absorción de este mineral, los huesos son más densos y resistentes. Asimismo, este mineral puede prevenir enfermedades óseas como la osteoporosis, el raquitismo, el cáncer a los huesos, entre otras.",
+                    "Según un estudio de Jonathon Maguire, investigador del Hospital Saint Michael (Canadá), la leche es también una fuente de vitamina D, la cual ayuda al cuerpo a absorber el calcio. Los niños que no toman leche tienen más del doble de probabilidades de carecer de vitamina D, en comparación con los niños que sí la toman. La falta de esta vitamina obliga al organismo a utilizar sus reservas de calcio, por lo que el sistema óseo se debilita.",
+                    "Al contrario de lo que señalan sus detractores, la leche no provoca enfermedades al corazón. Recientemente, un estudio del Centro de Investigación Biomédica (España) encontró que no existe relación entre el consumo de leche o alguno de sus derivados y el riesgo de padecer enfermedades cardiovasculares (males que afectan el corazón y los vasos sanguíneos). A partir del análisis de los hábitos alimenticios de 20 000 personas, esta investigación concluyó que el consumo de leche no está asociado con el incremento de los niveles de colesterol ni triglicéridos, un tipo de grasa que se halla en la sangre.",
+                    "En síntesis, las razones presentadas permiten afirmar que consumir leche es un hábito necesario y saludable. Por ello, los especialistas en nutrición recomiendan que los niños hasta los 8 años de edad tomen diariamente entre 700 y 1 000 miligramos (mg) de calcio, lo que equivale a 3 vasos de leche aproximadamente. En el caso de personas entre 9 y 18 años de edad, es recomendable consumir 1 300 mg de calcio, lo cual equivale a 4 vasos de leche aproximadamente. Si se toman en cuenta estas recomendaciones, la leche será un importante aliado para el fortalecimiento de la salud y la prevención de algunas enfermedades, especialmente en niños y jóvenes.",
+                    "Jorge está de acuerdo con la información presentada en el texto de Velásquez, pero no entiende por qué se siente mal cada vez que toma leche. Por ello, buscó más información y encontró el siguiente texto en una revista.",
                  ],
                 "quiz": [
                     {
-                        "question": "Según la autora del primer texto, ¿qué está en debate sobre tener una vida saludable",
+                        "question": "¿Cuál de las siguientes investigaciones concluye que la leche es una fuente rica en vitamina D?",
                         "type": "multiple-choice",
-                        "options": ["Si la vida saludable está vinculada a prácticas como la actividad física regular y una dieta balanceada", "Si para tener una vida saludable son cruciales la salud mental y emocional, la calidad de sueño y relaciones interpersonales", "Si la vida saludable incluye aspectos físicos, mentales y emocionales", "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"],
-                        "answer": "Si existe una única fórmula para la vida saludable o si es una construcción personal y subjetiva"
+                        "options": ["La del Centro de Salud Pública de la Universidad de Harvard.", "La del Centro de Investigación Biomédica", "La del Instituto de Investigación Sanitaria de Aragón.", "La del Hospital Saint Michael."],
+                        "answer": "La del Hospital Saint Michael"
                     },
                     {
-                        "question": "Según Carla Pachas, ¿qué tipo de acciones debemos evitar al buscar un estilo de vida saludable?",
+                        "question": "De acuerdo con el texto de Francisco Goya, ¿qué consecuencia es más probable que sufra un adolescente de 15 años con baja producción de lactasa si sigue esta recomendación?",
                         "type": "multiple-choice",
-                        "options": ["Acciones que impliquen sacrificios abrumadores o sufrimientos humanos.", "Acciones que permitan adoptar hábitos equilibrados, como una alimentación variada", "Acciones sostenibles y realistas a largo plazo", "Acciones para disfrutar de los pequeños placeres"],
-                        "answer": "Acciones que impliquen sacrificios abrumadores o sufrimientos humanos."
+                        "options": ["Debilitamiento de los huesos.", "Cáncer de próstata o de ovarios.", "Gases, dolores de estómago y diarreas.", "Aumento de grasas saturadas y químicos."],
+                        "answer": "Gases, dolores de estómago y diarreas."
+                    },
+                                        {
+                        "question": "¿Qué dicen los expertos sobre el consumo de la leche y qué nutrientes aporta para fortalcer los huesos?",
+                        "type": "multiple-choice",
+                        "options": ["Vitamina C que previene infecciones respiratorias.", "Calcio, que contribuye a que los huesos sean más densos y resistentes.", "Hierro que mejora la circulación sanguínea.", "Proteínas vegetales que que fortalecen los músculos. "],
+                        "answer": "Calcio, que contribuye a que los huesos sean más densos y resistentes."
                     },
                     {
-                        "question": "En el texto de Julissa Choque, ¿a qué se refiere la palabra holística?",
+                        "question": "¿Cuál de los siguientes enunciados es una opinión?",
                         "type": "multiple-choice",
-                        "options": ["A la integralidad.", "A un desafío.", "A la inclusión.", "A la diversidad"],
-                        "answer": "A la integralidad."
+                        "options": ["Las personas no digieren la leche con la misma facilidad en todas las edades.", "Se puede afirmar que el consumo de leche procesada no es tan bueno como comúnmente se cree.", "Los especialistas en nutrición recomiendan que los niños hasta los 8 años de edad tomen diariamente entre 700 y 1 000 miligramos (mg) de calcio.", "En nuestras casas, en el colegio y en los medios de comunicación, es frecuente escuchar que la leche es un alimento indispensable para crecer."],
+                        "answer": "Se puede afirmar que el consumo de leche procesada no es tan bueno como comúnmente se cree"
                     },
                     {
-                        "question": "Lee esta parte del texto, “(…) debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales)”. ¿Con qué intención la autora incluye la información entre paréntesis?",
+                        "question": "¿Para qué los dos autores hacen referencia a distintas investigaciones en sus textos",
                         "type": "multiple-choice",
-                        "options": ["Precisar datos específicos.", "Insertar información complementaria. ", "Aclarar la definición adecuada.", "Narrar un hecho complementario."],
-                        "answer": "Insertar información complementaria."
+                        "options": ["Para señalar que los argumentos planteados se apoyan en estudios científicos.", "Para demostrar que tienen conocimiento sobre la composición de la leche.", "Para incentivar las investigaciones científicas sobre el consumo de leche.", "Para recomendar la lectura de diversos estudios científicos."],
+                        "answer": "Para señalar que los argumentos planteados se apoyan en estudios científicos."
                     }
                 ]
             },
             {
-                "title": "Vida Saludable: Equilibrio y Extremos",
-                "author": "Lic. Carla Pachas Vidal - Minedu 2023",
+                "title": "¿Debemos tomar leche?",
+                "author": "Francisco Goya - Minedu 2019",
                 "content": [
-                "En la era actual, la búsqueda de un estilo de vida saludable se ha convertido en un objetivo válido, pero debemos evitar extremos que puedan generarnos más estrés que beneficios. En medio de las modas y las presiones sociales, es esencial recordar que buscar la vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos.",
-                "Practicar la moderación como un camino para la vida saludable nos permite comprender que el bienestar no debe convertirse en una fuente de ansiedad. De esta manera, adoptar hábitos equilibrados, como una alimentación variada y la incorporación de actividad física agradable, se vuelve más sostenible y realista a largo plazo.",
-                "A pesar de las expectativas actuales, para vivir una vida saludable también debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales). La obsesión con la perfección en la dieta o el ejercicio puede generar más estrés que beneficios reales.",
-                "En resumen, el bienestar no debe convertirse en una carga nos insta a apreciar la diversidad y flexibilidad en nuestras elecciones diarias. En un mundo obsesionado con los estándares, encontrar el equilibrio en la búsqueda de la salud es la verdadera clave para cultivar una vida plena y sostenible.",    
+                "En nuestras casas, en el colegio y en los medios de comunicación, es frecuente escuchar que la leche es un alimento indispensable para crecer, y tener huesos sanos y fuertes. Sin embargo, ¿es tan buena la leche como se afirma?",
+                "Según un estudio del Centro de Salud Pública de la Universidad de Harvard (Estados Unidos), el consumo de leche procesada puede ser perjudicial para la salud de las personas. Este estudio indica que, aunque tomar este tipo de leche aporta calcio al organismo, su consumo frecuente incrementa el riesgo de padecer cáncer de próstata u ovarios, debido a sus altos niveles de grasas saturadas y químicos.",
+                "Además, el mismo estudio señala que el consumo diario de los derivados de la leche —queso, yogur, mantequilla, entre otros— aumenta los niveles de grasas saturadas en nuestro organismo. El consumo excesivo de alimentos que contienen este tipo de grasas incrementa el colesterol LDL, llamado también colesterol malo, debido a que se acumula en las arterias. Un alto porcentaje de grasas saturadas en el cuerpo puede ocasionar que los huesos se debiliten y que se originen enfermedades cardiovasculares.",
+                "Por otro lado, según el Instituto Nacional de Diabetes y Enfermedades Digestivas y Renales de Estados Unidos, las personas no digieren la leche con la misma facilidad en todas las edades. Esto se debe a que nuestro organismo, con el paso del tiempo, procesa con menor eficacia la lactosa, un tipo de azúcar que se encuentra en la leche y sus derivados. Esto ocurre porque, entre los 2 y 4 años de edad, el cuerpo comienza a disminuir la producción de una enzima llamada lactasa, la cual es responsable de digerir la lactosa. Cuando una persona produce poca cantidad de esta enzima, no digiere adecuadamente la lactosa, por lo que el consumo de leche le genera gases, dolor estomacal e, incluso, diarrea. Esta reducción es el principal motivo por el que las personas son intolerantes a la lactosa.", 
+                "En conclusión, a partir de las investigaciones mencionadas, se puede afirmar que el consumo de leche procesada no es tan bueno como comúnmente se cree. Como se ha planteado, el consumo excesivo de este tipo de leche incrementa el riesgo de padecer diferentes enfermedades.",   
             ],
                 "quiz": [
                     {
-                        "question": "¿Qué idea es común entre ambos textos?",
+                        "question": "BUSCADORES: Después de leer ambos textos, Jorge está de acuerdo con la postura de Francisco Goya. Por eso, quiere saber si existen alimentos que puedan reemplazar los nutrientes que la leche aporta. Para ello, busca más información en internet. ¿Cuál de los siguientes resultados de búsqueda le sería más útil?",
                         "type": "multiple-choice",
-                        "options": ["Debemos aceptar y disfrutar el equilibrio de acuerdo con nuestra diversidad y bienestar.", "Debemos adoptar buenos hábitos y disfrutar de los pequeños placeres.", "Debemos encontrar una visión saludable sin la obsesión de la perfección", "Debemos respetar nuestros valores culturales y percepciones sociales"],
-                        "answer": "Debemos encontrar una visión saludable sin la obsesión de la perfección."
-                    },
-                    {
-                        "question": "Según Carla Pachas, buscar una vida saludable no implica sacrificios abrumadores ni sufrimientos inhumanos. ¿Cuál de las siguientes ideas presentes en el texto de Julissa Choque incide sobre este mismo aspecto y complementa lo dicho por Carla Pachas?",
-                        "type": "multiple-choice",
-                        "options": ["La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras.", "La presión social y los estándares estéticos pueden distorsionar la idea de una vida saludable.", "La vida saludable se vincula con la actividad física regular y una dieta balanceada.", "Son cruciales la salud mental y emocional, la calidad del sueño y las relaciones interpersonales."],
-                        "answer": "La vida saludable incluye aspectos físicos, mentales y emocionales, y es necesario aceptar que se puede llegar a ella de diversas maneras."
+                        "options": ["La importancia de consumir vitamina D https://www.vidasaludable.com.pe/vitaminas.html La vitamina D se almacena en el tejido graso del cuerpo. Esta ayuda al cuerpo a absorber calcio, uno de los minerales que usted necesita para la formación de sus huesos.", "Recetas saludables hechas con leche https://www.recetariodigital.pe/recetas_leche.html Si estás cansado de tomar siempre el mismo vaso de leche, aquí te ofrecemos 10 recetas sencillas y muy nutritivas para prepararlas como parte de la lonchera de los pequeños.", "Los beneficios de una nutrición variada https://www.bibliotecamedica.pe/nutricion-saludable.html La alimentación diversa es clave para la buena salud. Los frutos secos como las almendras, y los pescados como la anchoveta y la cabrilla son ricos en calcio.", "Alimentos derivados de la leche https://www.formacion.educalab.com/leche-y-derivados.html La mantequilla, el queso y el yogur son algunos de los alimentos derivados de la leche. Por ejemplo, 100 g de queso fresco contienen 15 g de proteína y solo 11 g de grasa."],
+                        "answer": "Los beneficios de una nutrición variada https://www.bibliotecamedica.pe/nutricion-saludable.html La alimentación diversa es clave para la buena salud. Los frutos secos como las almendras, y los pescados como la anchoveta y la cabrilla son ricos en calcio."
                     }
                 ]
             },
             {
-                "title": "Una genialidad",
-                "author": "Adaptación",
+                "title": "La educación virtual transforma américa latina",
+                "author": "Gabriel Torres - Minedu 2023",
                 "content": [
-                    "En el ejército de Felipe Santiago Salaverry había unos treinta oficiales excedentes, a los que se les llamaba “rabones”. Iban en las marchas a la vanguardia, siendo los primeros en llegar a los pueblos, donde cometían atropellos infinitos. Al entrar las tropas, ya ellos habían tomado los mejores alojamientos y matado el hambre y la sed. Con frecuencia, recibía Salaverry quejas de los vecinos por sus abusos, hasta que —fastidiado— llamó al jefe del Estado Mayor, José María Lastres, y le dijo: “Coronel, reúnalos, califíquelos y destínelos”.",
-                    "Al día siguiente, le preguntó don Felipe Santiago: “Y bien, coronel... ¿qué ha dispuesto con los rabones?”.",
-                    "—	He colocado a veinte en el ejército, pero con los otros, que son corrompidos, francamente no sé qué hacer.",
-                    "—	¿No sabe qué hacer con ellos? Pues, fusílelos.",
-                    "—	¡Fusilarlos, mi general! –exclamó asustado Lastres.",
-                    "—	Sí, fusílelos hoy mismo. La patria ganará deshaciéndose de oficiales indignos de la honrosa carrera de las armas.",
-                    "—	Que los mate el enemigo y no nosotros –arguyó Lastres, y le costó lograr que Salaverry revocase la orden.",
-                    "—	Impóngales la orden de tomar un fusil y batirse siempre que haya cambio de balas. Ya que no pueden servir como oficiales, que sirvan como hombres –dijo Salaverry.",
-                    "Pero, la genialidad de Lastres no fue secreto para los rabones. Sabiendo que arriesgaban el pellejo, cambiaron un tanto su conducta, comportándose heroicamente en Uchumayo y Socabaya. Todos menos tres, en diez días, murieron como bravos en defensa de su bandera y del caudillo que representaba la causa de la voluntad peruana."
+                    "En respuesta a la creciente necesidad de acceso a la educación, América Latina está experimentando una transformación educativa a través de las plataformas virtuales. La colaboración entre gobiernos y empresas privadas ha dado lugar a un programa novedoso en México, que busca llevar cursos de alta calidad a estudiantes de todas las edades. Plataformas interactivas y contenido multimedia se implementan para hacer que el aprendizaje sea más atractivo y efectivo.",
+                    "En Brasil, la educación en línea se ha convertido en una herramienta fundamental para llegar a las zonas más lejanas del país. La expansión de la banda ancha de Internet y el acceso a dispositivos digitales han permitido que estudiantes en regiones previamente desatendidas reciban una educación de calidad sin la necesidad de desplazarse largas distancias. Colombia, por su parte, está adoptando un enfoque integral, incorporando la educación virtual en el plan de estudios regular de las escuelas. Esto proporciona a los estudiantes la flexibilidad para aprender a su propio ritmo y los prepara para un mundo digital en constante cambio.",
+                    "Este movimiento educativo va más allá de las fronteras nacionales. La cooperación regional entre países latinoamericanos ha resultado en programas conjuntos y plataformas compartidas, maximizando los recursos y ampliando el alcance de la educación en línea en toda la región.",
+                    "En resumen, América Latina está liderando una revolución educativa, combinando tecnología y compromiso para allanar el camino hacia un futuro educativo más inclusivo y accesible. La combinación de esfuerzos regionales está preparando a la próxima generación para enfrentar con éxito los desafíos de un mundo cada vez más digital."
                 ],
                 "quiz": [
                     {
-                        "question": "¿Cuál de los siguientes hechos ocurrió primero en la historia?",
+                        "question": "¿Qué está sucediendo México en relación con la trasformación educativa?",
                         "type": "multiple-choice",
-                        "options": ["Salaverry recibía quejas de los vecinos por el actuar de los “rabones”. ", "Había unos 30 oficiales excedentes que se llamaban 'rabones.'.", "Don Felipe preguntá a Lastres sobre la disposición de los rabones.","Lastre arguye para que Salaverry revoqué la orden."],
-                        "answer": "Había unos 30 oficiales excedentes que se llamaban 'rabones'."
+                        "options": ["Se están cerrando escuelas debido a la falta de recursos.", "La colaboración entre gobiernos y empresas privadas ha dado lugar a un programa novedoso.", "La educación en América Latina ha permanecido igual durante muchos años.","Los estudiantes están rechazando las plataformas virtuales de aprendizaje."],
+                        "answer": "La colaboración entre gobiernos y empresas privadas ha dado lugar a un programa novedoso."
                     },
                     {
-                        "question": "Según el texto, ¿Quién dio la orden para el cambio de actitud de los “rabones”?",
+                        "question": "¿Cuál es el tema principal del texto sobre la educación en América Latina?",
                         "type": "multiple-choice",
-                        "options": ["Felipe Santiago Salaverry.", "Ricardo Palma.", "Los vecinos de los pueblos.", "José María Lastres."],
-                        "answer": "José María Lastres."
+                        "options": ["La historia de la educación es fuente de innovación y cambio para el futuro educativo.", "La transformación educativa en América Latina a través de las tecnologías.", "Los desafíos del acceso a internet en áreas rurales para clases semipresenciales.", "La importancia de la literatura en el currículo escolar como forma de trasformación educativa."],
+                        "answer": "La transformación educativa en América Latina a través de las tecnologías."
                     },
                     {
-                       "question": "¿Cuál es la idea principal de la historia ?",
+                       "question": "¿Cuál es el significado de la expresión “revolución educativa” en el contexto del texto?",
                         "type": "multiple-choice",
-                        "options": ["La valentía de los “rabones” ", "La genialidad de Lastres.", "El liderazgo de Salaverry.", "La redención de los “rabones”"],
-                        "answer": "La genialidad de Lastres."
+                        "options": ["Un cambio significativo en los métodos y acceso a la educación gracias al uso de la tecnología.", "Un cambio temporal en la forma de enseñar en las escuelas rurales y urbanas con el internet.", "Un movimiento que busca cerrar todas las instituciones educativas tradicionales.", "Un programa que beneficia a las instituciones educativas más ricas."],
+                        "answer": "Un cambio significativo en los métodos y acceso a la educación gracias al uso de la tecnología."
                     },
                     {
-                        "question": "En la historia, ¿qué significa la palabra “rabones”?",
+                        "question": "¿Cuál es la ventaja principal de la educación virtual en América Latina?",
                         "type": "multiple-choice",
-                        "options": ["Se refiere a los oficiales de Salaverry. ", "Se refiere a los oficiales nuevos.", "Se refiere a los oficiales excedentes.", "Se refiere a los oficiales de Lastres"],
-                        "answer": "Se refiere a los oficiales excedentes. "
+                        "options": ["Los estudiantes deben aprender al ritmo y velocidad de su docente.", "Los estudiantes han convertido las herramientas digitales en una necesidad diaria.", "Facilita el acceso a una educación de calidad con virtualidad solo en algunas regiones.", "Facilita el acceso a una educación de calidad en zonas remotas sin necesidad de desplazamiento."],
+                        "answer": "Facilita el acceso a una educación de calidad en zonas remotas sin necesidad de desplazamiento."
                     },
                     {
-                        "question": " Un estudiante ha leído esta tradición y opinó lo siguiente - Luego, de leer esta historia, creo que Salaverry impuso la disciplina militar para el cambio de conducta en los “rabones” ¿Cuál de las siguientes ideas podría apoyar la opinión de este estudiante?",
+                        "question": "Según el texto, ¿qué significa “enfoque integral” en el contexto de la educación en Colombia?",
                         "type": "multiple-choice",
-                        "options": ["Que Salaverry ordenó a Lastres fusilarlos por el mal comportamiento", "Que los “rabones” eran los primeros en llegar a los pueblos y consumir los alimentos y bebidas.", "Que los “rabones” al conocer la orden de Salaverry, cambiaron y se comportaron heroicamente", "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."],
-                        "answer": "Que Salaverry impuso la orden de tomar un fusil y batirse siempre que haya cambio de balas."
+                        "options": ["Que se usen textos escritos en las aulas como una forma de aprendizaje integral.", "Que se combine la educación virtual y la tradicional en el plan de estudios de las escuelas.", "Que se enseñe a los estudiantes de forma tradicional, sin tecnologías virtuales.", "Que se enseñen tres materias específicas y no se incluyan otras."],
+                        "answer": "Que se combine la educación virtual y la tradicional en el plan de estudios de las escuelas."
                     },
                     {
-                        "question": "6.	Lee las siguientes frases: •	…, a los que se les llamaba “rabones”. •	…abusos, hasta que —fastidiado— llamó al jefe… ¿Cuál es la función de las comillas y las rayas (—fastidiado—) en el texto?",
+                        "question": "El texto presenta varios recursos formales que contribuyen a su claridad, cohesión y efectividad comunicativa. Entre ellos tenemos a los conectores lógicos: “a través”, “por su parte”, “va más allá”, “en resumen”, etc.",
                         "type": "multiple-choice",
-                        "options": ["El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor.", "El primero es para resaltar el tema del texto y el segundo, comenta las características del personaje.", "El primero es para enfatizar el significado de la palabra y el segundo, incorpora sinónimos al personaje.", "El primero es para resaltar términos nuevos en el texto y el segundo, incluye un término nuevo."],
-                        "answer": "El primero es para destacar un término coloquial en el texto y el segundo, incluye un comentario adicional del autor."
+                        "options": ["Unir dos sentencias o fórmulas bien formadas para dar sentido a un texto.", "Unir dos comentarios principales junto con los cuantificadores.", "Enlazar ideas, oraciones, frases y párrafos, para señalar relaciones semánticas y ortográficas.","Enlazar ideas, oraciones, frases y párrafos, para ayudar al lector a que tenga una lectura eficaz y comprensible."],
+                        "answer": "Enlazar ideas, oraciones, frases y párrafos, para ayudar al lector a que tenga una lectura eficaz y comprensible."
                     }
                 ]
             },
              {
-                    "title": "La batalla de maratón",
-                    "author": "Elena Martínez - 10 de febrero de 2022 - Minedu 2023",
+                    "title": "¿Qué se siente ver millones de colores?",
+                    "author": "Selecciones Reader's Digest. (19 de septiembre del 2016). Adaptado por Minedu 2021",
                     "content": [
-                    "En el amanecer del 12 de septiembre del 490 a.C., la llanura de Maratón fue testigo de uno de los enfrentamientos más notables de la Antigua Grecia: la Batalla de Maratón. Este episodio histórico no solo marcó un punto de inflexión en la Segunda Guerra Médica, sino que también dejó lecciones perdurables sobre estrategia militar y determinación.",
-                    "La contienda tuvo lugar entre las fuerzas griegas, lideradas por Atenas y Platea, y el Imperio Persa, bajo el mando de Darío I. A pesar de contar con muchos menos soldados, los griegos adoptaron una estrategia valiente y audaz que resultó decisiva. Estos rompieron las líneas persas, desencadenando un caos que culminó con una victoria sorprendente para los griegos. Esta movida exitosa, combinada con el coraje de los soldados, destacó la importancia de la táctica y la preparación en el campo de batalla.",
-                    "La Batalla de Maratón no solo fue un triunfo militar, sino también un símbolo de resistencia y determinación. El corredor Fidípides, enviado a Atenas para anunciar la victoria, corrió aproximadamente 42 kilómetros, dando origen al maratón moderno y perpetuando la historia de Maratón en la cultura popular.",
-                    "Este evento histórico nos muestra cómo la astucia estratégica y la valentía pueden superar las probabilidades aparentemente insuperables. La Batalla de Maratón marcó un hito en la historia militar y sirvió como recordatorio de que, incluso en las situaciones más desafiantes, la tenacidad y la astucia pueden prevalecer."
-                ], 
+                    "Para Concetta Antico, el cielo nocturno está lleno de zafiros y violetas; una rosa se tiñe de dorados y celestes; un camino de piedra es un arco iris de anaranjados, amarillos, verdes, azules y rojos pálidos. Concetta tiene “supervisión”, o tetracromatismo, una rara condición genética que le permite ver casi 100 millones de colores. Las personas con visión normal, en cambio, distinguen un millón.",
+                    "“Veo muchos matices de sombras y más colores bajo luz tenue”, afirma Concetta. “Si tú y yo vemos una hoja de árbol, yo percibo magenta en la orilla de ella, o turquesa en algunas partes donde tú sólo ves verde oscuro. Cuando la luz proyecta sombras en las paredes, veo violetas, lavandas y turquesas. Tú sólo ves grises”.",
+                    "“Ella ve el mundo de manera distinta de como lo vemos nosotros”, dice la neuróloga Wendy Martin, quien ha estudiado el caso de Concetta. Cuando era niña y vivía en Australia, ésta sabía que tenía una visión excepcional. A los siete años pintó vívidas reproducciones al óleo de cuadros de Cézanne, Van Gogh y Monet. Ahora se gana la vida como pintora e instructora de arte en San Diego, California, adonde se mudó con su esposo, Jason Pizzinat, a mediados de los años 80. Los colores que ve en la flora y la fauna del sur de California conforman su vasta paleta.",
+                    "Concetta se ofreció como voluntaria para estudios científicos, con el deseo de que estos también conduzcan a una mejor comprensión del daltonismo, o ceguera al color, que afecta a su hija, de 12 años. El daltonismo tiene por causa la misma mutación genética que el tetracromatismo. “Quiero que todos se den cuenta de lo hermoso que es el mundo”, dice Concetta (ninguno de sus hijos varones presenta la mutación).",
+                    "Aunque su experiencia visual es extraordinaria, ver el espectro completo le acarrea una desventaja: la sobrecarga sensorial. “Cuando despierto y miro por la ventana, lo hago solo unos momentos porque no puedo dejar de ver todos los colores del exterior”, dijo a la BBC. “Veo todos los colores en el piso de madera cuando voy al baño, y distingo todos los de la pasta de dientes. En el comedor, la canasta de frutas es un estallido de colores”.",
+                    "El supermercado es “una pesadilla”, prosigue Concetta. Todos los pasillos son “un bombardeo de colores”. Tal vez a causa de esto, dice que su color favorito es el blanco. “Es apacible y muy relajante para mis ojos”, expresa."
+                            ], 
                 "quiz": [
                     {
-                        "question": "De acuerdo con el texto, en la Batalla de Maratón ¿quién lideró este triunfo militar?",
+                        "question": "Falta la pregunta",
                         "type": "multiple-choice",
-                        "options": ["Atenas y Platea.", "Darío.", "Fidípedes.", "Los persas."],
-                        "answer": "Atenas y Platea."
+                        "options": ["Usar su mediano dominio de las lenguas nativas para comunicarse con ellos", "Ofrecer oro y riquezas a cambio de su libertad.", "Recordar que para ese día se esperaba un eclipse solar.", "Relatar las hazañas de su vida en España y su trabajo religioso."],
+                        "answer": "Recordar que para ese día se esperaba un eclipse solar."
                     },
                     {
-                        "question": "Según el texto, ¿a qué se refiere la frase “punto de inflexión”?",
+                        "question": "Falta pregunta",
                         "type": "multiple-choice",
-                        "options": ["Momento de valentía.", "Momento de cambio.", "Momento de intrepidez.", "Momento de coraje."],
-                        "answer": "Momento de cambio."
+                        "options": ["Fray Bartolomé usa su conocimiento de los eclipses para salvar su vida, pero los indígenas sabían de los eclipses, y es sacrificado.", "Fray Bartolomé logra escapar de los indígenas gracias a su inteligencia y a su dominio de las lenguas nativas.", "Fray Bartolomé es altamente respetado por los indígenas, quienes lo consideran un gran sabio.", "Fray Bartolomé tiene éxito en su intento de engañar a los indígenas y se convierte en su líder."],
+                        "answer": "Fray Bartolomé usa su conocimiento de los eclipses para salvar su vida, pero los indígenas sabían de los eclipses, y es sacrificado."
                     },
                     {
-                        "question": "Según el texto, ¿cuáles son las lecciones que nos deja la Batalla de Maratón?",
+                        "question": "falta ",
                         "type": "multiple-choice",
-                        "options": ["Valentía y audacia.", "Coraje y preparación en el campo.", "Resistencia y determinación.", "Astucia y valentía."],
-                        "answer": "Resistencia y determinación."
+                        "options": ["Decidió buscar ayuda y aventuras en la selva. ", "Se sentó con tranquilidad a esperar la muerte.", "Intentó encontrar un camino de regreso a España.", "Aceptó el celo religioso por su labor redentora."],
+                        "answer": "Se sentó con tranquilidad a esperar la muerte."
                     },
                     {
-                        "question": "Respecto a la Batalla de Maratón, cómo episodio histórico, ¿qué lecciones podemos deducir?",
+                        "question": "falta pregunta",
                         "type": "multiple-choice",
-                        "options": ["Cómo la valiente estrategia y la audacia superan las adversidades.", "Cómo a mayor número de soldados se superan los desafíos.", "Cómo ser corredor y tener resistencia superan las adversidades.", "Cómo ser persa y tener astucia, superan los desafíos."],
-                        "answer": "Cómo la valiente estrategia y la audacia superan las adversidades."
+                        "options": ["Bartolomé fue sacrificado porque no conocía las lenguas nativas.", "Bartolomé, para salvar su vida, decidió usar su conocimiento sobre el eclipse de sol.", "La serenidad de los indígenas hizo que Bartolomé perdiera la esperanza de sobrevivir.", "A pesar de su conocimiento de Aristóteles, Bartolomé no pudo entender a los indígenas."],
+                        "answer": "A pesar de su conocimiento de Aristóteles, Bartolomé no pudo entender a los indígenas."
                     },
                     {
-                        "question": "Luego de leer el texto, ¿cuál es el tema principal del texto?",
+                        "question": "falta pregunta",
                         "type": "multiple-choice",
-                        "options": ["La Batalla de Maratón y su implicancia histórica.", "La Batalla de Maratón y el resultado del enfrentamiento.", "El origen del maratón moderno y el triunfo militar.", "El origen del maratón moderno y la inmortalización de su historia."],
-                        "answer": "La Batalla de Maratón y su implicancia histórica."
+                        "options": ["Contar la historia de un fraile que llega a Guatemala con un gran conocimiento.", "Mostrar el conflicto entre culturas y el menosprecio por el conocimiento indígena.", "Describir las características geográficas de la selva de Guatemala.", "Relatar las características de los eclipses solares durante los siguientes años."],
+                        "answer": "Mostrar el conflicto entre culturas y el menosprecio por el conocimiento indígena."
                     },
                     {
-                        "question": "De acuerdo con el texto, ¿cómo se relaciona la Batalla de Maratón con el origen del maratón moderno?",
+                        "question": "Falta pregunta”?",
                         "type": "multiple-choice",
-                        "options": ["La batalla y la acción de Fidípedes son símbolos de valentía. ", "El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", "El nombre de la batalla da origen al maratón moderno."],
-                        "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
+                        "options": ["Mostrar la valentía de Fray Bartolomé ante el sacrificio.", "Destacar la ignorancia de los indígenas sobre el conocimiento europeo.", "Señalar el fracaso del protagonista y su consecuente muerte.", "Resaltar la belleza de la selva guatemalteca y su entorno."],
+                        "answer": "Señalar el fracaso del protagonista y su consecuente muerte."
                     }
                 ]
                 }
@@ -1802,8 +2647,22 @@ body.dark-mode .results-list li.incorrect {
             // Elementos para Evaluaciones y export
             const evalSection = document.getElementById('evalSection');
             const evalTitle = document.getElementById('evalTitle');
+            const evalSubtitle = document.getElementById('evalSubtitle');
             const evalTextContainer = document.getElementById('evalTextContainer');
             const evalQuizContainer = document.getElementById('evalQuizContainer');
+
+            // Mostrar el subtítulo solo cuando el título indique evaluación de entrada o salida
+            const updateEvalSubtitleVisibility = () => {
+                const txt = (evalTitle.textContent || '').toLowerCase();
+                if (txt.includes('entrada') || txt.includes('salida') || txt.includes('prueba')) {
+                    evalSubtitle.style.display = 'block';
+                } else {
+                    evalSubtitle.style.display = 'none';
+                }
+            }
+            const mo = new MutationObserver(updateEvalSubtitleVisibility);
+            mo.observe(evalTitle, { childList: true, characterData: true, subtree: true });
+            updateEvalSubtitleVisibility();
             const submitEvalBtn = document.getElementById('submitEvalBtn');
             const evalSummary = document.getElementById('evalSummary');
             const startEntryEvalBtn = document.getElementById('startEntryEvalBtn');
@@ -1862,6 +2721,17 @@ body.dark-mode .results-list li.incorrect {
             const displayText = (text) => {
                 currentText = text;
 
+                // Ocultar pantalla inicial cuando se carga un texto
+                const initialWelcome = document.getElementById('initialWelcome');
+                if (initialWelcome) {
+                    initialWelcome.classList.add('hidden');
+                }
+
+                // Mostrar elementos de contenido
+                textTitle.style.display = 'block';
+                textAuthor.style.display = 'block';
+                textContent.style.display = 'block';
+
                 // --- MODIFICACIÓN: Lógica de la Evaluación de Entrada (Botón de Ingreso y Doble Columna) ---
                 if (currentCategory === 'entrada' && entradaData.length >= 2) {
                     textTitle.textContent = 'Evaluación de Entrada'; // Título de categoría
@@ -1874,7 +2744,7 @@ body.dark-mode .results-list li.incorrect {
                     textAuthor.textContent = `Autor: ${text.author}`;
                     textContent.innerHTML = text.content.map(p => `<p>${p}</p>`).join('');
                     textContent.style.fontSize = `${currentFontSize}rem`;
-                    startQuizBtn.textContent = '✅ Iniciar Quiz de Comprensión';
+                    startQuizBtn.textContent = '✅ Iniciar los ejercicios de Comprensión';
                 }
                 // --- FIN MODIFICACIÓN DE ENTRADA ---
 
@@ -2327,8 +3197,8 @@ body.dark-mode .results-list li.incorrect {
                 
                 // Mostrar el feedback del score con el resumen detallado (MODIFICACIÓN)
                 quizFeedback.innerHTML = `
-                    <h3>Resultados del Quiz</h3>
-                    <p>Has acertado ${correctAnswers} de ${totalQuestions} preguntas. Tu puntaje en el quiz es: <strong>${score} puntos</strong>.</p>
+                    <h3>Resultados del cuestionario</h3>
+                    <p>Has acertado ${correctAnswers} de ${totalQuestions} preguntas. Tu puntaje en el cuestionario es: <strong>${score} puntos</strong>.</p>
                     <hr>
                     <h4>Resumen por Ejercicio:</h4>
                     ${resultsSummary}
@@ -2496,7 +3366,7 @@ body.dark-mode .results-list li.incorrect {
                             });
                         });
                     } else {
-                        alert('No hay respuestas de actividad para exportar. Realiza primero el quiz de la actividad.');
+                        alert('No hay respuestas de actividad para exportar. Realiza primero el cuestionario de la actividad.');
                         return;
                     }
                     const fname = `actividad_${category}_${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getDate().toString().padStart(2,'0')}_${now.getHours().toString().padStart(2,'0')}${now.getMinutes().toString().padStart(2,'0')}.xls`;
@@ -2511,11 +3381,18 @@ body.dark-mode .results-list li.incorrect {
                     const exercises = [];
                     if (!Array.isArray(data) || data.length === 0) return exercises;
 
-                    if (data.length >= 4) {
+                    if (data.length >= 5) {
                         // Primer ejercicio = combinación de los dos primeros en doble columna
                         exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
                         exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 2'});
                         exercises.push({ type: 'single', text: data[3], quiz: data[3].quiz || [], title: 'Ejercicio 3'});
+                        exercises.push({ type: 'single', text: data[4], quiz: data[4].quiz || [], title: 'Ejercicio 4'});
+                    } else if (data.length === 4) {
+                        // Primer ejercicio = combinación de los dos primeros en doble columna
+                        exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
+                        exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 2'});
+                        exercises.push({ type: 'single', text: data[3], quiz: data[3].quiz || [], title: 'Ejercicio 3'});
+                        exercises.push({ type: 'single', text: data[3], quiz: data[3].quiz || [], title: 'Ejercicio 4'});
                     } else if (data.length === 3) {
                         exercises.push({ type: 'double', columns: [data[0], data[1]], quiz: [...(data[0].quiz || []), ...(data[1].quiz || [])], title: 'Ejercicio 1 '});
                         exercises.push({ type: 'single', text: data[2], quiz: data[2].quiz || [], title: 'Ejercicio 2'});
@@ -2576,11 +3453,17 @@ body.dark-mode .results-list li.incorrect {
                         `;
                     }
 
-                    // Generar el quiz para este ejercicio
-                    generateEvalQuiz(ex.quiz || [], index);
+                    // Calcular el número de pregunta inicial (correlativa)
+                    let questionStartNumber = 1;
+                    for (let i = 0; i < index; i++) {
+                        questionStartNumber += (evalState.exercises[i].quiz || []).length;
+                    }
+
+                    // Generar el quiz para este ejercicio con numeración correlativa
+                    generateEvalQuiz(ex.quiz || [], index, questionStartNumber);
                 };
 
-                const generateEvalQuiz = (quiz, exIndex) => {
+                const generateEvalQuiz = (quiz, exIndex, questionStartNumber = 1) => {
                     currentEvalQuiz = { quiz: quiz || [], exIndex };
                     evalQuizContainer.innerHTML = '';
                     if (!quiz || quiz.length === 0) {
@@ -2590,7 +3473,8 @@ body.dark-mode .results-list li.incorrect {
                     quiz.forEach((q, qIndex) => {
                         const qDiv = document.createElement('div');
                         qDiv.classList.add('question');
-                        qDiv.innerHTML = `<p>${qIndex + 1}. ${q.question}</p>`;
+                        const questionNumber = questionStartNumber + qIndex;
+                        qDiv.innerHTML = `<p>${questionNumber}. ${q.question}</p>`;
                         const name = `eval_${exIndex}_q${qIndex}`;
                         if (q.type === 'multiple-choice') {
                             q.options.forEach(opt => {
@@ -2707,6 +3591,22 @@ body.dark-mode .results-list li.incorrect {
                         alert('No hay ejercicios configurados para esta evaluación.');
                         return;
                     }
+                    
+                    // Ocultar la pantalla inicial (logo y mensaje)
+                    const initialWelcome = document.getElementById('initialWelcome');
+                    if (initialWelcome) {
+                        initialWelcome.classList.add('hidden');
+                    }
+                    
+                    // Remover padding y min-height del article cuando se oculta la imagen
+                    const textDisplayArticle = document.querySelector('.text-display');
+                    if (textDisplayArticle) {
+                        textDisplayArticle.style.minHeight = 'auto';
+                        textDisplayArticle.style.padding = '0';
+                        textDisplayArticle.style.backgroundColor = 'transparent';
+                        textDisplayArticle.style.boxShadow = 'none';
+                    }
+                    
                     evalState = { mode, exercises, currentIndex: 0, rows: [] };
                     evalSummary.innerHTML = '';
                     if (evalSection) evalSection.style.display = 'block';
@@ -2714,7 +3614,8 @@ body.dark-mode .results-list li.incorrect {
                 };
 
                 // Inicialización al cargar la página
-                selectRandomText();
+                // NO cargar texto automáticamente - mostrar pantalla inicial
+                // selectRandomText();
 
                 // Event listener para el cambio de categoría
                 textCategorySelect.addEventListener('change', () => {
@@ -2727,6 +3628,33 @@ body.dark-mode .results-list li.incorrect {
                     selectRandomText();
                 });
             });
+
+        // ===== Control de Pantalla de Bienvenida =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            
+            // Función para cerrar la pantalla de bienvenida
+            function closeWelcome() {
+                welcomeOverlay.classList.add('hide');
+                setTimeout(() => {
+                    welcomeOverlay.style.display = 'none';
+                }, 800);
+            }
+
+            // Cerrar al hacer clic en cualquier parte de la pantalla
+            welcomeOverlay.addEventListener('click', closeWelcome);
+
+            // Cerrar automáticamente después de 5 segundos
+            setTimeout(closeWelcome, 5000);
+
+            // Cerrar si se presiona cualquier tecla
+            document.addEventListener('keydown', function(event) {
+                if (welcomeOverlay.style.display !== 'none') {
+                    closeWelcome();
+                }
+            });
+        });
         </script>
 </body>
 </html>
+
