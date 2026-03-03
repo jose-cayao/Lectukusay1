@@ -939,6 +939,35 @@ body.dark-mode .results-list li.incorrect {
             pointer-events: none;
         }
 
+        /* Contenedor de tarjetas de actividad dentro de la pantalla inicial */
+        .activity-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .activity-card {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-align: center;
+            flex: 1 1 calc(30% - 2rem);
+            min-width: 120px;
+        }
+
+        .activity-card:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+
         @keyframes fadeInOverlay {
             from {
                 opacity: 0;
@@ -1658,8 +1687,10 @@ body.dark-mode .results-list li.incorrect {
                     
                     <!-- Contenido de texto -->
                     <div class="initial-content">
-                        <h2 class="initial-title">LectuKushay</h2>
-                        <p class="initial-subtitle">La alegría de leer comienza aquí</p>
+                        <h2 class="initial-title">Elige tu aventura</h2>
+                        <p class="initial-subtitle">Selecciona una actividad para iniciar</p>
+                        <!-- selector de actividades dentro del recuadro azul -->
+                        <div class="activity-cards"></div>
                     </div>
                     
                     <!-- Decoración con imagen adolescentes leyendo -->
@@ -1694,7 +1725,7 @@ body.dark-mode .results-list li.incorrect {
             <!-- Comentarios de estudiante removidos (requerimiento) -->
             <section id="evalSection" class="eval-section" style="display:none;" role="region" aria-label="Sección de evaluación">
                 <h2 id="evalTitle">Evaluación</h2>
-                <p id="evalSubtitle" class="eval-subtitle" style="display:none; font-weight:600; color:var(--primary-color); margin-top:0.5rem;">Instrumento de recolección de información del proyecto: Aplicación de la herramienta tecnológica Lectukushay v.1 para mejorar la comprensión lectora en estudiantes del VII ciclo de la Institución Educativa N° 16142 Señor Cautivo, Sallique, Jaén, Cajamarca, 2025</p>
+                <p id="evalSubtitle" class="eval-subtitle" style="display:none; font-weight:600; color:var(--primary-color); margin-top:0.5rem;">Instrumento de recolección de información del proyecto: Herramienta tecnológica Lectukushay para fortalecer la competencia lee diversos tipos de textos en su lengua materna en estudiantes del VII ciclo de la Institución Educativa N° 16142 Señor Cautivo, Sallique, Jaén, Cajamarca, 2026</p>
                 <div id="evalProgress" style="margin-bottom:0.5rem; font-weight:bold;" role="status" aria-live="polite"></div>
                 <div id="evalTextContainer" class="eval-text-container" role="main"></div>
                 <div id="evalQuizContainer" class="eval-quiz-container"></div>
@@ -3653,8 +3684,31 @@ body.dark-mode .results-list li.incorrect {
                     closeWelcome();
                 }
             });
+
+            // --- Generación de tarjetas de actividad dentro del recuadro azul ---
+            const textCategorySelect = document.getElementById('textCategory');
+            const cardsContainer = document.querySelector('.initial-content .activity-cards');
+            if (textCategorySelect && cardsContainer) {
+                const activities = [];
+                for (let i = 0; i < textCategorySelect.options.length; i++) {
+                    const opt = textCategorySelect.options[i];
+                    activities.push({ value: opt.value, label: opt.text });
+                }
+                activities.forEach(act => {
+                    const card = document.createElement('div');
+                    card.className = 'activity-card';
+                    card.textContent = act.label;
+                    card.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        textCategorySelect.value = act.value;
+                        textCategorySelect.dispatchEvent(new Event('change'));
+                    });
+                    cardsContainer.appendChild(card);
+                });
+            }
         });
         </script>
 </body>
 </html>
+
 
