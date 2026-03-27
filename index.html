@@ -122,11 +122,16 @@
     line-height: 1.4;
 }
 
-/* --- Compatibilidad con Modo Oscuro (Dark Mode) --- */
-
-body.dark-mode .column-text {
-    border-right: 1px solid #4a637d; /* Borde oscuro para la doble columna */
-}
+        .uploaded-infographic {
+            width: 100%;
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+            border: 2px solid #129cec;
+            border-radius: 8px;
+            margin: 1rem auto;
+        }
 
 body.dark-mode .author-label {
     color: #bdc3c7;
@@ -1587,9 +1592,9 @@ body.dark-mode .results-list li.incorrect {
     <header>
         <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg" alt="Logo LectuKushay - Plataforma de lectura educativa">
         <b><h1>LectuKushay</h1></b>
-        <div class="slogan-container">
+        <div class="slogan-container"> 
             <!-- Nota: La etiqueta <marquee> está obsoleta y puede no ser compatible en futuros navegadores. -->
-            <b><marquee behavior="scroll" direction="left" scrollamount="5"><p>¡La alegría de leer comienza aquí!</p></marquee></b>
+            </b><b><center behavior="scroll" direction="left" scrollamount="5"><p> La alegría de leer comienza aquí</p></center></b>
         </div>
     </header>
 
@@ -1666,6 +1671,14 @@ body.dark-mode .results-list li.incorrect {
                     <button id="decreaseFontSizeBtn">A-</button>
                     <button id="exportActivityBtn" class="btn-secondary">Exportar Actividad (.xls)</button>
                 </div>
+                <div id="imageUploadContainer" style="display:none; margin-top: 1rem;">
+                    <label for="imageUploadInput">Actividad 04 - Subir infografía (imagen):</label><br>
+                    <input type="file" id="imageUploadInput" accept="image/*" aria-label="Subir infografía en imagen para la actividad" />
+                    <div id="imagePreview" style="margin-top: 10px;"></div>
+                </div>
+                <div id="infographicModeIndicator" style="display:none; margin-top: 0.75rem; padding: 0.5rem; border: 1px solid #4caf50; border-radius: 6px; background: #e8f5e9; color: #1b5e20; font-weight: 600;">
+                    Modo infografía activo
+                </div>
             </nav>
 
             <article class="text-display" role="article">
@@ -1707,10 +1720,6 @@ body.dark-mode .results-list li.incorrect {
                 </div>
                 <button id="startQuizBtn" class="btn-primary" style="display:none;">Terminé de leer, ¡a la comprensión!</button>
             </article>
-
-            <section id="readingMessage" class="reading-message" style="display:none;">
-                <p>¡Bien hecho! Has terminado esta lectura. 🎉</p>
-            </section>
 
             <section id="quizSection" class="quiz-section" style="display:none;" role="region" aria-label="Sección de preguntas de comprensión">
                 <h2>Preguntas de Comprensión</h2>
@@ -1980,6 +1989,7 @@ body.dark-mode .results-list li.incorrect {
             {
                 "title": "La luz es como el agua",
                 "author": "Gabriel García Márquez",
+                "image": "E://UNC//la-luz-es-como-el-agua-3.jpg",
                 "content": [
                     "En Navidad los niños volvieron a pedir un bote de remos.",
                     "-De acuerdo -dijo el papá, lo compraremos cuando volvamos a Cartagena.Totó, de nueve años, y Joel, de siete, estaban más decididos de lo que suspadres creían.",
@@ -2010,34 +2020,40 @@ body.dark-mode .results-list li.incorrect {
                 ],
                 "quiz": [
                     {
-                        "question": "¿Cómo era el patito diferente a los demás?",
+                        "question": "Determina quiénes son los personajes principales y secundarios.",
                         "type": "multiple-choice",
-                        "options": ["Pequeño y blanco", "Grande, feo y gris", "Flaco y marrón", "Lindo y colorido"],
-                        "answer": "Grande, feo y gris"
+                        "options": ["Los padres son los principales y los niños los secundarios.", "Los bomberos.", "Totó y Joel; los padres, compañeros y bomberos.", "Solo hay un personaje principal: el padre."],
+                        "answer": "Totó y Joel; los padres, compañeros y bomberos."
                     },
                     {
-                        "question": "¿Quién se burlaba del patito feo?",
+                        "question": "¿Cuántos años tenían los niños al principio de cuento?",
                         "type": "multiple-choice",
-                        "options": ["Los gansos", "Su madre", "Los otros patitos", "Los campesinos"],
-                        "answer": "Los otros patitos"
+                        "options": ["10 y 8 años", "9 y 7 años", "8 y 6 años", "11 y 9 años"],
+                        "answer": "9 y 7 años"
                     },
                     {
-                        "question": "¿Qué le sucedió al patito feo en primavera?",
+                        "question": "¿Por qué los padres se resistían a comprar el bote de remos?",
                         "type": "multiple-choice",
-                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
-                        "answer": "Se convirtió en un hermoso cisne"
+                        "options": ["Porque no tenían dinero suficiente.", "Porque no les gustaban los barcos.", "Porque los niños no lo merecían.", "Porque no había espacio ni agua donde usarlo en el apartamento."],
+                        "answer": "Porque no había espacio ni agua donde usarlo en el apartamento."
                     },
                     {
-                        "question": "¿Quién rescató al patito feo en invierno?",
+                        "question": "¿Crees que la historia pertenece a un cuento fantástico? ¿por qué?",
                         "type": "multiple-choice",
-                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
-                        "answer": "Un campesino"
+                        "options": ["No, porque todo ocurre en la vida real.", "Sí, porque mezcla situaciones reales con elementos imposibles como la luz que se comporta como agua.", "Sí, pero solo porque aparecen niños.", "No, porque es una historia histórica."],
+                        "answer": "Sí, porque mezcla situaciones reales con elementos imposibles como la luz que se comporta como agua."
                     },
                     {
-                        "question": "¿Qué sentimiento predominaba en el patito feo al inicio de la historia?",
+                        "question": "¿De dónde sacaron Totó y Joel la idea de que la luz es como el agua?",
                         "type": "multiple-choice",
-                        "options": ["Un cazador", "Una pata", "Un campesino", "Un perro"],
-                        "answer": "Soledad"
+                        "options": ["De una explicación que les dio un adulto al comparar la luz con el agua.", "De un programa de televisión.", "De un libro de ciencias.", "De su imaginación sin influencia externa."],
+                        "answer": "De una explicación que les dio un adulto al comparar la luz con el agua."
+                    },
+                    {
+                        "question": "¿Por qué los padres se extrañan sobre los pedidos de sus hijos?",
+                        "type": "multiple-choice",
+                        "options": ["Porque eran demasiado baratos.", "Porque eran regalos comunes.", "Porque nunca pedían nada.", "Porque eran peligrosos, extraños y no tenían sentido en el contexto del apartamento."],
+                        "answer": "Porque eran peligrosos, extraños y no tenían sentido en el contexto del apartamento."
                     }
                 ]
             }
@@ -2048,6 +2064,7 @@ body.dark-mode .results-list li.incorrect {
             {
                 "title": "Las muchas vidas",
                 "author": "Alonso Cueto. En el diario la República - 2014",
+                "image": "E://UNC//muchasvidas.jpg",
                 "content": [
                     "Estar en un “estado de gracia” es frecuente en Alfredo Bryce, que esta semana cumplirá setenta y cinco años de una vida vivida hasta los extremos, en el culto a la literatura como el reflejo del desorden y la diversidad existencial. Si hubiera de definir su obra, quizá podríamos decir que es la exploración del humor como el camino más directo y complejo a la verdad de cada ser humano.",
                     "Es ocasión para que sus lectores agradezcamos las muchas vidas que nos ha dado: la de Julius y sus avatares en El palacio; la de Susy, Juan Lucas y los Lastarria; la de esa escena inolvidable en la que la humilde Arminda le regala unas medias al niño, desde el fondo del corazón. Tenemos que agradecer también la soledad y la sensibilidad de Jimmy en Paracas, quien una noche fatídica descubre que su padre ha vendido su cuerpo al hijo del jefe. Y también a Sevilla, que muere en Madrid cerrando los ojos, porque el mundo es demasiado ancho, complicado, alto y vertiginoso, en esa maravillosa novela que es Muerte de Sevilla en Madrid.",
@@ -2092,33 +2109,102 @@ body.dark-mode .results-list li.incorrect {
 
         const actividad07Data = [
             {
-                "title": "Actividad 07",
-                "author": "Autor",
+                "title": "El gato negro",
+                "author": "Edgar Allan Poe - Fragmento",
+                "image": "E://UNC//el-gato-negro.jpg",
                 "content": [
-                    "Contenido de la actividad 07. Reemplaza con el texto real cuando esté disponible."
+                    "Desde la infancia me destaqué por la docilidad y bondad de mi carácter. La ternura que abrigaba mi corazón era tan grande que llegaba a convertirme en objeto de burla para mis compañeros. Me gustaban especialmente los animales, y mis padres me permitían tener una gran variedad. Pasaba a su lado la mayor parte del tiempo, y jamás me sentía más feliz que cuando les daba de comer y los acariciaba. Este rasgo de mi carácter creció conmigo y, cuando llegué a la madurez, se convirtió en una de mis principales fuentes de placer.",
+                    "Aquellos que alguna vez han experimentado cariño hacia un perro fiel y sagaz no necesitan que me moleste en explicarles la naturaleza o la intensidad de la retribución que recibía. Hay algo en el generoso y abnegado amor de un animal que llega directamente al corazón de aquel que con frecuencia ha probado la falsa amistad y la frágil fidelidad del hombre.",
+                    "Me casé joven y tuve la alegría de que mi esposa compartiera mis preferencias. Al observar mi gusto por los animales domésticos, no perdía oportunidad de procurarme los más agradables de entre ellos. Teníamos pájaros, peces de colores, un hermoso perro, conejos, un monito y un gato. Este último era un animal de notable tamaño y hermosura, completamente negro y de una sagacidad asombrosa. Al referirse a su inteligencia, mi mujer, que en el fondo era no poco supersticiosa, aludía con frecuencia a la antigua creencia popular de que todos los gatos negros son brujas metamorfoseadas. No quiero decir que lo creyera seriamente, y sólo menciono la cosa porque acabo de recordarla.",
+                    "Plutón -tal era el nombre del gato- se había convertido en mi favorito y mi camarada. Sólo yo le daba de comer y él me seguía por todas partes en casa. Me costaba mucho impedir que anduviera tras de mí en la calle."
                 ],
                 "quiz": [
                     {
-                        "question": "Pregunta ejemplo actividad 07",
-                        "type": "short-answer",
-                        "answer": "respuesta"
+                        "question": "¿Cuál es la idea central del texto de Edgar Allan Poe?",
+                        "type": "multiple-choice",
+                        "options": ["La alegría que el protagonista compartía con su esposa.", "La diversidad de especies animales de las que era dueño.", "El amor del protagonista por los animales y el apego que sentía por su gato.", "Ninguna de las anteriores"],
+                        "answer": "La diversidad de especies animales de las que era dueño."
+                    },
+                    {
+                        "question": "En el texto “Teníamos pájaros, peces de colores, un hermoso perro, conejos, un monito y un gato”, ¿qué animales están descritos con un adjetivo calificativo?",
+                        "type": "multiple-choice",
+                        "options": ["Los peces y el perro.", "Los pájaros, los peces y los conejos.", "Todos los animales.", "Ningún animal."],
+                        "answer": "Los peces y el perro."
+                    },
+                    {
+                        "question": "¿Cuáles son los rasgos que definen el carácter del personaje principal?",
+                        "type": "multiple-choice",
+                        "options": ["Impaciencia y temor a los animales.", "Paciencia y sabiduría.", "Pulcritud y paciencia.", "Docilidad, bondad y ternura."],
+                        "answer": "Docilidad, bondad y ternura."
+                    },
+                    {
+                        "question": "En el párrafo 3, la palabra “metamorfoseadas” hace referencia a que los gatos:",
+                        "type": "multiple-choice",
+                        "options": ["Es un gato embrujado.", "Son brujas con alma de gato.", "Son brujas transformadas en gatos..", "Viven en los cuerpos de las brujas."],
+                        "answer": "Son brujas transformadas en gatos."
+                    },                    
+                    {
+                        "question": "¿Por qué el autor menciona la creencia de que los gatos negros son brujas metamorfoseadas?",
+                        "type": "multiple-choice",
+                        "options": ["Para describir únicamente el aspecto físico del gato.", "Para explicar el origen científico de los gatos negros.", "Para anticipar un posible elemento oscuro o inquietante en la historia.", "Para demostrar que su esposa tenía razón en todo."],
+                        "answer": "Para anticipar un posible elemento oscuro o inquietante en la historia."
+                    },
+                    {
+                        "question": "¿Qué se puede inferir sobre la relación del protagonista con los seres humanos en comparación con los animales?",
+                        "type": "multiple-choice",
+                        "options": ["Tiene la misma relación afectiva con humanos y animales.", "Encuentra en los animales una fidelidad que no halla en las personas.", "Desconfía de los animales y evita relacionarse con ellos.", "Prefiere a los humanos porque son más fieles."],
+                        "answer": "Encuentra en los animales una fidelidad que no halla en las personas."
                     }
                 ]
             }
         ];
-
         const actividad08Data = [
             {
-                "title": "Actividad 08",
-                "author": "Autor",
+                "title": "Messi se merece este balón de oro",
+                "author": "Juan José Marón - 2023, 30 de octubre - Diario Olé",
+                "image": "E://UNC//mesi.jpg",
                 "content": [
-                    "Contenido de la actividad 08. Reemplaza con el texto real cuando esté disponible."
+                    "Leo fue el gran líder futbolístico del campeón del Mundo en Qatar y, a los 36 años, no para de sorprender: un líder en todo momento que debe llevarse su octavo trofeo.",
+                    "Apremiado por una pregunta incómoda, porque uno de sus futbolistas estaba involucrado, Pep Guardiola, dio una respuesta sobre quién debería ganar el Balón de Oro que se entregará hoy en París: “Siempre he dicho que debería haber dos secciones, una para Messi y otra para el resto. La peor temporada de Messi, la peor, la peor es la mejor para el resto de los jugadores”. ¿Entonces está bien si el crack rosarino se lleva su octavo trofeo? Sí. A los 36 años, en el ocaso de su carrera, cuando el cuerpo ya no va en sintonía con la cabeza, la Pulga cambió el paradigma con un Mundial de Qatar impecable, en el que se hizo líder y figura desde principio a fin. Y sí, por supuesto que una Copa del Mundo es un fundamento más que suficiente para que nadie ponga en duda la justicia.",
+                    "De todos modos, en este premio que se otorgará en Francia sería lícito (y acaso necesario) pecar de argentinismo exacerbado: ya no hay nada más que exigirle a Messi. Ni en términos nacionales (Selección) ni a nivel de clubes. Después de todo lo que dio -y lo que aún sigue ofreciendo-, hay que estar más convencidos que nunca de que merece ganar este Balón de Oro por la temporada 2022-23. Kylian Mbappé es un monstruo absoluto, hizo ocho goles en el Mundial, tres en la final, pero la perdió ante un Messi que en términos estadísticos estuvo en el mismo escalón: siete goles en Qatar y tres asistencias. Haaland y sus mil goles en el poderoso Manchester City también seducen, sobre todo porque ganó la Champions, pero el noruego no hizo goles ni en las semifinales ni en las finales de la Orejona... Leo, sí apareció en los momentos decisivos.",
+                    "No solo se toman en cuenta los títulos, sino la actuación individual y su aporte al equipo: Messi fue el gran líder de la Scaloneta, invitó a creer tras la derrota en el debut, se hizo cargo con fútbol. Y, en los episodios finales de su obra maestra, revolucionó EE.UU. para darle al Inter Miami su primer título. Sí, Leo se recontra merece este Balón de Oro."
                 ],
                 "quiz": [
                     {
-                        "question": "Pregunta ejemplo actividad 08",
-                        "type": "short-answer",
-                        "answer": "respuesta"
+                        "question": "¿Cuál es el tema central del artículo?",
+                        "type": "multiple-choice",
+                        "options": ["La rivalidad entre Messi, Mbappé y Haaland.", "La historia del Balón de Oro a lo largo del tiempo.", "La defensa de que Messi merece ganar el Balón de Oro por su desempeño reciente.", "El crecimiento del fútbol en Estados Unidos."],
+                        "answer": "La defensa de que Messi merece ganar el Balón de Oro por su desempeño reciente."
+                    },
+                    {
+                        "question": "¿Cuáles son los argumentos que presenta el autor para justificar que “Messi se merece el octavo Balón de Oro”?",
+                        "type": "multiple-choice",
+                        "options": ["Su edad, su popularidad y su trayectoria pasada.", "Su liderazgo en el Mundial, su rendimiento decisivo y sus logros con clubes.", "Su relación con otros jugadores y entrenadores.", "La opinión de los periodistas deportivos."],
+                        "answer": "Su liderazgo en el Mundial, su rendimiento decisivo y sus logros con clubes."
+                    },
+                    {
+                        "question": "Si tuvieras que redactar un nuevo título para el texto, ¿cuál sería el más apropiado?",
+                        "type": "multiple-choice",
+                        "options": ["El retiro de Messi y su legado en el fútbol.", "Mbappé y Haaland: los nuevos reyes del fútbol.", "Messi: liderazgo, títulos y grandeza que justifican otro Balón de Oro.", "La historia del Mundial de Qatar 2022."],
+                        "answer": "Messi: liderazgo, títulos y grandeza que justifican otro Balón de Oro."
+                    },
+                    {
+                        "question": "¿Qué se deduce cuando el autor afirma que Messi “cambió el paradigma”?",
+                        "type": "multiple-choice",
+                        "options": ["Que dejó de jugar al fútbol profesional.", "Que modificó la forma de entender el liderazgo y el rendimiento a su edad.", "Que cambió de equipo durante la temporada.", "Que dejó de ser importante en su selección."],
+                        "answer": "Que modificó la forma de entender el liderazgo y el rendimiento a su edad."
+                    },
+                    {
+                        "question": "¿Consideras que ganar un Mundial debe ser el factor principal para obtener el Balón de Oro?",
+                        "type": "multiple-choice",
+                        "options": ["Sí, porque es el logro más importante en el fútbol.", "No, porque solo importa el rendimiento en clubes.", "No, porque el premio debería eliminarse.", "Depende, ya que deben considerarse tanto logros colectivos como desempeño individual."],
+                        "answer": "Depende, ya que deben considerarse tanto logros colectivos como desempeño individual."
+                    },
+                    {
+                        "question": "¿El autor presenta un análisis completamente objetivo sobre quién merece el Balón de Oro?",
+                        "type": "multiple-choice",
+                        "options": ["Sí, porque solo usa datos estadísticos.", "No, porque muestra una postura claramente favorable hacia Messi.", "Sí, porque no menciona a otros jugadores.", "No, porque no habla del Mundial."],
+                        "answer": "No, porque muestra una postura claramente favorable hacia Messi."
                     }
                 ]
             }
@@ -2126,16 +2212,65 @@ body.dark-mode .results-list li.incorrect {
 
         const actividad09Data = [
             {
-                "title": "Actividad 09",
-                "author": "Autor",
+                "title": "Móvil de estrellas",
+                "author": "Secretaría de Educación de Pública. (2010). Español. Cuarto grado. Articulación de la Educación Básica. Fase experimental",
+                "image": "E://UNC//estrellas.jpg",
                 "content": [
-                    "Contenido de la actividad 09. Reemplaza con el texto real cuando esté disponible."
+                    "Materiales:",
+                    "",
+                    "Hojas de colores 18x18 cm.",
+                    "Tijeras",
+                    "Dos palos de madera.",
+                    "Hilo. (Puede sustituirse por listones)",
+                    "",
+                    "Instrucciones:",
+                    "Dobla la hoja por la mitad y marca el doblez. Extiéndela nuevamente y realiza la misma operación pero volteando la hoja para que quede una cruz marcada.",
+                    "Después, realiza la misma operación, pero esta vez formando un triángulo. Extiende la hoja y continúa del otro lado. Al desdoblar la hoja deberá quedar un asterisco marcando en el centro.",
+                    "Junta las líneas diagonales hacia el centro para formar una estrella de cuatro puntas.",
+                    "Junta cada una de las puntas para que quede un triángulo.",
+                    "Con las puntas juntas a manera de triángulos, realiza pequeños cortes en la parte externa.",
+                    "Al separar nuevamente las puntas, debe quedar una estrella similar al papel picado.",
+                    "Elabora un total de cuatro estrellas.",
+                    "Posteriormente, ata los polos de madera con el hilo para que queden en forma de cruz. De los extremos de los palos amarra hilos de distintos largos.",
+                    "Cuelga cuidadosamente las estrellas de los hilos para formar un lindo y colorido móvil.",
+                    "Puedes pintar los palos con los colores que más te gusten y poner más estrellas."
                 ],
                 "quiz": [
                     {
-                        "question": "Pregunta ejemplo actividad 09",
-                        "type": "short-answer",
-                        "answer": "respuesta"
+                        "question": "¿Cuál es el propósito del texto?",
+                        "type": "multiple-choice",
+                        "options": ["Dar información acerca de los móviles de estrellas.", "Indicar los pasos para hacer un móvil de estrellas.", "Mostrar ejemplos de móviles de estrellas.", "Mostrar que las estrellas se pueden mover."],
+                        "answer": "Indicar los pasos para hacer un móvil de estrellas."
+                    },
+                    {
+                        "question": "Según el instructivo, ¿qué se forma al realizar todos los dobleces indicados y unir las líneas diagonales hacia el centro?",
+                        "type": "multiple-choice",
+                        "options": ["Una estrella de cinco puntas.", "Una estrella de seis puntas.", "Una estrela de tres puntas.", "Una estrella de cuatro puntas."],
+                        "answer": "Una estrella de cuatro puntas."
+                    },
+                    {
+                        "question": "En el texto aparecen verbos como formar y poner. ¿A qué forma verbal pertenece su terminación? ",
+                        "type": "multiple-choice",
+                        "options": ["Al infinitivo.", "Al gerundio.", "Al participio.", "Pluscuamperfecto."],
+                        "answer": "Al infinitivo."
+                    },
+                    {
+                        "question": "¿Qué ocurriría si no se realizan correctamente los dobleces iniciales de la hoja?",
+                        "type": "multiple-choice",
+                        "options": ["No se podría cortar la hoja.", "El hilo no resistiría el peso.", "La estrella no tendría la forma adecuada.", "Los palos no formarían una cruz."],
+                        "answer": "La estrella no tendría la forma adecuada."
+                    },
+                    {
+                        "question": "¿Por qué el texto sugiere usar hilos de distintos largos al colgar las estrellas?",
+                        "type": "multiple-choice",
+                        "options": ["Para crear un efecto visual más atractivo y dinámico.", "Para que todas las estrellas queden iguales.", "Para gastar más material.", "Para que el móvil sea más resistente."],
+                        "answer": "Para crear un efecto visual más atractivo y dinámico."
+                    },
+                    {
+                        "question": "¿Consideras que las instrucciones del texto son claras para cualquier persona?",
+                        "type": "multiple-choice",
+                        "options": ["Sí, porque todos entienden fácilmente los pasos.", "No, porque no presenta ningún orden.", "En parte, porque aunque están ordenadas, algunas acciones podrían requerir demostración visual.", "No, porque no menciona los materiales."],
+                        "answer": "En parte, porque aunque están ordenadas, algunas acciones podrían requerir demostración visual."
                     }
                 ]
             }
@@ -2143,16 +2278,48 @@ body.dark-mode .results-list li.incorrect {
 
         const actividad10Data = [
             {
-                "title": "Actividad 10",
-                "author": "Autor",
+                "title": "Kuelap: despensa de los antiguos peruanos",
+                "author": "Adaptado de Choquetaype, R. (2007). Una ciudadela de piedra en las alturass. ",
                 "content": [
-                    "Contenido de la actividad 10. Reemplaza con el texto real cuando esté disponible."
+                    ""
                 ],
+                "image": "E:\\UNC\\kuelap.png",
                 "quiz": [
                     {
-                        "question": "Pregunta ejemplo actividad 10",
-                        "type": "short-answer",
-                        "answer": "respuesta"
+                        "question": "¿Cuál es la medida al final de las enormes entradas?",
+                        "type": "multiple-choice",
+                        "options": ["70 m", "20 m", "0,70 m", "12 m"],
+                        "answer": "0,70 m"
+                    },    
+                    {
+                        "question": "¿Cuántas construcciones circulares existieron aproximadamente en Kuélap?",
+                        "type": "multiple-choice",
+                        "options": ["60", "150", "400", "680"],
+                        "answer": "400"
+                    },
+                    {
+                        "question": "¿De qué trata principalmente este texto?",
+                        "type": "multiple-choice",
+                        "options": ["De las consecuencias de la invasión española en Kuélap.", "De las características arquitectónicas de la fortaleza de Kuélap.", "De las estrategias de defensa de los chachapoyas en Kuélap.", "De las formas de almacenamiento de alimentos en Kuélap."],
+                        "answer": "De las características arquitectónicas de la fortaleza de Kuélap."
+                    },
+                    {
+                        "question": "Según el texto, ¿qué protegía a Kuélap contra la erosión?",
+                        "type": "multiple-choice",
+                        "options": ["Su distribución en dos extensas plataformas.", "Su ubicación en la cima de una montaña.", "El uso de ichu seco en sus bases circulares.", "El empleo de piedras calizas en sus muros."],
+                        "answer": "El empleo de piedras calizas en sus muros."
+                    },
+                    {
+                        "question": "¿Para qué ha colocado el autor la imágenes en el texto sobre la vista de perfil y las enormes entradas?", 
+                        "type": "multiple-choice",
+                        "options": ["Para mostrar la forma inclinada de una de las entradas de Kuélap.", "Para mostrar los ángulos de una persona en la entrada de Kuélap.", "Para indicar la ausencia de ventanas en los muros de la entrada de Kuélap.", "Para indicar la cantidad de puestos de vigilancia en la entrada de Kuélap."],
+                        "answer": "Para mostrar la forma inclinada de una de las entradas de Kuélap."
+                    },  
+                    {
+                        "question": "¿A cuál de los siguientes estudiantes le sería más útil este texto?", 
+                        "type": "multiple-choice",
+                        "options": ["A Claudia, quien hace una tarea sobre el uso de plantas en construcciones.", "A Martín, quien investiga sobre las causas del fenómeno de El Niño.", "A José, quien busca técnicas para almacenar alimentos.", "A Luisa, quien indaga sobre fortalezas militares preíncas."],
+                        "answer": "A Luisa, quien indaga sobre fortalezas militares preíncas."
                     }
                 ]
             }
@@ -2160,84 +2327,57 @@ body.dark-mode .results-list li.incorrect {
 
         const novelasData = [
             {
-                "title": "Actividad 02",
-                "author": "Miguel de Cervantes Saavedra",
+                "title": "Claudia Rua: la peruana que une al Perú con el mundo a través de historias ",
+                "author": "Cecilia Fernández Sivori ",
+                "image": "E://UNC//rua.jpg",
                 "content": [
-                    "En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor.",
-                    "Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.",
-                    "El resto della concluían sayo de velarte, calzas de velludo para las fiestas con sus pantuflos de lo mismo, y los días de entresemana se honraba con su vellori de lo más fino.",
-                    "Tenía en su casa una ama que pasaba de los cuarenta, y una sobrina que no llegaba a los veinte, y un mozo de campo y plaza, que así ensillaba el rocín como tomaba la podadera.",
-                    "Frisaba la edad de nuestro hidalgo con los cincuenta años; era de complexión recia, seco de carnes, enjuto de rostro, gran madrugador y amigo de la caza. Quieren decir que tenía el sobrenombre de Quijada o Quesada, que en esto hay alguna diferencia en los autores que de este caso escriben; aunque por conjeturas verosímiles se deja entender que se llamaba Quijana."
+                    "Convertida en un puente entre el Perú y el mundo, nuestra compatriota Claudia Rua muestra la cultura peruana desde Suiza al mundo a través de su asociación Trama, donde confluyen diversas expresiones artísticas y también sus cuentos, en los que nuestro país se pone de manifiesto. ",
+                    "La labor de Claudia Rua es una forma de “hacer patria” desde Suiza. A través de sus propuestas artísticas y literarias, logra llevar a un público diverso la riqueza cultural peruana: desde las especies de nuestros bosques hasta las danzas que cuentan nuestra historia, así proyectan la imagen de una nación rica y llena de oportunidades ante el mundo.",
+                    "Claudia emigró durante la pandemia junto a su esposo e hija, y llevó consigo una maleta repleta de sueños y proyectos; sin embargo, pese a que tenía esa contención familiar, su vida en Suiza fue como “comenzar de cero”.",
+                    "“Al llegar debí adaptarme a un idioma nuevo, pese a que había estudiado francés. Todo era un reto: cosas tan simples como ir a comprar el pan, reconocer las calles, los tiempos, la comida, el clima. Antes renegaba de Lima y fue entonces que me di cuenta de que era una privilegiada. Ahora valoro todo de mi patria. Y hoy también siento que Suiza es mi casa”.",
+                    "“Fue así que necesité encontrarme un tiempo y pude enfocarme en trabajar mi escritura mediante la creación de historias. En el camino encontré una amiga peruana que es artista y cineasta, y fundamos una asociación cultural llamada Trama, que busca vincular a la comunidad latinoamericana en Suiza a través del arte”, refiere.",
+                    "Así, los libros poco a poco también se han convertido en un vehículo que le permite acercar el Perú al mundo. En palabras de Claudia: “Cada cuento no es solo un proyecto, sino extensión de mí. Me sirven para encontrarme y vincularme con las comunidades a través de los dos idiomas. Me tomó un año desarrollar los proyectos y conté con el apoyo de empresas suizas involucradas”.",
+                    "Desde que llegó a Suiza, cada año ha escrito varios títulos: ¿Y dónde están las medias?, Walter y la Lluvia de semillas, El viaje de Plumita, ¿Cuáles son tus sueños, abuela? y Los recolectores de corazones.",
+                    "“Siempre va a haber un elemento del Perú o que acerque al país a mis textos. En mi primer libro, en las ilustraciones, pedí poner, por ejemplo, la bandera de Perú y en los otros hablo del árbol del shihuahuaco, mientras que en otro el protagonista es parte de la Amazonía. Es mi manera de mantener este vínculo y esta presencia en mi lugar”, precisa Claudia Rua.",
+                    "Sobre sus proyectos",
+                    "Claudia vive llena de proyectos que acaricia con ilusión. “Mi próximo libro hablará del violín en la música de la danza de tijeras. Este cuento estará inspirado en mi abuelo, Leoncio Rua, quien fue el patriarca de este arte. Condecorado por el Ministerio de Cultura, fue un personaje muy importante de la música andina y referente de ella. Los discípulos de mi abuelo han sido los hermanos Chávez. El libro del 2026 se llamará El violín de Leíto”."
                 ],
                 "quiz": [
                     {
-                        "question": "¿En qué lugar vivía el hidalgo?",
+                        "question": "¿Qué organización fundó Claudia Rua en Suiza para vincular a la comunidad latinoamericana?",
                         "type": "multiple-choice",
-                        "options": ["Andalucía", "La Mancha", "Extremadura", "Castilla"],
-                        "answer": "La Mancha"
+                        "options": ["El Ministerio de Cultura.", "La asociación cultural Trama.", "Los hermanos Chávez.", " La comunidad Shihuahuaco"],
+                        "answer": "La asociación cultural Trama."
                     },
                     {
-                        "question": "¿Qué edad frisaba el hidalgo?",
+                        "question": "En	el	texto, ¿qué	significa	que	la	labor	de	Claudia	Rua	sea	una	forma	de	“hacer	patria”	desde Suiza?",
                         "type": "multiple-choice",
-                        "options": ["Treinta", "Cuarenta", "Cincuenta", "Sesenta"],
-                        "answer": "Cincuenta"
+                        "options": ["Que trabaja para el gobierno peruano desde el extranjero.", "Que ha decidido vivir permanentemente fuera del Perú.", "Que difunde y revalora la riqueza cultural peruana en otro país.", "Que su familia es la única que consume productos peruanos en Suiza."],
+                        "answer": "Que difunde y revalora la riqueza cultural peruana en otro país."
                     },
                     {
-                        "question": "¿Cómo se llamaba el hidalgo según las conjeturas?",
-                        "type": "short-answer",
-                        "answer": "Quijana"
-                    },
-                    {
-                        "question": "¿Qué animal era flaco y tenía el hidalgo?",
+                        "question": "A partir de sus declaraciones, ¿cómo se sintió Claudia Rua al llegar a Suiza? ",
                         "type": "multiple-choice",
-                        "options": ["Caballo", "Rocín", "Asno", "Mula"],
-                        "answer": "Rocín"
+                        "options": ["Despreocupada, pues ya dominaba el idioma francés.", "Privilegiada por no tener que volver a vivir en Lima.", "Retada, debido a que el cambio de entorno fue como empezar de cero.", "Arrepentida de haber emigrado con su familia durante la pandemia."],
+                        "answer": "Retada, debido a que el cambio de entorno fue como empezar de cero."
                     },
                     {
-                        "question": "¿Qué comida consumían las más noches?",
-                        "type": "short-answer",
-                        "answer": "Salpicón"
-                    }
-                ]
-            },
-            {
-                "title": "Cien Años de Soledad (Fragmento)",
-                "author": "Gabriel García Márquez",
-                "content": [
-                    "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo.",
-                    "Macondo era entonces una aldea de veinte casas de barro y cañabrava construidas a la orilla de un río de aguas diáfanas que se precipitaban por un lecho de piedras pulidas, blancas y enormes como huevos prehistóricos.",
-                    "El mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo.",
-                    "Todos los años, por el mes de marzo, una familia de gitanos desarrapados plantaba su carpa cerca de la aldea, y con un gran alboroto de pitos y tambores daban a conocer los nuevos inventos.",
-                    "Primero llevaron el imán. Un gitano corpulento, con barba montaraz y manos de gorrión, que se presentó con el nombre de Melquíades, hizo una pública demostración de lo que él llamaba la octava maravilla del mundo."
-                ],
-                "quiz": [
-                    {
-                        "question": "¿Qué recordaba el coronel Aureliano Buendía frente al pelotón de fusilamiento?",
+                        "question": "¿Con qué intención Claudia Rua solicita incluir elementos como la bandera o la Amazonía en sus cuentos?",
                         "type": "multiple-choice",
-                        "options": ["Su infancia", "El día que conoció el hielo", "La guerra", "A su madre"],
-                        "answer": "El día que conoció el hielo"
+                        "options": ["Para lograr que las empresas suizas financien sus proyectos de arte.", "Para lograr que su vínculo con el país se mantenga desde el exterior.", "Para cumplir con los diversos requisitos que el Ministerio exige hoy.", "Para que los peruanos en Suiza compren sus libros."],
+                        "answer": "Para lograr que su vínculo con el país se mantenga desde el exterior."
                     },
                     {
-                        "question": "¿Cómo era Macondo al principio?",
+                        "question": "¿Qué	representa	la	figura	de	Leoncio	Rua	para	el	próximo	proyecto	literario	de	Claudia?",
                         "type": "multiple-choice",
-                        "options": ["Una ciudad grande", "Un puerto", "Una aldea de veinte casas de barro", "Un campamento militar"],
-                        "answer": "Una aldea de veinte casas de barro"
+                        "options": ["El primer discípulo de los conocidos hermanos Chávez en el Cusco.", "Un personaje ficticio creado para narrar sobre la danza de tijeras.", "Una fuente de inspiración basada en su legado como patriarca del arte.", "Un empresario de Suiza que apoya la cultura andina y sus proyectos"],
+                        "answer": "Una fuente de inspiración basada en su legado como patriarca del arte."
                     },
-                    {
-                        "question": "¿Qué traían los gitanos a Macondo cada año?",
-                        "type": "short-answer",
-                        "answer": "Nuevos inventos"
-                    },
-                    {
-                        "question": "¿Quién era Melquíades?",
+                                        {
+                        "question": "Si quisieras difundir una tradición de tu comunidad como lo hace Claudia Rua, ¿qué medio sería el más adecuado?",
                         "type": "multiple-choice",
-                        "options": ["El padre del coronel", "Un habitante de Macondo", "Un gitano", "Un soldado"],
-                        "answer": "Un gitano"
-                    },
-                    {
-                        "question": "¿Qué fue lo primero que llevaron los gitanos?",
-                        "type": "short-answer",
-                        "answer": "El imán"
+                        "options": ["Publicar información breve sobre la tradición en redes sociales para que más personas la conozcan. ", " Crear cuentos o expresiones artísticas que permitan compartir la tradición con personas de otros lugares.", " Organizar actividades locales para que los vecinos practiquen la tradición en su comunidad.", " Guardar documentos sobre la tradición para que se conserven en archivos."],
+                        "answer": "Crear cuentos o expresiones artísticas que permitan compartir la tradición con personas de otros lugares."
                     }
                 ]
             }
@@ -2245,84 +2385,51 @@ body.dark-mode .results-list li.incorrect {
 
         const fabulasData = [
             {
-                "title": "Actividad 03",
-                "author": "Esopo",
+                "title": "¿Estamos perdiendo la capacidad de pensar críticamente en la era digital?",
+                "author": "Ministerio de educación",
+                "image": "E://UNC//whatsapp_image_2025-01-11_at_19.34_57.jpg",
                 "content": [
-                    "Un día, una liebre se jactaba de su velocidad ante una tortuga, quien, con calma, le propuso una carrera.",
-                    "La liebre, confiada en su rapidez, aceptó riendo. Al inicio, la liebre corrió muy rápido, dejando a la tortuga muy atrás.",
-                    "Viendo que la tortuga avanzaba muy lentamente, la liebre decidió tomar una siesta a mitad del camino, segura de que tendría tiempo de sobra para ganar.",
-                    "Mientras la liebre dormía, la tortuga siguió avanzando, paso a paso, sin detenerse.",
-                    "Cuando la liebre despertó, vio con asombro que la tortuga estaba a punto de cruzar la meta. Corrió con todas sus fuerzas, pero ya era demasiado tarde. La tortuga ganó la carrera."
+                    "En la actualidad, el acceso masivo a información a través de dispositivos digitales ha generado la ilusión de que estamos más informados que nunca. Sin embargo, sostenemos que el acceso indiscriminado a la información digital no equivale necesariamente a la adquisición de conocimiento. Por el contrario, la sobreexposición a contenidos sin filtros ha debilitado nuestra capacidad de análisis, lo cual nos vuelve sujetos vulnerables ante la propagación de la desinformación y el sesgo algorítmico.",
+                    "Para comprender cómo se produce este debilitamiento, debemos analizarlo, en primer lugar, desde un enfoque educativo. Podemos señalar que el desarrollo de competencias comunicativas requiere no solo recibir datos, sino también aprender a jerarquizar y contrastar fuentes para construir un juicio propio. Esta capacidad de análisis se ve afectada en el entorno digital, donde el algoritmo prioriza aquello que genera una reacción emocional inmediata sobre lo que es veraz. Al aceptar estos contenidos sin el debido cuestionamiento, el estudiante deja de ejercer su pensamiento crítico y participa activamente en la propagación de noticias falsas que polarizan a nuestra sociedad.",
+                    "Asimismo, la salud mental de los estudiantes se ve afectada por la inmediatez digital. Como sugieren las guías del Ministerio de Salud (Minsa, 2023), el uso constante de redes sociales genera una necesidad de validación externa que desplaza la reflexión pausada necesaria para el aprendizaje. La desinformación, al ser presentada con un lenguaje sensacionalista, activa respuestas de miedo o ira que bloquean las áreas del cerebro responsables del pensamiento lógico.",
+                    "En conclusión, la tecnología es una herramienta poderosa, pero su uso sin pensamiento crítico es peligroso. Ser un estudiante del siglo XXI implica ejercer el derecho a estar bien informado, lo que conlleva la obligación de verificar antes de compartir. No podemos dejar que el algoritmo piense por nosotros. Es hora de recuperar el control sobre nuestra atención y convertirnos en ciudadanos digitales responsables, capaces de discernir la realidad en medio de la saturación de contenido."  
                 ],
                 "quiz": [
                     {
-                        "question": "¿Quién propuso la carrera?",
+                        "question": " Según el texto, ¿qué impacto genera la sobreexposición a información sin filtro?",
                         "type": "multiple-choice",
-                        "options": ["La liebre", "La tortuga", "Un zorro", "Un pájaro"],
-                        "answer": "La tortuga"
+                        "options": ["Debilita la capacidad de análisis crítico.", "Genera la ilusión de que el estudiante no está informado.", "Provoca una reacción emocional inmediata en las personas.", "Facilita la construcción de un juicio propio en la red."],
+                        "answer": "Debilita la capacidad de análisis crítico."
                     },
                     {
-                        "question": "¿Por qué la liebre se detuvo a mitad del camino?",
+                        "question": "¿Qué relación de causa-efecto se explica en el texto respecto a la salud mental de los estudiantes?",
+                         "type": "multiple-choice",
+                        "options": ["La necesidad de validación externa desplaza la reflexión pausada.", " El uso constante de redes sociales aumenta la capacidad crítica.", "La desinformación bloquea las áreas del pensamiento lógico.", "La inmediatez digital promueve la verificación de los contenidos."],
+                        "answer": "La necesidad de validación externa desplaza la reflexión pausada."
+                    },
+                    {
+                        "question": "¿Qué acción propone el autor para enfrentar la desinformación en el entorno digital?",
                         "type": "multiple-choice",
-                        "options": ["Estaba cansada", "Quería esperar a la tortuga", "Decidió tomar una siesta", "Se perdió"],
-                        "answer": "Decidió tomar una siesta"
+                        "options": ["Utilizar algoritmos que prioricen reacciones rápidas.", "Evitar el uso de dispositivos para no polarizarse. ", "Verificar la información antes de compartirla con otros.", "Delegar el análisis crítico a las guías de salud."],
+                        "answer": "Verificar la información antes de compartirla con otros"
                     },
                     {
-                        "question": "¿Qué hizo la tortuga mientras la liebre dormía?",
-                        "type": "short-answer",
-                        "answer": "Siguió avanzando"
-                    },
-                    {
-                        "question": "¿Cuál es la moraleja principal de esta fábula?",
+                        "question": "¿Cuál de las siguientes afirmaciones del texto expresa una opinión del autor?",
                         "type": "multiple-choice",
-                        "options": ["La velocidad no importa", "La constancia vence a la rapidez", "Es bueno tomar siestas", "Siempre hay que jactarse"],
-                        "answer": "La constancia vence a la rapidez"
+                        "options": ["El acceso masivo a información se da a través de dispositivos digitales.", "El Ministerio de Salud publicó guías sobre redes sociales en el año 2023.", "El uso constante de redes sociales genera una necesidad de validación externa.", "La ilusión de estar informados es el mayor peligro de la era digital."],
+                        "answer": "El uso constante de redes sociales genera una necesidad de validación externa."
                     },
                     {
-                        "question": "¿Qué animal se jactaba de su velocidad?",
-                        "type": "short-answer",
-                        "answer": "La liebre"
-                    }
-                ]
-            },
-            {
-                "title": "El León y el Ratón",
-                "author": "Esopo",
-                "content": [
-                    "Un día, un león dormía plácidamente bajo la sombra de un árbol. Un pequeño ratón, sin darse cuenta, pasó corriendo sobre su cara y lo despertó.",
-                    "El león, furioso, atrapó al ratón con su pata y estaba a punto de matarlo. El ratón, asustado, le suplicó que lo perdonara, prometiendo que algún día le devolvería el favor.",
-                    "El león se rió de la idea de que un ratón tan pequeño pudiera ayudar a un rey de la selva, pero, conmovido por su súplica, lo dejó ir.",
-                    "Poco tiempo después, el león cayó en una trampa de cazadores y quedó atrapado en una red. Rugió con desesperación, pero nadie acudió en su ayuda.",
-                    "El ratón, al escuchar los rugidos, recordó su promesa. Corrió hacia el león y, con sus pequeños y afilados dientes, royó las cuerdas de la red hasta liberarlo. El león aprendió que incluso los más pequeños pueden ser de gran ayuda."
-                ],
-                "quiz": [
-                    {
-                        "question": "¿Quién despertó al león?",
+                        "question": "¿Cuál es la intención principal del autor al redactar este artículo?",
                         "type": "multiple-choice",
-                        "options": ["Un pájaro", "Un ratón", "Un cazador", "Otro león"],
-                        "answer": "Un ratón"
+                        "options": ["Explicar cómo funcionan los algoritmos en las redes sociales.", "Convencer sobre la importancia del pensamiento crítico digital.", "Demostrar que los dispositivos causan daño en la salud mental.", "Describir las guías de comunicación que propone el Estado."],
+                        "answer": "Demostrar que los dispositivos causan daño en la salud mental."
                     },
                     {
-                        "question": "¿Qué prometió el ratón al león?",
+                        "question": "Un estudiante afirma: “Como recibo mucha información a través de mis redes sociales, puedo asegurar que estoy aprendiendo más que nunca”. Según el texto, ¿qué idea permite refutar esta afirmación?",
                         "type": "multiple-choice",
-                        "options": ["Ser su amigo", "Darle comida", "Devolverle el favor", "Nunca volver a molestarlo"],
-                        "answer": "Devolverle el favor"
-                    },
-                    {
-                        "question": "¿Cómo ayudó el ratón al león?",
-                        "type": "short-answer",
-                        "answer": "Royendo las cuerdas de la red"
-                    },
-                    {
-                        "question": "¿Qué lección aprendió el león?",
-                        "type": "multiple-choice",
-                        "options": ["Que no debe dormir en el bosque", "Que los ratones son peligrosos", "Que incluso los más pequeños pueden ser de gran ayuda", "Que debe cazar ratones"],
-                        "answer": "Que incluso los más pequeños pueden ser de gran ayuda"
-                    },
-                    {
-                        "question": "¿En qué quedó atrapado el león?",
-                        "type": "short-answer",
-                        "answer": "En una red"
+                        "options": ["El aprendizaje requiere contrastar datos, no solo recibirlos.", "El algoritmo prioriza la veracidad para el usuario.", "La tecnología garantiza por sí misma el pensamiento.", " La inmediatez es el mejor método para desarrollar el intelecto."],
+                        "answer": "El aprendizaje requiere contrastar datos, no solo recibirlos."
                     }
                 ]
             }
@@ -2330,132 +2437,55 @@ body.dark-mode .results-list li.incorrect {
 
         const articulosData = [
             {
-                "title": "Actividad 04",
-                "author": "Equipo de Ecología Activa",
-                "content": [
-                    "El reciclaje es un proceso fundamental para la sostenibilidad de nuestro planeta. Consiste en transformar materiales usados en nuevos productos, reduciendo así la necesidad de consumir recursos naturales frescos.",
-                    "Cada año, millones de toneladas de residuos son generadas en todo el mundo. Gran parte de estos residuos terminan en vertederos, contaminando el suelo, el agua y el aire. El reciclaje ayuda a mitigar este problema.",
-                    "Además de la reducción de la contaminación, el reciclaje también ahorra energía. La fabricación de productos a partir de materiales reciclados requiere menos energía que la producción a partir de materias primas vírgenes.",
-                    "Fomentar el reciclaje en nuestras comunidades es vital. Pequeñas acciones como separar la basura en casa y utilizar contenedores específicos para cada tipo de residuo, marcan una gran diferencia.",
-                    "Educar a las nuevas generaciones sobre la importancia del reciclaje asegura un futuro más limpio y saludable para todos."
-                ],
+                "title": "Jóvenes y adultos de 18 a 59 años",
+                "author": "Adaptado del Centro Nacional de Datos",
+                "content": [],
+                "image": "E:\\UNC\\jovenesyadultos.jpeg",
                 "quiz": [
                     {
-                        "question": "¿Qué es el reciclaje?",
+                        "question": "¿Cuál es el porcentaje de los jóvenes que no saben leer ni escribir?",
                         "type": "multiple-choice",
-                        "options": ["Quemar basura", "Transformar materiales usados en nuevos productos", "Tirar todo a la basura", "Enterrar residuos"],
-                        "answer": "Transformar materiales usados en nuevos productos"
+                        "options": ["5%", "1%", "7%", "10%"],
+                        "answer": "1%"
                     },
                     {
-                        "question": "¿Qué se reduce al recicrar?",
+                        "question": "¿Por qué la mayoría de sus trabajos son informales?",
                         "type": "multiple-choice",
-                        "options": ["El consumo de energía", "La contaminación", "El uso de recursos naturales", "Todas las anteriores"],
-                        "answer": "Todas las anteriores"
+                        "options": ["Porque no saben leer ni escribir.", "Porque no tienen EBR.", "Porque son analfabetos funcionales.", "Porque no hay oferta de EBA ni Cetpro."],
+                        "answer": "Porque no hay oferta de EBA ni Cetpro."
                     },
                     {
-                        "question": "¿Qué tipo de contaminación ayuda a mitigar el reciclaje?",
-                        "type": "short-answer",
-                        "answer": "Suelo, agua y aire"
-                    },
-                    {
-                        "question": "¿Cómo podemos fomentar el reciclaje en casa?",
+                        "question": " ¿Qué oportunidades podemos identificar en esta etapa etaria?",
                         "type": "multiple-choice",
-                        "options": ["Comprando más cosas", "Separando la basura", "Tirando todo al mismo cubo", "No haciendo nada"],
-                        "answer": "Separando la basura"
+                        "options": ["Máximo nivel de desarrollo cognitivo e ingreso al ámbito laboral.", "Producción máxima de la fuerza laboral y de todas sus potencialidades.", "Cuidado familiar y de los recursos económicos de la sociedad conyugal.", "Posibilidad de elegir y ser elegido mediante elecciones libres y soberanas."],
+                        "answer": "Producción máxima de la fuerza laboral y de todas sus potencialidades."
                     },
                     {
-                        "question": "¿Qué asegura la educación sobre el reciclaje a las nuevas generaciones?",
-                        "type": "short-answer",
-                        "answer": "Un futuro más limpio y saludable"
-                    }
-                ]
-            },
-            {
-                "title": "El Ciclo del Agua",
-                "author": "National Geographic Kids",
-                "content": [
-                    "El agua en nuestro planeta está siempre en movimiento, en un proceso continuo llamado el ciclo del agua. Este ciclo es esencial para la vida en la Tierra.",
-                    "Comienza con la evaporación, donde el calor del sol convierte el agua de océanos, ríos y lagos en vapor de agua, que sube a la atmósfera.",
-                    "En la atmósfera, el vapor de agua se enfría y se convierte en pequeñas gotas de agua o cristales de hielo, formando las nubes. Este proceso se llama condensación.",
-                    "Cuando las nubes se llenan de agua, esta cae de nuevo a la Tierra en forma de lluvia, nieve o granizo. Esto es la precipitación.",
-                    "Finalmente, el agua que cae puede ser absorbida por la tierra, fluir hacia ríos y lagos, o regresar a los océanos, completando el ciclo y preparándose para empezar de nuevo."
-                ],
-                "quiz": [
-                    {
-                        "question": "¿Cómo se llama el proceso continuo del agua en el planeta?",
+                        "question": "¿Qué función cumple, en el texto, la presentación de los datos en porcentajes?",
                         "type": "multiple-choice",
-                        "options": ["El ciclo de vida", "El ciclo del agua", "El ciclo de la energía", "El ciclo solar"],
-                        "answer": "El ciclo del agua"
+                        "options": ["Informar.", "Explicar.", "Mostrar.", "Presentar."],
+                        "answer": "Informar"
                     },
                     {
-                        "question": "¿Qué ocurre durante la evaporación?",
+                        "question": "¿Cuál de las siguientes expresiones es una opinión?",
                         "type": "multiple-choice",
-                        "options": ["El agua se congela", "El agua se convierte en vapor", "El agua cae como lluvia", "El agua se filtra en la tierra"],
-                        "answer": "El agua se convierte en vapor"
+                        "options": ["Se consolida la identidad, proceso esencial para las relaciones amicales y de pareja.", "6 de cada 10 mujeres han sido víctimas de violencia por parte de sus parejas.", "La educación tecnológica es percibida como de segundo nivel.", "28,6 % tiene educación terciaria, cuyo acceso está determinado por el nivel socioeconómico."],
+                        "answer": "La educación tecnológica es percibida como de segundo nivel."
                     },
                     {
-                        "question": "¿Qué se forma durante la condensación?",
-                        "type": "short-answer",
-                        "answer": "Nubes"
-                    },
-                    {
-                        "question": "¿En qué formas puede caer el agua a la Tierra durante la precipitación?",
+                        "question": "¿Para qué se ha incorporado principalmente la imagen al centro de la infografía?",
                         "type": "multiple-choice",
-                        "options": ["Vapor y niebla", "Lluvia, nieve o granizo", "Hielo y rocío", "Nubes y neblina"],
-                        "answer": "Lluvia, nieve o granizo"
-                    },
-                    {
-                        "question": "¿Qué es esencial para la vida en la Tierra según el texto?",
-                        "type": "short-answer",
-                        "answer": "El ciclo del agua"
+                        "options": ["Para representar a los jóvenes y adultos.", "Para representar las edades de los jóvenes y adultos.", "Para representar las profesiones de los jóvenes y adultos.", "Para representar los cambios entre los jóvenes y adultos."],
+                        "answer": "Para representar las edades de los jóvenes y adultos."
                     }
                 ]
             }
-        ];
+          ];
         const poesiaData = [
-          {
-            "title": "Actividad 05",
-            "author": "Federico García Lorca",
-            "content": [
-              "En el cielo de la noche, un hombre viejo",
-              "con un saco de diamantes y de espejos.",
-              "El viento le lleva la risa, el eco,",
-              "y siembra luces donde no hay reflejo.",
-              "",
-              "Cada estrella una promesa, un suspiro,",
-              "un faro que guía al marinero herido.",
-              "Con manos de tierra y corazón de río,",
-              "va pintando el lienzo, el infinito."
-            ],
-            "quiz": [
-              {
-                "question": "¿Quién es el personaje principal del poema?",
-                "type": "multiple-choice",
-                "options": ["Un marinero", "Un hombre viejo", "El viento", "Un pintor"],
-                "answer": "Un hombre viejo"
-              },
-              {
-                "question": "¿Qué siembra el personaje principal en el cielo?",
-                "type": "short-answer",
-                "answer": "Estrellas"
-              },
-              {
-                "question": "¿Qué representa el 'faro que guía al marinero herido'?",
-                "type": "multiple-choice",
-                "options": ["El saco de diamantes", "Las promesas", "Las estrellas", "La risa del hombre"],
-                "answer": "Las estrellas"
-              },
-              {
-                "question": "¿Con qué compara el poema al 'lienzo, el infinito'?",
-                "type": "multiple-choice",
-                "options": ["Un río", "El corazón", "El cielo", "La tierra"],
-                "answer": "El cielo"
-              }
-            ]
-          },
-          {
+            {
             "title": "Mariposas de Papel",
             "author": "Alfonsina Storni",
+            "image": "E://UNC//maxresdefault.jpg",
             "content": [
               "Tengo mariposas de papel,",
               "hechas de mis sueños más finos.",
@@ -2489,6 +2519,18 @@ body.dark-mode .results-list li.incorrect {
                 "type": "multiple-choice",
                 "options": ["Tristeza", "Enojo", "Esperanza", "Miedo"],
                 "answer": "Esperanza"
+              },
+              {
+                "question": "¿Qué mensaje sobre la vida o el crecimiento personal transmite el verso “en cada caída, un despertar”, y cómo se relaciona con la idea de dejar volar las mariposas?",
+                "type": "multiple-choice",
+                "options": ["La vida está llena de fracasos que deben evitarse.", "Los errores y caídas permiten aprender y seguir creciendo.", "Es mejor no arriesgarse para no equivocarse.", "Los sueños siempre se pierden cuando enfrentan dificultades."],
+                "answer": "Los errores y caídas permiten aprender y seguir creciendo."
+              },
+              {
+                "question": "¿Por qué la autora utiliza la imagen de “mariposas de papel” para representar sus sueños?",
+                "type": "multiple-choice",
+                "options": ["Porque quiere mostrar que los sueños son frágiles, pero pueden tomar vuelo si se intenta.", "Porque las mariposas son fáciles de hacer y decorar.", "Porque el papel es un material común en la vida diaria.", "Porque las mariposas solo sirven como adorno en el poema."],
+                "answer": "Porque quiere mostrar que los sueños son frágiles, pero pueden tomar vuelo si se intenta."
               }
             ]
           }
@@ -2668,8 +2710,11 @@ body.dark-mode .results-list li.incorrect {
             const decreaseFontSizeBtn = document.getElementById('decreaseFontSizeBtn');
             const toggleThemeBtn = document.getElementById('toggleThemeBtn');
             const startQuizBtn = document.getElementById('startQuizBtn');
+            const infographicModeIndicator = document.getElementById('infographicModeIndicator');
             const readingMessage = document.getElementById('readingMessage');
             const quizSection = document.getElementById('quizSection');
+            const imageUploadContainer = document.getElementById('imageUploadContainer');
+            const imageUploadInput = document.getElementById('imageUploadInput');
             const quizQuestionsContainer = document.getElementById('quizQuestions');
             const submitQuizBtn = document.getElementById('submitQuizBtn');
             const retryQuizBtn = document.getElementById('retryQuizBtn');
@@ -2751,6 +2796,7 @@ body.dark-mode .results-list li.incorrect {
 
             const displayText = (text) => {
                 currentText = text;
+                currentQuiz = null; // Reset quiz to avoid mixing questions between activities
 
                 // Ocultar pantalla inicial cuando se carga un texto
                 const initialWelcome = document.getElementById('initialWelcome');
@@ -2769,13 +2815,37 @@ body.dark-mode .results-list li.incorrect {
                     textAuthor.textContent = 'Instrucciones: Lee atentamente y responde el cuestionario al final.';
                     textContent.innerHTML = `<p class="placeholder-text">Presiona el botón 'Iniciar Evaluación' para comenzar la lectura y ver el texto en doble columna.</p>`;
                     startQuizBtn.textContent = '▶️ Iniciar Evaluación';
-                } else {
-                    // Comportamiento estándar para las demás categorías
+                    startQuizBtn.style.display = 'block';
+                } else if (currentCategory === 'actividad04' || currentCategory === 'actividad10') {
                     textTitle.textContent = text.title;
                     textAuthor.textContent = `Autor: ${text.author}`;
-                    textContent.innerHTML = text.content.map(p => `<p>${p}</p>`).join('');
+
+                    if (text.image) {
+                        imageUploadContainer.style.display = 'none';
+                        textContent.innerHTML = `
+                            <img src="${text.image}" alt="Infografía - Actividad" class="uploaded-infographic" />
+                        `;
+                        startQuizBtn.style.display = 'block';
+                        startQuizBtn.textContent = '✅ Iniciar los ejercicios de Comprensión';
+                    } else {
+                        imageUploadContainer.style.display = 'block';
+                        textContent.innerHTML = `<p class="placeholder-text">Sube una infografía para esta actividad usando el campo de arriba. Después podrás continuar con las preguntas de comprensión.</p>`;
+                        startQuizBtn.style.display = 'none';
+                    }
+                    textContent.style.fontSize = `${currentFontSize}rem`;
+                } else {
+                    imageUploadContainer.style.display = 'none';
+                    // Comportamiento estándar para las demás categorías (incluye actividad01, 02, 03, 05, 06, 07, 08, 09)
+                    textTitle.textContent = text.title;
+                    textAuthor.textContent = `Autor: ${text.author}`;
+
+                    const imageHtml = text.image ? `<img src="${text.image}" alt="Imagen relacionada" class="uploaded-infographic" />` : '';
+                    const contentHtml = text.content.map(p => `<p>${p}</p>`).join('');
+
+                    textContent.innerHTML = `${imageHtml}${contentHtml}`;
                     textContent.style.fontSize = `${currentFontSize}rem`;
                     startQuizBtn.textContent = '✅ Iniciar los ejercicios de Comprensión';
+                    startQuizBtn.style.display = 'block';
                 }
                 // --- FIN MODIFICACIÓN DE ENTRADA ---
 
@@ -2823,6 +2893,10 @@ body.dark-mode .results-list li.incorrect {
 
                     lastDisplayedTextIndexPerCategory[currentCategory] = newIndex;
                     console.log(`Categoría: ${currentCategory}, Texto seleccionado: ${texts[newIndex].title}`);
+                    if (currentCategory === 'actividad04' || currentCategory === 'actividad10') {
+                        // Mantener la ruta de imagen de la actividad (infografía) si ya existe
+                        imageUploadInput.value = '';
+                    }
                     displayText(texts[newIndex]);
                 } else {
                     textTitle.textContent = '';
@@ -2869,6 +2943,30 @@ body.dark-mode .results-list li.incorrect {
                         console.log('Lectura finalizada.');
                     };
                 }
+            });
+
+            imageUploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (!file) {
+                    return;
+                }
+
+                if (!file.type.startsWith('image/')) {
+                    alert('Por favor selecciona un archivo de imagen válido.');
+                    imageUploadInput.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (!currentText) {
+                        return;
+                    }
+
+                    currentText.image = e.target.result;
+                    displayText(currentText);
+                };
+                reader.readAsDataURL(file);
             });
 
             // --- Cambio de tamaño de texto ---
@@ -3056,13 +3154,9 @@ body.dark-mode .results-list li.incorrect {
                     console.warn('Este texto no tiene preguntas de comprensión asociadas.');
                     return;
                 }
-                readingMessage.style.display = 'block';
-                setTimeout(() => {
-                    quizSection.style.display = 'block';
-                    readingMessage.style.display = 'none';
-                    startQuizBtn.style.display = 'none';
-                    generateQuiz(currentText.quiz);
-                }, 1500);
+                quizSection.style.display = 'block';
+                startQuizBtn.style.display = 'none';
+                generateQuiz(currentText.quiz);
             }
 
             // MODIFICACIÓN: Listener del botón de inicio (actúa como "Ingresar" en entrada)
