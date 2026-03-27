@@ -8,8 +8,8 @@
     <style>
         /* Variables para colores */
         :root {
-            --primary-color: #00324e;
-            --secondary-color: #129cec;
+            --primary-color: #1969be;
+            --secondary-color: #1db3f5;
             --accent-color: #f32f19;
             --success-color: #fca503;
             --bg-color: #f7f8fa;
@@ -292,7 +292,6 @@ body.dark-mode .results-list li.incorrect {
         .eval-section h2 {
             color: var(--primary-color);
             margin-top: 0;
-            border-bottom: 3px solid var(--primary-color);
             padding-bottom: 0.7rem;
             margin-bottom: 1.2rem;
             font-weight: 700;
@@ -303,6 +302,11 @@ body.dark-mode .results-list li.incorrect {
         .sidebar h3 {
             font-size: 1.1rem;
             color: #00324e;
+        }
+
+        /* Reducir espacio entre título y lista de Record de Lectura */
+        .reading-record h3 {
+            margin-bottom: 0.5rem;
         }
 
         /* Estilo para los contenedores de input con botón de voz */
@@ -1601,12 +1605,10 @@ body.dark-mode .results-list li.incorrect {
     <main>
         <aside class="sidebar">
             <div class="visual-options"> <!-- Nueva sección para opciones visuales, ahora al inicio del sidebar -->
-                <h3>Opciones de Visualización</h3>
                 <button id="toggleThemeBtn">🌙 Modo Oscuro / ☀️ Modo Claro</button>
             </div>
-            <h2>Panel de Estudiante</h2>
             <div class="student-form">
-                <h3>Ingresa tus datos:</h3>
+                <h3 style="text-align: center; margin-bottom: 1rem;">Regístrese</h3>
                 <div class="input-with-speech">
                     <label for="studentName" class="input-label">Nombre completo:</label>
                     <input type="text" id="studentName" placeholder="Ej: Juan Pérez" required aria-label="Nombre completo del estudiante">
@@ -1634,7 +1636,6 @@ body.dark-mode .results-list li.incorrect {
                 </ul>
             </div>
             <div class="ranking">
-                <h3>Ranking:</h3>
                 <ol id="studentRanking">
                     <!-- El ranking de estudiantes se cargará aquí -->
                 </ol>
@@ -1700,7 +1701,7 @@ body.dark-mode .results-list li.incorrect {
                     
                     <!-- Contenido de texto -->
                     <div class="initial-content">
-                        <h2 class="initial-title">Elige tu aventura</h2>
+                        <h2 class="initial-title" style="font-size: 3.5rem; font-weight: bold;">Elige tu aventura</h2>
                         <p class="initial-subtitle">Selecciona una actividad para iniciar</p>
                         <!-- selector de actividades dentro del recuadro azul -->
                         <div class="activity-cards"></div>
