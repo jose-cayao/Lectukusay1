@@ -504,8 +504,19 @@ body.dark-mode .results-list li.incorrect {
             cursor: pointer;
         }
 
+        .text-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
         .text-actions button {
-            margin-left: 0.5rem; /* Mantener margen entre botones de acción de texto */
+            margin-left: 0;
+            padding: 0.45rem 0.65rem;
+            min-width: 42px;
+            min-height: 38px;
+            font-size: 0.85rem;
         }
 
         .text-display, .quiz-section, .comment-section {
@@ -649,6 +660,36 @@ body.dark-mode .results-list li.incorrect {
             margin-bottom: 1.5rem; /* Espacio debajo de esta sección */
             padding-bottom: 1rem;
             border-bottom: 1px dashed #dddbe4; /* Separador */
+            display: flex;
+            justify-content: center;
+        }
+
+        .visual-options button {
+            width: 100%;
+            max-width: 260px;
+            text-align: center;
+        }
+
+        .text-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .text-selector label {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .text-selector select {
+            border: 2px solid #005ab5;
+            box-shadow: 0 0 0 3px rgba(0, 90, 181, 0.14);
+            border-radius: 8px;
+            padding: 0.85rem;
+            background-color: white;
         }
 
         footer {
@@ -3805,7 +3846,6 @@ body.dark-mode .results-list li.incorrect {
         </script>
 </body>
 </html>
-
 
 
 
