@@ -3094,7 +3094,7 @@ body.dark-mode .results-list li.incorrect {
                         textAuthor.textContent = progress.textAuthor || '';
                         textContent.innerHTML = progress.textContentHtml || '';
                         textContent.style.fontSize = `${currentFontSize}rem`;
-                        startQuizBtn.textContent = progress.startQuizLabel || '➡️ Siguiente';
+                        startQuizBtn.textContent = progress.startQuizLabel || '➡️ Iniciar los ejercicios de comprensión';
                         startQuizBtn.style.display = progress.startQuizVisible ? 'block' : 'none';
 
                         if (progress.quizVisible && currentText.quiz && currentText.quiz.length) {
@@ -3178,7 +3178,7 @@ body.dark-mode .results-list li.incorrect {
                             <img src="${text.image}" alt="Infografía - Actividad" class="uploaded-infographic" />
                         `;
                         startQuizBtn.style.display = 'block';
-                        startQuizBtn.textContent = '➡️ Siguiente';
+                        startQuizBtn.textContent = '➡️ Iniciar los ejercicios de comprensión';
                     } else {
                         imageUploadContainer.style.display = 'block';
                         textContent.innerHTML = `<p class="placeholder-text">Sube una infografía para esta actividad usando el campo de arriba. Después podrás continuar con las preguntas de comprensión.</p>`;
