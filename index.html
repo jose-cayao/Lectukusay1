@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lectukushay</title>
+    <title>LectuKushay</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Variables para colores */
@@ -440,52 +440,6 @@ body.dark-mode .results-list li.incorrect {
             padding: 0.3rem 0.6rem;
             border-radius: 5px;
             display: inline-block;
-        }
-
-        .achievement-legend {
-            padding: 0.85rem;
-            border-radius: 10px;
-            background: rgba(25, 105, 190, 0.08);
-            border: 1px solid rgba(3, 55, 107, 0.18);
-            text-align: center;
-        }
-
-        .achievement-legend p {
-            margin: 0 0 0.6rem 0;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-align: center;
-        }
-
-        .achievement-scale {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .achievement-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.35rem 0.55rem;
-            border-radius: 999px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            opacity: 0.72;
-            transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .achievement-badge.active {
-            opacity: 1;
-            transform: scale(1.04);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-        }
-
-        body.dark-mode .achievement-legend {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.18);
         }
 
         .level-c { background-color: var(--level-c-color); color: white; }
@@ -1122,12 +1076,12 @@ body.dark-mode .results-list li.incorrect {
             border: 2px solid #ffffff;
             border-radius: 10px;
             padding: 1rem 1.5rem;
-            color: #020744;
+            color: #ffffff;
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
             text-align: center;
             flex: 1 1 calc(30% - 2rem);
-            min-width: 120px; 
+            min-width: 120px;
         }
 
         .activity-card:hover {
@@ -1753,24 +1707,24 @@ body.dark-mode .results-list li.incorrect {
     </div>
 
     <header>
-        <img id="imagen" src="logo.jpg" alt="Logo LectuKushay - Plataforma de lectura educativa">
+        <img id="logo" src="https://i.pinimg.com/736x/ed/5c/99/ed5c999a1162251cf4efd18c4b09a1cc.jpg" alt="Logo LectuKushay - Plataforma de lectura educativa">
         <b><h1>LectuKushay</h1></b>
         <div class="slogan-container"> 
             <!-- Nota: La etiqueta <marquee> está obsoleta y puede no ser compatible en futuros navegadores. -->
-            </b><b><center behavior="scroll" direction="left" scrollamount="5"><p> </p></center></b>
+            </b><b><center behavior="scroll" direction="left" scrollamount="5"><p> La alegría de leer comienza aquí</p></center></b>
         </div>
     </header>
 
     <main>
         <aside class="sidebar">
             <div class="visual-options"> <!-- Nueva sección para opciones visuales, ahora al inicio del sidebar -->
-                <button id="toggleThemeBtn">🌙 Oscuro / ☀️ Claro</button>
+                <button id="toggleThemeBtn">🌙 Modo Oscuro / ☀️ Modo Claro</button>
             </div>
             <div class="student-form">
                 <h3 style="text-align: center; margin-bottom: 1rem;">Regístrese</h3>
                 <div class="input-with-speech">
                     <label for="studentName" class="input-label">Nombre completo:</label>
-                    <input type="text" id="studentName" placeholder="Ej: José Cayao Bustamante" required aria-label="Nombre completo del estudiante">
+                    <input type="text" id="studentName" placeholder="Ej: Juan Pérez" required aria-label="Nombre completo del estudiante">
                     <button class="speech-input-btn" data-target="studentName" title="Dictar nombre">🎤</button>
                 </div>
                 <div class="input-with-speech">
@@ -1786,15 +1740,7 @@ body.dark-mode .results-list li.incorrect {
                 <p>Puntaje Total: <span id="totalScore">0</span></p>
                 <p>Nivel Alcanzado: <span id="levelAchieved" class="level-c">Inicio (C)</span></p>
                 <button id="registerNewStudentBtn" class="btn-secondary" style="margin-top: 1rem;">Registrar Nuevo Estudiante</button>
-            </div>
-            <div class="achievement-legend" aria-label="Escala del nivel de logro">
-                <p>Niveles de logro</p>
-                <div class="achievement-scale" id="achievementScale">
-                    <span class="achievement-badge level-c active" data-level="level-c">C </span>
-                    <span class="achievement-badge level-b" data-level="level-b">B </span>
-                    <span class="achievement-badge level-a" data-level="level-a">A </span>
-                    <span class="achievement-badge level-ad" data-level="level-ad">AD </span>
-                </div>
+                
             </div>
             <div class="reading-record">
                 <h3>Record de Lectura:</h3>
@@ -1818,7 +1764,7 @@ body.dark-mode .results-list li.incorrect {
         <section class="content-area">
             <nav class="controls">
                 <div class="text-selector">
-                    <label for="textCategory">Elige una actividad:</label>
+                    <label for="textCategory">Elige tu aventura:</label>
                     <select id="textCategory">
                         <option value="actividad01">Actividad 01</option>
                         <option value="actividad02">Actividad 02</option>
@@ -1847,13 +1793,6 @@ body.dark-mode .results-list li.incorrect {
                 <div id="infographicModeIndicator" style="display:none; margin-top: 0.75rem; padding: 0.5rem; border: 1px solid #4caf50; border-radius: 6px; background: #e8f5e9; color: #1b5e20; font-weight: 600;">
                     Modo infografía activo
                 </div>
-                <div id="progressStatus" style="margin-top: 0.75rem; padding: 0.65rem 0.8rem; border-radius: 6px; background: #eef7ff; color: #0a4a7a; font-weight: 600;">
-                    💾 Tu avance se guarda automáticamente.
-                </div>
-                <div class="progress-actions" style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.75rem;">
-                    <button id="resumeProgressBtn" class="btn-secondary">↩️ Continuar</button>
-                    <button id="clearProgressBtn" class="btn-secondary">🗑️ Borrar</button>
-                </div>
             </nav>
 
             <article class="text-display" role="article">
@@ -1880,6 +1819,11 @@ body.dark-mode .results-list li.incorrect {
                         <!-- selector de actividades dentro del recuadro azul -->
                         <div class="activity-cards"></div>
                     </div>
+                    
+                    <!-- Decoración con imagen adolescentes leyendo -->
+                    <div class="initial-decoration">
+                        <img src="E:\UNC//Lectu_imagen.png" alt="250" loading="lazy">
+                    </div>
                 </div>
                 
                 <!-- Contenido del texto (oculto inicialmente) -->
@@ -1892,7 +1836,7 @@ body.dark-mode .results-list li.incorrect {
             </article>
 
             <section id="quizSection" class="quiz-section" style="display:none;" role="region" aria-label="Sección de preguntas de comprensión">
-                <h2>Lee con atención cada una de las preguntas y elige la respuesta correcta. ¡Éxitos!</h2>
+                <h2>Preguntas de Comprensión</h2>
                 <div id="quizQuestions">
                     <!-- Preguntas del quiz se cargarán aquí -->
                 </div>
@@ -1915,8 +1859,8 @@ body.dark-mode .results-list li.incorrect {
     </main>
 
     <footer>
-            <p>© 2026 LectuKushay Plataforma Educativa Interactiva</p>
-            <p>© 2026 José Lenis Cayao Bustamante</p>
+            <p>© 2025 LectuKushay Plataforma Educativa Interactiva</p>
+            <p>© 2025 José Lenis Cayao Bustamante</p>
             <p>Desarrollado para fomentar la lectura y comprensión en estudiantes de secundaria</p>
     </footer>
 
@@ -1954,7 +1898,7 @@ body.dark-mode .results-list li.incorrect {
                     {
                         "question": "Lee esta parte del texto, “(…) debemos aprender a disfrutar de los pequeños placeres (y, por qué no, permitirnos algunos ‘gustitos’ ocasionales)”. ¿Con qué intención la autora incluye la información entre paréntesis?",
                         "type": "multiple-choice",
-                        "options": ["Precisar datos específicos.", "Insertar información complementaria.", "Aclarar la definición adecuada.", "Narrar un hecho complementario."],
+                        "options": ["Precisar datos específicos.", "Insertar información complementaria. ", "Aclarar la definición adecuada.", "Narrar un hecho complementario."],
                         "answer": "Insertar información complementaria."
                     }
                 ]
@@ -2095,10 +2039,10 @@ body.dark-mode .results-list li.incorrect {
                         "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
                     },
                     {
-                        "question": "¿Qué enseñanza del texto puede aplicarse de manera más pertinente a los desafíos actuales de la sociedad?",
+                        "question": "De acuerdo con el texto, ¿cómo se relaciona la Batalla de Maratón con el origen del maratón moderno?",
                         "type": "multiple-choice",
-                        "options": ["Que el número de personas siempre determina el éxito de una acción.", "Que la fuerza física es más importante que la estrategia y la organización.", "Que la astucia, la preparación y la determinación permiten superar situaciones adversas.", "Que solo los hechos históricos antiguos tienen valor cultural."],
-                        "answer": "Que la astucia, la preparación y la determinación permiten superar situaciones adversas."
+                        "options": ["La batalla y la acción de Fidípedes son símbolos de valentía.", " El nombre de la llanura da origen al maratón moderno.", "La batalla y la hazaña de Fidípedes son símbolos de resistencia.", " El nombre de la batalla da origen al maratón moderno."],
+                        "answer": "La batalla y la hazaña de Fidípedes son símbolos de resistencia."
                     }   
                 ]
                 },
@@ -2543,10 +2487,10 @@ body.dark-mode .results-list li.incorrect {
                         "options": ["El primer discípulo de los conocidos hermanos Chávez en el Cusco.", "Un personaje ficticio creado para narrar sobre la danza de tijeras.", "Una fuente de inspiración basada en su legado como patriarca del arte.", "Un empresario de Suiza que apoya la cultura andina y sus proyectos"],
                         "answer": "Una fuente de inspiración basada en su legado como patriarca del arte."
                     },
-                    {
+                                        {
                         "question": "Si quisieras difundir una tradición de tu comunidad como lo hace Claudia Rua, ¿qué medio sería el más adecuado?",
                         "type": "multiple-choice",
-                        "options": ["Publicar información breve sobre la tradición en redes sociales para que más personas la conozcan.", "Crear cuentos o expresiones artísticas que permitan compartir la tradición con personas de otros lugares.", "Organizar actividades locales para que los vecinos practiquen la tradición en su comunidad.", "Guardar documentos sobre la tradición para que se conserven en archivos."],
+                        "options": ["Publicar información breve sobre la tradición en redes sociales para que más personas la conozcan. ", " Crear cuentos o expresiones artísticas que permitan compartir la tradición con personas de otros lugares.", " Organizar actividades locales para que los vecinos practiquen la tradición en su comunidad.", " Guardar documentos sobre la tradición para que se conserven en archivos."],
                         "answer": "Crear cuentos o expresiones artísticas que permitan compartir la tradición con personas de otros lugares."
                     }
                 ]
@@ -2894,12 +2838,8 @@ body.dark-mode .results-list li.incorrect {
             const evalSection = document.getElementById('evalSection');
             const evalTitle = document.getElementById('evalTitle');
             const evalSubtitle = document.getElementById('evalSubtitle');
-            const evalProgress = document.getElementById('evalProgress');
             const evalTextContainer = document.getElementById('evalTextContainer');
             const evalQuizContainer = document.getElementById('evalQuizContainer');
-            const progressStatus = document.getElementById('progressStatus');
-            const resumeProgressBtn = document.getElementById('resumeProgressBtn');
-            const clearProgressBtn = document.getElementById('clearProgressBtn');
 
             // Mostrar el subtítulo solo cuando el título indique evaluación de entrada o salida
             const updateEvalSubtitleVisibility = () => {
@@ -2928,7 +2868,6 @@ body.dark-mode .results-list li.incorrect {
             const currentStudentGradeSpan = document.getElementById('currentStudentGrade');
             const totalScoreSpan = document.getElementById('totalScore');
             const levelAchievedSpan = document.getElementById('levelAchieved');
-            const achievementScale = document.getElementById('achievementScale');
             const readTextsList = document.getElementById('readTextsList');
             const studentRankingList = document.getElementById('studentRanking');
             const registerNewStudentBtn = document.getElementById('registerNewStudentBtn');
@@ -2941,179 +2880,6 @@ body.dark-mode .results-list li.incorrect {
             let currentStudent = null;
             let studentScores = JSON.parse(localStorage.getItem('studentScores')) || {};
             let lastDisplayedTextIndexPerCategory = {}; // Para asegurar que se elija un texto diferente
-            let suppressNextBeforeUnloadSave = false;
-            const PROGRESS_STORAGE_KEY = 'lectukushayProgress';
-
-            const updateProgressStatus = (message, restored = false) => {
-                if (!progressStatus) return;
-                progressStatus.textContent = message;
-                progressStatus.style.background = restored ? '#e8f5e9' : '#eef7ff';
-                progressStatus.style.color = restored ? '#1b5e20' : '#0a4a7a';
-            };
-
-            const updateProgressButtons = () => {
-                const hasSavedProgress = !!localStorage.getItem(PROGRESS_STORAGE_KEY);
-                [resumeProgressBtn, clearProgressBtn].forEach(button => {
-                    if (!button) return;
-                    button.disabled = !hasSavedProgress;
-                    button.style.opacity = hasSavedProgress ? '1' : '0.6';
-                    button.style.cursor = hasSavedProgress ? 'pointer' : 'not-allowed';
-                });
-            };
-
-            const setAchievementScaleActive = (levelClass = 'level-c') => {
-                if (!achievementScale) return;
-                achievementScale.querySelectorAll('.achievement-badge').forEach(badge => {
-                    badge.classList.toggle('active', badge.dataset.level === levelClass);
-                });
-            };
-
-            const collectInputAnswers = (container) => {
-                const answers = {};
-                if (!container) return answers;
-
-                container.querySelectorAll('input').forEach(input => {
-                    const key = input.name || input.id;
-                    if (!key) return;
-
-                    if (input.type === 'radio') {
-                        if (input.checked) {
-                            answers[key] = input.value;
-                        }
-                    } else {
-                        answers[key] = input.value;
-                    }
-                });
-
-                return answers;
-            };
-
-            const restoreInputAnswers = (container, answers = {}) => {
-                if (!container || !answers) return;
-
-                container.querySelectorAll('input').forEach(input => {
-                    const key = input.name || input.id;
-                    if (!key || !(key in answers)) return;
-
-                    if (input.type === 'radio') {
-                        input.checked = answers[key] === input.value;
-                    } else {
-                        input.value = answers[key];
-                    }
-                });
-            };
-
-            const clearSavedProgress = (message = '💾 No hay avance pendiente guardado.') => {
-                suppressNextBeforeUnloadSave = true;
-                localStorage.removeItem(PROGRESS_STORAGE_KEY);
-                updateProgressStatus(message);
-                updateProgressButtons();
-            };
-
-            const saveProgress = () => {
-                suppressNextBeforeUnloadSave = false;
-                try {
-                    const progress = {
-                        currentCategory,
-                        currentFontSize,
-                        currentText,
-                        currentStudentKey: currentStudent ? currentStudent.name.toLowerCase().replace(/\s/g, '-') : null,
-                        textTitle: textTitle.textContent,
-                        textAuthor: textAuthor.textContent,
-                        textContentHtml: textContent.innerHTML,
-                        startQuizLabel: startQuizBtn.textContent,
-                        startQuizVisible: startQuizBtn.style.display !== 'none',
-                        quizVisible: quizSection.style.display === 'block',
-                        quizAnswers: collectInputAnswers(quizQuestionsContainer),
-                        evalVisible: evalSection && evalSection.style.display === 'block',
-                        evalAnswers: collectInputAnswers(evalQuizContainer),
-                        evalSummaryHtml: evalSummary.innerHTML,
-                        evalState: evalState ? {
-                            mode: evalState.mode,
-                            currentIndex: evalState.currentIndex,
-                            rows: evalState.rows
-                        } : null
-                    };
-
-                    localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
-                    updateProgressStatus('💾 Tu avance se guarda automáticamente.');
-                    updateProgressButtons();
-                } catch (error) {
-                    console.warn('No se pudo guardar el avance.', error);
-                }
-            };
-
-            const restoreSavedProgress = () => {
-                const savedProgressRaw = localStorage.getItem(PROGRESS_STORAGE_KEY);
-                if (!savedProgressRaw) {
-                    updateProgressStatus('💾 Tu avance se guarda automáticamente.');
-                    updateProgressButtons();
-                    return;
-                }
-
-                try {
-                    const progress = JSON.parse(savedProgressRaw);
-                    currentFontSize = Number(progress.currentFontSize) || currentFontSize;
-                    textContent.style.fontSize = `${currentFontSize}rem`;
-
-                    if (progress.currentStudentKey && studentScores[progress.currentStudentKey]) {
-                        currentStudent = studentScores[progress.currentStudentKey];
-                        localStorage.setItem('lastActiveStudent', progress.currentStudentKey);
-                        updateStudentUI();
-                    }
-
-                    if (progress.evalVisible && progress.evalState && progress.evalState.mode) {
-                        startEvaluation(progress.evalState.mode, {
-                            currentIndex: progress.evalState.currentIndex,
-                            rows: progress.evalState.rows,
-                            answers: progress.evalAnswers,
-                            summaryHtml: progress.evalSummaryHtml
-                        });
-                        suppressNextBeforeUnloadSave = false;
-                        updateProgressStatus('✅ Se recuperó tu evaluación guardada. Puedes continuar.', true);
-                        updateProgressButtons();
-                        return;
-                    }
-
-                    if (progress.currentCategory) {
-                        currentCategory = progress.currentCategory;
-                        textCategorySelect.value = progress.currentCategory;
-                    }
-
-                    if (progress.currentText) {
-                        currentText = progress.currentText;
-                        const initialWelcome = document.getElementById('initialWelcome');
-                        if (initialWelcome) {
-                            initialWelcome.classList.add('hidden');
-                        }
-
-                        textTitle.style.display = 'block';
-                        textAuthor.style.display = 'block';
-                        textContent.style.display = 'block';
-                        textTitle.textContent = progress.textTitle || currentText.title || '';
-                        textAuthor.textContent = progress.textAuthor || '';
-                        textContent.innerHTML = progress.textContentHtml || '';
-                        textContent.style.fontSize = `${currentFontSize}rem`;
-                        startQuizBtn.textContent = progress.startQuizLabel || '➡️ Siguiente';
-                        startQuizBtn.style.display = progress.startQuizVisible ? 'block' : 'none';
-
-                        if (progress.quizVisible && currentText.quiz && currentText.quiz.length) {
-                            generateQuiz(currentText.quiz);
-                            restoreInputAnswers(quizQuestionsContainer, progress.quizAnswers);
-                            quizSection.style.display = 'block';
-                            startQuizBtn.style.display = 'none';
-                        } else {
-                            quizSection.style.display = 'none';
-                        }
-
-                        updateProgressStatus('✅ Se recuperó tu actividad guardada. Puedes continuar.', true);
-                    }
-                    updateProgressButtons();
-                } catch (error) {
-                    console.warn('No se pudo restaurar el avance guardado.', error);
-                    clearSavedProgress();
-                }
-            };
 
             const loadTexts = async (category) => {
                 switch (category) {
@@ -3137,10 +2903,6 @@ body.dark-mode .results-list li.incorrect {
                         return actividad09Data;
                     case 'actividad10':
                         return actividad10Data;
-                    case 'entrada':
-                        return entradaData;
-                    case 'salida':
-                        return salidaData;
                     default:
                         return [];
                 }
@@ -3178,7 +2940,7 @@ body.dark-mode .results-list li.incorrect {
                             <img src="${text.image}" alt="Infografía - Actividad" class="uploaded-infographic" />
                         `;
                         startQuizBtn.style.display = 'block';
-                        startQuizBtn.textContent = '➡️ Siguiente';
+                        startQuizBtn.textContent = '✅ Iniciar los ejercicios de Comprensión';
                     } else {
                         imageUploadContainer.style.display = 'block';
                         textContent.innerHTML = `<p class="placeholder-text">Sube una infografía para esta actividad usando el campo de arriba. Después podrás continuar con las preguntas de comprensión.</p>`;
@@ -3196,7 +2958,7 @@ body.dark-mode .results-list li.incorrect {
 
                     textContent.innerHTML = `${imageHtml}${contentHtml}`;
                     textContent.style.fontSize = `${currentFontSize}rem`;
-                    startQuizBtn.textContent = '➡️ Iniciar los ejercicios de comprensión';
+                    startQuizBtn.textContent = '✅ Iniciar los ejercicios de Comprensión';
                     startQuizBtn.style.display = 'block';
                 }
                 // --- FIN MODIFICACIÓN DE ENTRADA ---
@@ -3209,7 +2971,6 @@ body.dark-mode .results-list li.incorrect {
 
                 window.speechSynthesis.cancel();
                 readAloudBtn.textContent = '🗣️ Leer en Voz Alta';
-                saveProgress();
             };
 
             const selectRandomText = async () => {
@@ -3318,7 +3079,6 @@ body.dark-mode .results-list li.incorrect {
 
                     currentText.image = e.target.result;
                     displayText(currentText);
-                    saveProgress();
                 };
                 reader.readAsDataURL(file);
             });
@@ -3327,13 +3087,11 @@ body.dark-mode .results-list li.incorrect {
             increaseFontSizeBtn.addEventListener('click', () => {
                 currentFontSize = Math.min(currentFontSize + 0.1, 2.0); // Límite superior
                 textContent.style.fontSize = `${currentFontSize}rem`;
-                saveProgress();
             });
 
             decreaseFontSizeBtn.addEventListener('click', () => {
                 currentFontSize = Math.max(currentFontSize - 0.1, 0.8); // Límite inferior
                 textContent.style.fontSize = `${currentFontSize}rem`;
-                saveProgress();
             });
 
             // --- Modo Claro/Oscuro ---
@@ -3371,9 +3129,8 @@ body.dark-mode .results-list li.incorrect {
                     currentStudentNameSpan.textContent = 'Ninguno'; // Placeholder
                     currentStudentGradeSpan.textContent = 'N/A'; // Placeholder
                     totalScoreSpan.textContent = '0';
-                    levelAchievedSpan.textContent = 'Inicio (C)';
-                    levelAchievedSpan.className = 'level-c';
-                    setAchievementScaleActive('level-c');
+                    levelAchievedSpan.textContent = 'N/A';
+                    levelAchievedSpan.className = ''; // Limpiar clases de nivel
                     // Show the student input form when no student is active
                     studentForm.style.display = 'block';
                     studentInfo.style.display = 'none'; // Hide student info when no student is active
@@ -3399,8 +3156,8 @@ body.dark-mode .results-list li.incorrect {
                     levelClass = 'level-c'; // Rojo
                 }
                 levelAchievedSpan.textContent = level;
-                levelAchievedSpan.className = levelClass;
-                setAchievementScaleActive(levelClass);
+                levelAchievedSpan.className = '';
+                levelAchievedSpan.classList.add(levelClass);
             };
 
             const renderReadTexts = () => {
@@ -3514,7 +3271,6 @@ body.dark-mode .results-list li.incorrect {
                 quizSection.style.display = 'block';
                 startQuizBtn.style.display = 'none';
                 generateQuiz(currentText.quiz);
-                saveProgress();
             }
 
             // MODIFICACIÓN: Listener del botón de inicio (actúa como "Ingresar" en entrada)
@@ -3556,7 +3312,6 @@ body.dark-mode .results-list li.incorrect {
                         
                         // Aplicar tamaño de fuente
                         textContent.style.fontSize = `${currentFontSize}rem`;
-                        saveProgress();
                         return;
                     }
                 }
@@ -3566,35 +3321,7 @@ body.dark-mode .results-list li.incorrect {
             };
 
             startQuizBtn.addEventListener('click', handleStartQuizClick);
-            quizQuestionsContainer.addEventListener('input', saveProgress);
-            quizQuestionsContainer.addEventListener('change', saveProgress);
-            evalQuizContainer.addEventListener('input', saveProgress);
-            evalQuizContainer.addEventListener('change', saveProgress);
-            window.addEventListener('beforeunload', () => {
-                if (!suppressNextBeforeUnloadSave) {
-                    saveProgress();
-                }
-            });
 
-            resumeProgressBtn && resumeProgressBtn.addEventListener('click', () => {
-                if (!localStorage.getItem(PROGRESS_STORAGE_KEY)) {
-                    updateProgressStatus('💾 No hay avance guardado para continuar.');
-                    return;
-                }
-                restoreSavedProgress();
-            });
-
-            clearProgressBtn && clearProgressBtn.addEventListener('click', () => {
-                if (!localStorage.getItem(PROGRESS_STORAGE_KEY)) {
-                    updateProgressStatus('💾 No hay avance guardado para borrar.');
-                    return;
-                }
-
-                if (confirm('¿Deseas borrar el avance guardado y volver al inicio?')) {
-                    clearSavedProgress('🗑️ Se borró el avance guardado.');
-                    window.location.reload();
-                }
-            });
 
             // Definición de generateQuiz (parte previamente solicitada)
             const generateQuiz = (quiz) => {
@@ -3629,7 +3356,6 @@ body.dark-mode .results-list li.incorrect {
                     }
                     quizQuestionsContainer.appendChild(questionDiv);
                 });
-                saveProgress();
             };
 
             // MODIFICACIÓN: Listener del botón de enviar quiz (Añadido resumen de respuestas)
@@ -3728,7 +3454,6 @@ body.dark-mode .results-list li.incorrect {
 
                 submitQuizBtn.style.display = 'none';
                 retryQuizBtn.style.display = 'block';
-                clearSavedProgress('✅ Actividad completada. Tu avance pendiente fue limpiado.');
 
                 setTimeout(() => {
                     quizSection.style.display = 'none';
@@ -3742,7 +3467,6 @@ body.dark-mode .results-list li.incorrect {
 
             retryQuizBtn.addEventListener('click', () => {
                 generateQuiz(currentQuiz);
-                saveProgress();
             });
 
             // --- Sección de Comentarios ---
@@ -3976,7 +3700,6 @@ body.dark-mode .results-list li.incorrect {
 
                     // Generar el quiz para este ejercicio con numeración correlativa
                     generateEvalQuiz(ex.quiz || [], index, questionStartNumber);
-                    saveProgress();
                 };
 
                 const generateEvalQuiz = (quiz, exIndex, questionStartNumber = 1) => {
@@ -4070,7 +3793,6 @@ body.dark-mode .results-list li.incorrect {
                     // Avanzar automáticamente al siguiente ejercicio o finalizar
                     evalState.currentIndex++;
                     if (evalState.currentIndex < evalState.exercises.length) {
-                        saveProgress();
                         // Mostrar siguiente ejercicio
                         setTimeout(() => {
                             showExercise(evalState.currentIndex);
@@ -4095,14 +3817,13 @@ body.dark-mode .results-list li.incorrect {
                             finalHtml += `<p>Estudiante: ${currentStudent ? currentStudent.name : 'N/A'}</p>`;
                             finalHtml += '<p>Puedes exportar los resultados usando "Exportar Respuestas (.xls)".</p>';
                             evalSummary.innerHTML = finalHtml + '<hr>' + evalSummary.innerHTML;
-                            clearSavedProgress('✅ Evaluación completada. Ya no queda avance pendiente.');
                             // Preparar descarga inmediata opcional: no descargar automáticamente, esperar al usuario
                         }, 500);
                     }
                 });
 
                 // Iniciar evaluación (botones ya agregados) -- función pública
-                const startEvaluation = (mode, savedProgress = null) => {
+                const startEvaluation = (mode) => {
                     const data = (mode === 'entrada') ? entradaData : salidaData;
                     const exercises = buildExercisesFromData(data);
                     if (!exercises || exercises.length === 0) {
@@ -4125,28 +3846,10 @@ body.dark-mode .results-list li.incorrect {
                         textDisplayArticle.style.boxShadow = 'none';
                     }
                     
-                    evalState = {
-                        mode,
-                        exercises,
-                        currentIndex: savedProgress && Number.isInteger(savedProgress.currentIndex) ? savedProgress.currentIndex : 0,
-                        rows: Array.isArray(savedProgress?.rows) ? savedProgress.rows : []
-                    };
-                    evalSummary.innerHTML = savedProgress?.summaryHtml || '';
+                    evalState = { mode, exercises, currentIndex: 0, rows: [] };
+                    evalSummary.innerHTML = '';
                     if (evalSection) evalSection.style.display = 'block';
-
-                    if (evalState.currentIndex >= evalState.exercises.length) {
-                        evalTextContainer.innerHTML = '';
-                        evalQuizContainer.innerHTML = '';
-                        evalTitle.textContent = mode === 'entrada' ? 'Evaluación de entrada' : 'Evaluación de salida';
-                        evalProgress.textContent = 'Completada';
-                        return;
-                    }
-
-                    showExercise(evalState.currentIndex);
-                    if (savedProgress?.answers) {
-                        restoreInputAnswers(evalQuizContainer, savedProgress.answers);
-                    }
-                    saveProgress();
+                    showExercise(0);
                 };
 
                 // Inicialización al cargar la página
@@ -4163,9 +3866,6 @@ body.dark-mode .results-list li.incorrect {
                     
                     selectRandomText();
                 });
-
-                restoreSavedProgress();
-                updateProgressButtons();
             });
 
         // ===== Control de Pantalla de Bienvenida =====
@@ -4218,7 +3918,6 @@ body.dark-mode .results-list li.incorrect {
         </script>
 </body>
 </html>
-  
 
 
 
